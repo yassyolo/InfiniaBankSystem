@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infinia.Infrastructure.Data.DataConstants
+﻿namespace Infinia.Infrastructure.Data.DataConstants
 {
     public static class DataConstants
     {
@@ -21,8 +15,21 @@ namespace Infinia.Infrastructure.Data.DataConstants
         {
             public const int NameMaxLength = 70;
             public const int NameMinLength = 2;
+            public const int UsernameMaxLength = 15;
+            public const int UsernameMinLength = 5;
+        }
+        public static class IdentityCard
+        {
             public const int SSNMaxLength = 10;
             public const int SSNMinLength = 10;
+            public const int CardNumberMaxLength = 10;
+            public const int CardNumberMinLength = 10;
+            public const int IssuerMaxLength = 20;
+            public const int IssuerMinLength = 2;
+            public const int NationalityMaxLength = 20;
+            public const int NationalityMinLength = 2;
+            public const int SexMaxLength = 10;
+            public const int SexMinLength = 3;
         }
         public static class Address
         {

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia", "Infinia.csproj", "{C30AEE0F-EF72-4637-A908-B8161D41382A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infinia", "Infinia.csproj", "{C30AEE0F-EF72-4637-A908-B8161D41382A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia.Core", "..\Infinia.Core\Infinia.Core.csproj", "{9A5E28C0-EC4C-4B53-A7C7-926A05F99A7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infinia.Infrastructure", "..\Infinia.Infrastructure\Infinia.Infrastructure.csproj", "{15DA949F-F5DD-4288-A1BC-BFA572110CE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia.Infrastructure", "..\Infinia.Infrastructure\Infinia.Infrastructure.csproj", "{15DA949F-F5DD-4288-A1BC-BFA572110CE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia.Core", "..\Infinia.Core\Infinia.Core.csproj", "{0B72FBE0-931A-47D3-843F-7B697A627AD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{C30AEE0F-EF72-4637-A908-B8161D41382A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C30AEE0F-EF72-4637-A908-B8161D41382A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C30AEE0F-EF72-4637-A908-B8161D41382A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A5E28C0-EC4C-4B53-A7C7-926A05F99A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A5E28C0-EC4C-4B53-A7C7-926A05F99A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A5E28C0-EC4C-4B53-A7C7-926A05F99A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A5E28C0-EC4C-4B53-A7C7-926A05F99A7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15DA949F-F5DD-4288-A1BC-BFA572110CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15DA949F-F5DD-4288-A1BC-BFA572110CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15DA949F-F5DD-4288-A1BC-BFA572110CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15DA949F-F5DD-4288-A1BC-BFA572110CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

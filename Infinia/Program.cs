@@ -2,12 +2,15 @@ using Infinia.Core.Contracts;
 using Infinia.Core.Services;
 using Infinia.Infrastructure;
 using Infinia.Infrastructure.Data.DataModels;
+using Infinia.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IEncryptionService, EncryptionService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IRepository, Repository>();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

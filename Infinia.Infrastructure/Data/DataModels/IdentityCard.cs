@@ -10,6 +10,10 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Comment("Identity card identifier")]
         public int Id { get; set; }
 
+        [Comment("Identity card SSN")]
+        [Required]
+        public byte[] EncryptedSSN { get; set; } = null!;
+
         [Comment("Identity card number")]
         [Required]
         public byte[] EncryptedCardNumber { get; set; } = null!;
