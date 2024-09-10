@@ -4,6 +4,7 @@ using Infinia.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240909234911_SeedDatabase")]
+    partial class SeedDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +80,6 @@ namespace Infinia.Infrastructure.Migrations
                     b.ToTable("Accounts");
 
                     b.HasComment("Account entity");
-
 
                     b.HasData(
                         new
@@ -153,7 +154,6 @@ namespace Infinia.Infrastructure.Migrations
                             Status = "Open",
                             Type = "Savings"
                         });
-
                 });
 
             modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.Address", b =>
@@ -465,7 +465,6 @@ namespace Infinia.Infrastructure.Migrations
                             EncryptedNationality = new byte[] { 134, 55, 67, 164, 48, 44, 210, 254, 78, 218, 227, 4, 6, 97, 152, 180, 234, 106, 141, 247, 74, 13, 39, 26, 219, 173, 161, 238, 61, 183, 169, 221 },
                             EncryptedSex = new byte[] { 139, 175, 173, 247, 127, 244, 248, 147, 1, 211, 148, 110, 2, 137, 63, 182, 190, 3, 122, 18, 189, 55, 162, 151, 24, 17, 14, 249, 116, 98, 76, 139 }
                         });
-
                 });
 
             modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.IncomeInfo", b =>
