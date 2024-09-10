@@ -1,3 +1,5 @@
+using Infinia.Core.Contracts;
+using Infinia.Core.Services;
 using Infinia.Infrastructure;
 using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.AspNetCore.Identity;
@@ -5,11 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IEncryptionService, EncryptionService>();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter() ;
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<Customer, IdentityRole>(options =>
 {
@@ -21,6 +24,10 @@ builder.Services.AddIdentity<Customer, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+// Add Razor Pages services
+builder.Services.AddRazorPages();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -33,7 +40,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
