@@ -10,8 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IEncryptionService, EncryptionService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRepository, Repository>();
-// Add services to the container.
+builder.Services.AddHostedService<MonthlyFeeDeductionService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -28,14 +30,12 @@ builder.Services.AddIdentity<Customer, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Add Razor Pages services
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

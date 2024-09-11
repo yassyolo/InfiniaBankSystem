@@ -10,6 +10,10 @@
             public const int StatusMinLength = 0;
             public const int NameMaxLength = 40;
             public const int NameMinLength = 2;
+            public const int BranchMaxLength = 20;
+            public const int BranchMinLength = 2;
+            public const decimal BalanceMinValue = 0;
+            public const decimal BalanceMaxValue = 100000;
         }
         public static class Customer
         {
@@ -64,6 +68,11 @@
             public const int DescriptionMinLength = 0;
             public const int ReasonMaxLength = 100;
             public const int ReasonMinLength = 0;
+        }
+        public static class Notification
+        {
+            public const int ContentMaxLength = 200;
+            public const int ContentMinLength = 0;
         }
     }
 }

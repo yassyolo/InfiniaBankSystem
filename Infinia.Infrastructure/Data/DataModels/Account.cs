@@ -26,6 +26,11 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Required]
         public string Name { get; set; } = string.Empty;
 
+        [Comment("Branch that the country is associated with")]
+        [MaxLength(BranchMaxLength)]
+        [Required]
+        public string Branch { get; set; } = string.Empty;
+
         [Comment("Account balance")]
         [DataType(DataType.Currency)]
         [Required]
@@ -51,6 +56,10 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Required]
         [Comment("Account monthly fee")]
         public decimal MonthlyFee { get; set; }
+
+        [Comment("Last time a monthly fee was deducted")]
+        [DataType(DataType.DateTime)]
+        public DateTime? LastMonthlyFeeDeduction { get; set; }
 
         [Comment("List of transactions related to this account")]
         public IEnumerable<Transaction> Transactions { get; set; } = new List<Transaction>();

@@ -21,6 +21,7 @@ namespace Infinia.Infrastructure
             builder.ApplyConfiguration(new LoanApplicationConfiguration());
             builder .ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new IdentityCardConfiguration());
+            builder.ApplyConfiguration(new NotificationConfiguration());
             base.OnModelCreating(builder);
         }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; } = null!;
@@ -35,5 +36,6 @@ namespace Infinia.Infrastructure
         public DbSet<Transaction> Transactions { get; set; } = null!;
         public DbSet<Account> Accounts { get; set; } = null!;
         public DbSet<LoanApplication> LoanApplications { get; set; } = null!;
+        public DbSet<Notification> Notifications { get; set; } = null!;
     }
 }

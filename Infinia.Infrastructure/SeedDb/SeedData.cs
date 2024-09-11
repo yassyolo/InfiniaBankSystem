@@ -1,10 +1,5 @@
 ﻿using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infinia.Infrastructure.SeedDb
 {
@@ -84,6 +79,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 3,
                 Balance = 1000,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "Sliven",
                 Type = "Current",
                 Name = "Current acount",
                 CreationDate = date,
@@ -96,6 +93,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 4,
                 Balance = 200,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "Sliven",
                 Type = "Savings",
                 Name = "Savings account",
                 CreationDate = date,
@@ -108,6 +107,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 5,
                 Balance = 900,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "Sliven",
                 Type = "Current",
                 Name = "Current acount-2",
                 CreationDate = dateForAccount2,
@@ -120,6 +121,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 6,
                 Balance = 100,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "Sliven",
                 Type = "Savings",
                 Name = "Savings account-2",
                 CreationDate = dateForAccount2,
@@ -132,6 +135,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 1,
                 Balance = 100000000,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "None",
                 Type = "Bank",
                 Name = "Bank account",
                 CreationDate = dateForBankAccount,
@@ -144,6 +149,8 @@ namespace Infinia.Infrastructure.SeedDb
                 Id = 2,
                 Balance = 0,
                 CustomerId = Customer.Id,
+                LastMonthlyFeeDeduction = null,
+                Branch = "None",
                 Type = "Savings",
                 Name = "Savings account for bank account",
                 CreationDate = dateForBankAccount,

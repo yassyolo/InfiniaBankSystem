@@ -35,5 +35,8 @@ namespace Infinia.Infrastructure.Data.DataModels
 
         [Comment("Customer loan application")]
         public IEnumerable<LoanApplication> LoanApplications { get; set; } = new List<LoanApplication>();
+
+        [Comment("Customer notifications")]
+        public IEnumerable<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

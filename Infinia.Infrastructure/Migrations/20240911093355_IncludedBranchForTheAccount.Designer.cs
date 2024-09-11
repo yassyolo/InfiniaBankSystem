@@ -4,6 +4,7 @@ using Infinia.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911093355_IncludedBranchForTheAccount")]
+    partial class IncludedBranchForTheAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,10 +57,6 @@ namespace Infinia.Infrastructure.Migrations
                         .HasColumnType("varbinary(max)")
                         .HasComment("Account number");
 
-                    b.Property<DateTime?>("LastMonthlyFeeDeduction")
-                        .HasColumnType("datetime2")
-                        .HasComment("Last time a monthly fee was deducted");
-
                     b.Property<decimal>("MonthlyFee")
                         .HasColumnType("decimal(18,4)")
                         .HasComment("Account monthly fee");
@@ -95,7 +93,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 3,
                             Balance = 1000m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 11, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5381),
+                            CreationDate = new DateTime(2024, 9, 11, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8291),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -108,7 +106,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 4,
                             Balance = 200m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 11, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5381),
+                            CreationDate = new DateTime(2024, 9, 11, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8291),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -121,7 +119,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 5,
                             Balance = 900m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 8, 22, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5447),
+                            CreationDate = new DateTime(2024, 8, 22, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8350),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -134,7 +132,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 2,
                             Balance = 0m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 12, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5512),
+                            CreationDate = new DateTime(2024, 8, 12, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8368),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -147,7 +145,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 1,
                             Balance = 100000000m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 12, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5512),
+                            CreationDate = new DateTime(2024, 8, 12, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8368),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -160,7 +158,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 6,
                             Balance = 100m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 8, 22, 19, 21, 6, 213, DateTimeKind.Local).AddTicks(5447),
+                            CreationDate = new DateTime(2024, 8, 22, 12, 33, 54, 999, DateTimeKind.Local).AddTicks(8350),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -311,7 +309,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             AccessFailedCount = 0,
                             AddressId = 1,
-                            ConcurrencyStamp = "d42de6f9-7080-4a4f-8feb-aba781a30d73",
+                            ConcurrencyStamp = "744c5c13-6cdc-438a-b429-eb49d2458f5e",
                             Email = "ivanivanov@gmail.com",
                             EmailConfirmed = true,
                             IdentityCardId = 1,
@@ -319,9 +317,9 @@ namespace Infinia.Infrastructure.Migrations
                             Name = "Ivan Ivanov",
                             NormalizedEmail = "IVANIBANOV@GMAIL.COM",
                             NormalizedUserName = "IVANIVANOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI7TgEl65I903xhTqveQmcwxCOe5gEtqdTe0fbbAxj13DtPmZec4njMyTh0tVQ6Aaw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPO8+qn5EAJwu6y/D+0Z1FC29zsM8U9Yty9Um01RlymdTCZJKTXo7+gyv0iQco+93g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7d20c3f3-609c-4b98-8571-214e5aa47b45",
+                            SecurityStamp = "0f323fca-3ecb-434a-826f-c8c934b4be28",
                             TwoFactorEnabled = false,
                             UserName = "ivanivanov"
                         });
@@ -649,43 +647,6 @@ namespace Infinia.Infrastructure.Migrations
                     b.ToTable("MaritalStatuses");
 
                     b.HasComment("Marital status entity");
-                });
-
-            modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Notification identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasComment("Notification message");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2")
-                        .HasComment("Notification creation date");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("Customer notification identifier");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit")
-                        .HasComment("Notification status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Notifications");
-
-                    b.HasComment("Notification entity");
                 });
 
             modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.PropertyStatus", b =>
@@ -1042,17 +1003,6 @@ namespace Infinia.Infrastructure.Migrations
                     b.Navigation("PropertyStatus");
                 });
 
-            modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.Notification", b =>
-                {
-                    b.HasOne("Infinia.Infrastructure.Data.DataModels.Customer", "Customer")
-                        .WithMany("Notifications")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("Infinia.Infrastructure.Data.DataModels.Transaction", b =>
                 {
                     b.HasOne("Infinia.Infrastructure.Data.DataModels.Account", "Account")
@@ -1130,8 +1080,6 @@ namespace Infinia.Infrastructure.Migrations
                     b.Navigation("Accounts");
 
                     b.Navigation("LoanApplications");
-
-                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

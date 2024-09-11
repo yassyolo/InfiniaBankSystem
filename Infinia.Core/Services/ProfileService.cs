@@ -17,6 +17,15 @@ namespace Infinia.Core.Services
             this.encryptionService = encryptionService;
         }
 
+        public async Task<bool> CustomerWithIdentityCardNumberExists(string identityCardNumber, string userId)
+        {
+            var identityCardNumberEncrypted = encryptionService.Encrypt(identityCardNumber);
+            var identityCard = await repository.All<IdentityCard>()
+                .FirstOrDefaultAsync(i => i.EncryptedCardNumber == identityCardNumberEncrypted);
+            return await repository.All<Customer>()
+                .AnyAsync(x => x.IdentityCardId == identityCard.Id && x.Id == userId);
+        }
+
         public async Task<bool> CustomerWithIdExistsAsync(string userId)
         {
             return await repository.All<Customer>().AnyAsync(c => c.Id == userId);

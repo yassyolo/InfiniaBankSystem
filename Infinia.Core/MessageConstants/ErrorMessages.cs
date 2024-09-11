@@ -4,8 +4,12 @@
     {
         public const string RequiredFieldErrorMessage = "The field {0} is required.";
         public const string LengthErrorMessage = "The field {0} must be between {2} and {1} characters.";
+        public const string InvalidBalanceErrorMessage = "Balance must be between {2} and {1} levas.";
+        public const string NegativeBalanceErrorMessage = "Balance must not be negative.";
         public const string PasswordsDoNotMatchErrorMessage = "The passwords do not match.";
         public const string InvalidUsernameErrorMessage = "Invalid username.";
+        public const string InvalidAccountDeletion = "Cannot delete account.";
+        public const string InvalidIdentityCardNumberErrorMessage = "Invalid identity card.";
         public const string InvalidPasswordErrorMessage = "Invalid password.";
         public const string InvalidLoginAttemptErrorMessage = "Invalid login attempt.";
         public const string NewPasswordLikeCurrentPasswordErrorMessage = "New password must be different from the current password.";

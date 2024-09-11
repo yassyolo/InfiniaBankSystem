@@ -8,6 +8,10 @@ namespace Infinia.Infrastructure.SeedDb
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.HasMany(x => x.Notifications)
+                .WithOne(x => x.Customer)
+                .HasForeignKey(x => x.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(x => x.Accounts)
                 .WithOne(x => x.Customer)
                 .HasForeignKey(x => x.CustomerId)
