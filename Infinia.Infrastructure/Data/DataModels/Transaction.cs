@@ -54,6 +54,7 @@ namespace Infinia.Infrastructure.Data.DataModels
         public DateTime TransactionDate { get; set; }
 
         [Comment("Transaction BIC")]
+        [MaxLength(BicMaxLength)]
         public string? Bic { get; set; } = string.Empty;
 
         [Comment("Transaction fee")]

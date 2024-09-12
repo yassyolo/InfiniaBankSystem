@@ -8,7 +8,7 @@ namespace Infinia.Core.ViewModels.Account
     public class CreateAccountViewModel
     {
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(0, 100000d, ErrorMessage = InvalidBalanceErrorMessage)]
+        [Range(BalanceMinValue, BalanceMaxValue, ErrorMessage = InvalidBalanceErrorMessage)]
         public decimal Balance { get; set; }
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]

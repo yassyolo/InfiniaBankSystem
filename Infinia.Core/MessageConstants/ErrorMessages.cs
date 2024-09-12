@@ -7,7 +7,12 @@
         public const string InvalidBalanceErrorMessage = "Balance must be between {2} and {1} levas.";
         public const string NegativeBalanceErrorMessage = "Balance must not be negative.";
         public const string PasswordsDoNotMatchErrorMessage = "The passwords do not match.";
+        public const string InvalidReceiverIBANErrorMessage = "Account with this IBAN does not exist within the bank.";
+        public const string InvalidReceivalAccountErrorMessage = "Receival account must not be the same as the sender account.";
         public const string InvalidUsernameErrorMessage = "Invalid username.";
+        public const string InvalidAccountErrorMessage = "Invalid account.";
+        public const string EmailNotConfirmedErrorMessage = "Email needs to be confirmed before logging in.";
+        public const string InvalidAmountErrorMessage = "The amount must be between {2} and {1} levas.";
         public const string InvalidAccountDeletion = "Cannot delete account.";
         public const string InvalidIdentityCardNumberErrorMessage = "Invalid identity card.";
         public const string InvalidPasswordErrorMessage = "Invalid password.";

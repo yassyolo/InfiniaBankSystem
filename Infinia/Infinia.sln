@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infinia", "Infinia.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infinia.Infrastructure", "..\Infinia.Infrastructure\Infinia.Infrastructure.csproj", "{15DA949F-F5DD-4288-A1BC-BFA572110CE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia.Core", "..\Infinia.Core\Infinia.Core.csproj", "{0B72FBE0-931A-47D3-843F-7B697A627AD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infinia.Core", "..\Infinia.Core\Infinia.Core.csproj", "{0B72FBE0-931A-47D3-843F-7B697A627AD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinia.Tests", "..\Infinia.Tests\Infinia.Tests.csproj", "{19E255C4-EDB8-4F76-8CC8-6F13BD6B0E7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B72FBE0-931A-47D3-843F-7B697A627AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E255C4-EDB8-4F76-8CC8-6F13BD6B0E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E255C4-EDB8-4F76-8CC8-6F13BD6B0E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E255C4-EDB8-4F76-8CC8-6F13BD6B0E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E255C4-EDB8-4F76-8CC8-6F13BD6B0E7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

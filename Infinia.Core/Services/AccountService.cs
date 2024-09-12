@@ -4,6 +4,8 @@ using Infinia.Infrastructure.Data.DataModels;
 using Infinia.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using static Infinia.Core.Helpers.IbanHelper;
+using static Infinia.Core.Constants.AccountStatusConstants;
+using static Infinia.Core.Constants.AccountTypeConstants;
 
 namespace Infinia.Core.Services
 {
@@ -20,19 +22,19 @@ namespace Infinia.Core.Services
 
         public async Task<bool> AccountWithIdExistsAsync(int id)
         {
-            return await repository.AllReadOnly<Account>().AnyAsync(a => a.Id == id);
+            return await repository.AllReadOnly<Account>().AnyAsync(x => x.Id == id);
         }
 
         public async Task ChangeAccountNameAsync(int id, ChangeAccountNameViewModel model)
         {
-            var account = await repository.All<Account>().FirstOrDefaultAsync(a => a.Id == id);
+            var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.Id == id);
             account.Name = model.NewName;
             await repository.SaveChangesAsync();
         }
 
         public async Task CreateAccountAsync(CreateAccountViewModel model, string userId)
         {
-            var accountCountForUser =  await repository.AllReadOnly<Account>().CountAsync(a => a.CustomerId == userId);
+            var accountCountForUser =  await repository.AllReadOnly<Account>().CountAsync(x => x.CustomerId == userId);
             var creationDate = DateTime.Now;
             var encryptedIban = encryptionService.Encrypt(GenerateIban());
             var currentAccount = new Account
@@ -41,10 +43,10 @@ namespace Infinia.Core.Services
                 CustomerId = userId,
                 Branch = model.Branch,
                 EncryptedIBAN = encryptedIban,
-                Type = "Current",
+                Type = Current,
                 Name = $"CURRENT-{accountCountForUser+1}",
                 CreationDate = creationDate,
-                Status = "Active",
+                Status = Active,
                 MonthlyFee = 2m
             };
             await repository.AddAsync(currentAccount);
@@ -55,10 +57,10 @@ namespace Infinia.Core.Services
                 CustomerId = userId,
                 Branch = model.Branch,
                 EncryptedIBAN = encryptedIban,
-                Type = "Savings",
+                Type = Savings,
                 Name = $"SAVINGS-{accountCountForUser+1}",
                 CreationDate = creationDate,
-                Status = "Active",
+                Status = Active,
                 MonthlyFee = 0m
             };
             await repository.AddAsync(savingsAccount);
@@ -72,13 +74,13 @@ namespace Infinia.Core.Services
             };
         }
 
-        //TODO: Implement deletion of transaction related to account
         public async Task DeleteAccountAsync(int id)
         {
             var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.Id == id);
             var savingsAccount = await repository.All<Account>().FirstOrDefaultAsync(x => x.EncryptedIBAN == account.EncryptedIBAN);
-            await repository.DeleteAsync<Account>(account);
-            await repository.DeleteAsync<Account>(savingsAccount);
+            account.Status = Inactive;
+            savingsAccount.Status = Inactive;
+            await repository.SaveChangesAsync();
         }
 
         public async Task<DeleteAccountViewModel?> GetAccountForDeleteAsync(int id)
@@ -125,9 +127,9 @@ namespace Infinia.Core.Services
             };  
         }
 
-        public async Task<Account> GetSavingsAccountAsync(string iBAN)
+        public async Task<Account> GetSavingsAccountAsync(string IBAN)
         {
-            return await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => x.EncryptedIBAN == encryptionService.Encrypt(iBAN));
+            return await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => encryptionService.Decrypt(x.EncryptedIBAN) == IBAN);
         }
 
         public async Task<AccountDetailsViewModel?> GetAccountDetailsAsync(int id)

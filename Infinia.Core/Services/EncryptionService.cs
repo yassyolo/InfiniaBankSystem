@@ -8,11 +8,6 @@ namespace Infinia.Core.Services
     {
         private readonly byte[] key;
 
-        public EncryptionService(byte[] key)
-        {
-            this.key = key;
-        }
-
         public EncryptionService(IConfiguration config)
         {
             string encryptionKey = config["Encryption:Key"];

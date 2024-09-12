@@ -4,7 +4,6 @@ using Infinia.Extensions;
 using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 
 namespace Infinia.Controllers
@@ -14,12 +13,14 @@ namespace Infinia.Controllers
         private readonly SignInManager<Customer> signInManager;
         private readonly UserManager<Customer> userManager;
         private readonly IProfileService profileService;
+        private readonly IEmailSenderService emailSenderService;
 
-        public ProfileController(SignInManager<Customer> signInManager, UserManager<Customer> userManager, IProfileService profileService)
+        public ProfileController(SignInManager<Customer> signInManager, UserManager<Customer> userManager, IProfileService profileService, IEmailSenderService emailSenderService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.profileService = profileService;
+            this.emailSenderService = emailSenderService;
         }
 
         public IActionResult Index()
@@ -53,6 +54,11 @@ namespace Infinia.Controllers
             if (passwordCheck == false)
             {
                 ModelState.AddModelError("Password", InvalidPasswordErrorMessage);
+                return View(model);
+            }
+            if (await userManager.IsEmailConfirmedAsync(user) == false)
+            {
+                ModelState.AddModelError("", EmailNotConfirmedErrorMessage);
                 return View(model);
             }
             var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
@@ -180,12 +186,28 @@ namespace Infinia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            model.Street = "Sini kamani";
+            model.City = "Sofia";
+            model.PostalCode = "1000";
+            model.Country = "Bulgaria";
+            model.IdentityCardNumber = "1234567893";
+            model.IdentityCardIssuer = "MVR sofia";
+            model.IdentityCardIssueDate = DateTime.UtcNow.AddDays(-60);
+            model.IdentityCardNationality = "Bulgarian";
+            model.IdentityCardSex = "Woman";
+            model.Username = "yassyolo";
+            model.Email = "yoana.yotova03@gmail.com";
+            model.Password = "Yasen1234!";
+            model.ConfirmPassword = "Yasen1234!";
+            model.Name = "Yoana Kalinova Yotova";
+            model.SSN = "1234567894";
+
             if (ModelState.IsValid == false)
             {
                 return View(model);
             }
             var userWithEmail = await userManager.FindByEmailAsync(model.Email);
-            if (userManager != null)
+            if (userWithEmail != null)
             {
                 ModelState.AddModelError("Email", EmailAlreadyExistsErrorMessage);
                 return View(model);
@@ -210,7 +232,12 @@ namespace Infinia.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(Login));
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Profile", new { userId = user.Id, token = token }, Request.Scheme);
+
+                var emailBody = $"<h1>Confirm Your Email</h1><p>Please confirm your email by clicking the link: <a href='{confirmationLink}'>Confirm Email</a></p>";
+                await emailSenderService.SendEmailAsync(model.Email, "Email Confirmation", emailBody);
+                return RedirectToAction("Index", "Home");
             }
 
             foreach (var error in result.Errors)
@@ -219,6 +246,25 @@ namespace Infinia.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return BadRequest();
+            }
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
     }
 }

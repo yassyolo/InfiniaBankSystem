@@ -61,7 +61,8 @@ namespace Infinia.Core.Services
                 EncryptedIssuer = encryptionService.Encrypt(model.IdentityCardIssuer),
                 EncryptedDateOfIssue = encryptionService.Encrypt(model.IdentityCardIssueDate.ToString("dd.MM.yyyy")),
                 EncryptedSex = encryptionService.Encrypt(model.IdentityCardSex),
-                EncryptedNationality = encryptionService.Encrypt(model.IdentityCardNationality)
+                EncryptedNationality = encryptionService.Encrypt(model.IdentityCardNationality),
+                EncryptedSSN = encryptionService.Encrypt(model.SSN)
             };
             await repository.AddAsync(identityCard);
             await repository.SaveChangesAsync();

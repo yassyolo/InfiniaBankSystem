@@ -12,8 +12,8 @@
             public const int NameMinLength = 2;
             public const int BranchMaxLength = 20;
             public const int BranchMinLength = 2;
-            public const decimal BalanceMinValue = 0;
-            public const decimal BalanceMaxValue = 100000;
+            public const double BalanceMinValue = 0;
+            public const double BalanceMaxValue = 100000;
         }
         public static class Customer
         {
@@ -68,6 +68,12 @@
             public const int DescriptionMinLength = 0;
             public const int ReasonMaxLength = 100;
             public const int ReasonMinLength = 0;
+            public const double AmountMinValue = 0;
+            public const double AmountMaxValue = 100000;
+            public const int IBANMaxLength = 18;
+            public const int EncryptedReceiverIBANMinLength = 18;
+            public const int BicMaxLength = 4;
+            public const int BicMinLength = 4;
         }
         public static class Notification
         {
