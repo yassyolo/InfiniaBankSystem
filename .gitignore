@@ -48,7 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
-Infinia/.vs/Infinia/FileContentIndex/
-
+Infinia.Core/obj/
+Infinia.Infrastructure/obj/
+Infinia.Tests/obj/
+Infinia/.vs/
 Infinia/bin/
 Infinia/obj/
