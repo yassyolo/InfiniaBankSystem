@@ -75,7 +75,7 @@ namespace Infinia.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Login));
         }
         [HttpGet]
         public IActionResult ChangePassword()
@@ -182,33 +182,25 @@ namespace Infinia.Controllers
             var model = new RegisterViewModel();
             return View(model);
         }
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            //var customer = new Customer()
-            //{
-            //    Name = model.Name,
-            //    Email = model.Email,
-            //    IdentityCard = new IdentityCard
-            //}
-
-            //model.Street = "Sini kamani";
-            //model.City = "Sofia";
-            //model.PostalCode = "1000";
-            //model.Country = "Bulgaria";
-            //model.IdentityCardNumber = "1234567893";
-            //model.IdentityCardIssuer = "MVR sofia";
-            //model.IdentityCardIssueDate = DateTime.UtcNow.AddDays(-60);
-            //model.IdentityCardNationality = "Bulgarian";
-            //model.IdentityCardSex = "Woman";
-            //model.Username = "yassyolo";
-            //model.Email = "yoana.yotova03@gmail.com";
-            //model.Password = "Yasen1234!";
-            //model.ConfirmPassword = "Yasen1234!";
-            //model.Name = "Yoana Kalinova Yotova";
-            //model.SSN = "1234567894";
+            model.Street = "Sini kamani";
+            model.City = "Sofia";
+            model.PostalCode = "1000";
+            model.Country = "Bulgaria";
+            model.IdentityCardNumber = "1234567893";
+            model.IdentityCardIssuer = "MVR sofia";
+            model.IdentityCardIssueDate = DateTime.UtcNow.AddDays(-60);
+            model.IdentityCardNationality = "Bulgarian";
+            model.IdentityCardSex = "Woman";
+            model.Username = "yassyolo";
+            model.Email = "yoana.yotova03@gmail.com";
+            model.Password = "Yasen1234!";
+            model.ConfirmPassword = "Yasen1234!";
+            model.Name = "Yoana Kalinova Yotova";
+            model.SSN = "1234567894";
 
             if (ModelState.IsValid == false)
             {
@@ -245,8 +237,7 @@ namespace Infinia.Controllers
 
                 var emailBody = $"<h1>Confirm Your Email</h1><p>Please confirm your email by clicking the link: <a href='{confirmationLink}'>Confirm Email</a></p>";
                 await emailSenderService.SendEmailAsync(model.Email, "Email Confirmation", emailBody);
-                TempData["ConfirmationMessage"] = "A confirmation email has been sent to your registered email address. Please check your inbox.";
-                return RedirectToAction("RegistrationConfirmed");
+                return RedirectToAction("Index", "Home");
             }
 
             foreach (var error in result.Errors)
@@ -255,16 +246,6 @@ namespace Infinia.Controllers
             }
 
             return View(model);
-        }
-
-        public IActionResult RegistrationConfirmed()
-        {
-            var confirmationMessage = TempData["ConfirmationMessage"] as string;
-            if (confirmationMessage != null)
-            {
-                ViewBag.ConfirmationMessage = confirmationMessage;
-            }
-            return View();
         }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)

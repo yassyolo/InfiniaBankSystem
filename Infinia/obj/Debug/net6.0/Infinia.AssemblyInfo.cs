@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Infinia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9acdf8089d54365f9be834d13266832ca73f8684")]
 [assembly: System.Reflection.AssemblyProductAttribute("Infinia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Infinia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
