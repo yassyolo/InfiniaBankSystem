@@ -131,7 +131,7 @@ namespace Infinia.Core.Services
             await repository.AddAsync(transactionToAnotherBank);
             await repository.SaveChangesAsync();
         }
-
+        //TODO: Implement the transaction history with you as receiver
         public async Task MakeTransactionWithinTheBankAsync(TransactionWithinTheBankViewModel model, string userId)
         {
             var receiverAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.EncryptedIBAN == encryptionService.Encrypt(model.ReceiverIBAN) && x.Customer.Name == model.ReceiverName);
@@ -184,6 +184,35 @@ namespace Infinia.Core.Services
             
 
             return csv.ToString();
+        }
+        public async Task MakeMonthlyFeeTransactionAsync(TransactionWithinTheBankViewModel model, string userId)
+        {
+            var receiverAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.EncryptedIBAN == encryptionService.Encrypt(model.ReceiverIBAN) && x.Customer.Name == model.ReceiverName);
+            if (receiverAccount == null)
+            {
+                throw new InvalidOperationException(InvalidAccountErrorMessage);
+            }
+            var senderAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == model.AccountId && x.CustomerId == userId);
+            if (senderAccount == null)
+            {
+                throw new InvalidOperationException(InvalidAccountErrorMessage);
+            }
+            var transactionToAnotherBank = new Transaction()
+            {
+                Type = WithinTheBank,
+                ReceiverName = receiverAccount.Name,
+                EncryptedReceiverIBAN = encryptionService.Encrypt(model.ReceiverIBAN),
+                Amount = model.Amount,
+                Description = model.Description,
+                Reason = model.Reason,
+                AccountId = model.AccountId,
+                TransactionDate = DateTime.UtcNow,
+                Fee = MonthlyFeeDeductionFee
+            };
+            senderAccount.Balance -= model.Amount;
+            receiverAccount.Balance += model.Amount;
+            await repository.AddAsync(transactionToAnotherBank);
+            await repository.SaveChangesAsync();
         }
     }
 }

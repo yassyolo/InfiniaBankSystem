@@ -1,6 +1,9 @@
-﻿using Infinia.Infrastructure;
+﻿using Infinia.Core.Contracts;
+using Infinia.Core.ViewModels.Transaction;
+using Infinia.Infrastructure;
 using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.Extensions.DependencyInjection;
+using static Infinia.Core.Constants.TransactionFeeConstants;
 using Microsoft.Extensions.Hosting;
 
 namespace Infinia.Core.Services
@@ -8,10 +11,14 @@ namespace Infinia.Core.Services
     public class MonthlyFeeDeductionService : BackgroundService
     {
         private readonly IServiceProvider serviceProvider;
+        private readonly IEncryptionService encryptionService;
+        private readonly ITransactionService transactionService;
 
-        public MonthlyFeeDeductionService(IServiceProvider serviceProvider)
+        public MonthlyFeeDeductionService(IServiceProvider serviceProvider, IEncryptionService encryptionService, ITransactionService transactionService)
         {
             this.serviceProvider = serviceProvider;
+            this.encryptionService = encryptionService;
+            this.transactionService = transactionService;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,12 +42,23 @@ namespace Infinia.Core.Services
                 var accounts = dbContext.Accounts.ToList();
                 var todaysYear = DateTime.UtcNow.Year;
                 var todaysMonth = DateTime.UtcNow.Month;
+                var bankAccount = dbContext.Accounts.FirstOrDefault(x => x.Name == "Bank account");
 
                 foreach (var account in accounts)
                 {
                     if (account.Type != "Bank" && account.LastMonthlyFeeDeduction.Value.Month != todaysMonth ||
                         account.LastMonthlyFeeDeduction.Value.Year != todaysYear)
                     {
+                        var model = new TransactionWithinTheBankViewModel()
+                        {
+                            Reason = "Loan repayment",
+                            Description = $"Loan repayment made on {DateTime.UtcNow.ToString()}",
+                            ReceiverName = "Bank account",
+                            Amount =MonthlyFeeDeductionFee,
+                            ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
+                            AccountId = account.Id
+                        };
+                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);
                         account.Balance -= account.MonthlyFee;
                         account.LastMonthlyFeeDeduction = DateTime.UtcNow;
 

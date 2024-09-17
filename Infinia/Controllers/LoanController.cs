@@ -4,6 +4,10 @@ using Infinia.Core.ViewModels.Loan;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using Microsoft.AspNetCore.Mvc;
 using Infinia.Extensions;
+<<<<<<< HEAD
+using Microsoft.AspNetCore.Http.Metadata;
+=======
+>>>>>>> origin/main
 
 namespace Infinia.Controllers
 {
@@ -30,6 +34,16 @@ namespace Infinia.Controllers
         }
 
         [HttpGet]
+<<<<<<< HEAD
+        public IActionResult ApplyForLoan(string type, double rate)
+        {
+            var model = new LoanApplicationViewModel
+            {
+                Type = type,
+                InterestRate = rate
+            };
+            return View(model);
+=======
         public async Task<IActionResult> ApplyForLoan(string type, double rate)
         {
             /*var model = new LoanApplicationViewModel
@@ -38,6 +52,7 @@ namespace Infinia.Controllers
                 InterestRate = rate
             };*/
             return View();
+>>>>>>> origin/main
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,6 +84,49 @@ namespace Infinia.Controllers
                 return View(model);
             }
             await loanService.ApplyForLoanAsync(model, userId);
+<<<<<<< HEAD
+            return RedirectToAction(nameof(LoanApplicationsHistory));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoanApplicationsHistory()
+        {
+            var userId = User.GetId();
+            if (await profileService.CustomerWithIdExistsAsync(userId) == false)
+            {
+                return BadRequest();
+            }
+            var model = await loanService.GetLoanApplicationHistoryForCustomerAsync(userId);
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> LoanApplication(int id)
+        {
+            var userId = User.GetId();
+            if (await profileService.CustomerWithIdExistsAsync(userId) == false)
+            {
+                return BadRequest();
+            }
+            if (await loanService.LoanApplicationExistsAsync(id, userId) == false)
+            {
+                return BadRequest();
+            }
+            var model = await loanService.GetLoanApplicationDetailsAsync(id, userId);
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> CurrentLoans()
+        {
+            var userId = User.GetId();
+            if (await profileService.CustomerWithIdExistsAsync(userId) == false)
+            {
+                return BadRequest();
+            }
+            var model = await loanService.GetCurrentLoansForCustomerAsync(userId);
+            return View(model);
+        }
+
+=======
             return RedirectToAction(nameof(LoanApplicationHistory));
         }
 
@@ -76,5 +134,6 @@ namespace Infinia.Controllers
         {
             throw new NotImplementedException();
         }
+>>>>>>> origin/main
     }
 }

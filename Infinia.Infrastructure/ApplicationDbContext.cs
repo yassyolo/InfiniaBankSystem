@@ -38,5 +38,7 @@ namespace Infinia.Infrastructure
         public DbSet<Account> Accounts { get; set; } = null!;
         public DbSet<LoanApplication> LoanApplications { get; set; } = null!;
         public DbSet<Notification> Notifications { get; set; } = null!;
+
+        public DbSet<LoanRepayment> LoanRepayments { get; set; } = null!;
     }
 }

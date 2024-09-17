@@ -1,9 +1,15 @@
+<<<<<<< HEAD
+﻿namespace Infinia.Core.ViewModels
+{
+    public class LoanApplicationHistoryViewModel
+=======
 ﻿using Infinia.Core.MessageConstants;
 using System.ComponentModel.DataAnnotations;
 
 namespace Infinia.Core.ViewModels
 {
         public class LoanApplicationViewModel1
+>>>>>>> origin/main
         {
             public int Id { get; set; }
            
@@ -73,7 +79,12 @@ namespace Infinia.Core.ViewModels
             public string Type { get; set; } = string.Empty;
 
             public int LoanRepaymentNumber { get; set; }
+<<<<<<< HEAD
+            public string Status { get; set; } = string.Empty;
+    }
+=======
         }
+>>>>>>> origin/main
     
 }
 
