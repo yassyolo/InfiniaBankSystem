@@ -22,6 +22,7 @@ namespace Infinia.Infrastructure
             builder .ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new IdentityCardConfiguration());
             builder.ApplyConfiguration(new NotificationConfiguration());
+            builder.ApplyConfiguration(new LoanRepaymentConfiguration());
             base.OnModelCreating(builder);
         }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; } = null!;

@@ -16,6 +16,7 @@ builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddHostedService<MonthlyFeeDeductionService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ILoanService, LoanService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

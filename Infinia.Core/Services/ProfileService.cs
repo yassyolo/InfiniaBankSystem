@@ -17,6 +17,35 @@ namespace Infinia.Core.Services
             this.encryptionService = encryptionService;
         }
 
+        public async Task<bool> CustomerWithAccountIBANExists(string accountIBAN, string userId)
+        {
+            return await repository.AllReadOnly<Account>()
+                .AnyAsync(x => x.EncryptedIBAN == encryptionService.Encrypt(accountIBAN)
+                          && x.CustomerId == userId);
+        }
+
+        public async Task<bool> CustomerWithAddressExists(LoanApplicationViewModel model, string userId)
+        {
+            return await repository.AllReadOnly<Customer>()
+                .AnyAsync(x => x.Address.City == model.City &&
+                               x.Address.Country == model.Country &&
+                               x.Address.PostalCode == model.PostalCode &&
+                               x.Address.Street == model.Street &&
+                               x.Id == userId);
+        }
+
+        public async Task<bool> CustomerWithIdentityCardExists(LoanApplicationViewModel model, string userId)
+        {
+            return await repository.AllReadOnly<Customer>()
+                .AnyAsync(x => x.IdentityCard.EncryptedCardNumber == encryptionService.Encrypt(model.IdentityCardNumber) &&
+                               x.IdentityCard.EncryptedIssuer == encryptionService.Encrypt(model.IdentityCardIssuer) &&
+                               x.IdentityCard.EncryptedDateOfIssue == encryptionService.Encrypt(model.IdentityCardIssueDate.ToString("dd.MM.yyyy")) &&
+                               x.IdentityCard.EncryptedSex == encryptionService.Encrypt(model.IdentityCardSex) &&
+                               x.IdentityCard.EncryptedNationality == encryptionService.Encrypt(model.IdentityCardNationality) &&
+                               x.IdentityCard.EncryptedSSN == encryptionService.Encrypt(model.SSN) &&
+                               x.Id == userId);
+        }
+
         public async Task<bool> CustomerWithIdentityCardNumberExists(string identityCardNumber, string userId)
         {
             var identityCardNumberEncrypted = encryptionService.Encrypt(identityCardNumber);

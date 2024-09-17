@@ -4,6 +4,7 @@ using Infinia.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240917105952_AddedLoanRepayment")]
+    partial class AddedLoanRepayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,7 +97,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 3,
                             Balance = 1000m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 17, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1706),
+                            CreationDate = new DateTime(2024, 9, 17, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4755),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -108,7 +110,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 4,
                             Balance = 200m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 17, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1706),
+                            CreationDate = new DateTime(2024, 9, 17, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4755),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -121,7 +123,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 5,
                             Balance = 900m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 8, 28, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1794),
+                            CreationDate = new DateTime(2024, 8, 28, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4811),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -134,7 +136,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 2,
                             Balance = 0m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 18, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1811),
+                            CreationDate = new DateTime(2024, 8, 18, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4826),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -147,7 +149,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 1,
                             Balance = 100000000m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 18, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1811),
+                            CreationDate = new DateTime(2024, 8, 18, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4826),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -160,7 +162,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 6,
                             Balance = 100m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 8, 28, 16, 44, 47, 246, DateTimeKind.Local).AddTicks(1794),
+                            CreationDate = new DateTime(2024, 8, 28, 13, 59, 51, 862, DateTimeKind.Local).AddTicks(4811),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -311,7 +313,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             AccessFailedCount = 0,
                             AddressId = 1,
-                            ConcurrencyStamp = "07230bc7-5d58-4837-8ddb-48024cf95ce7",
+                            ConcurrencyStamp = "d4d35ba9-bf1f-44b2-8b6e-6ca5b515957b",
                             Email = "ivanivanov@gmail.com",
                             EmailConfirmed = true,
                             IdentityCardId = 1,
@@ -319,9 +321,9 @@ namespace Infinia.Infrastructure.Migrations
                             Name = "Ivan Ivanov",
                             NormalizedEmail = "IVANIBANOV@GMAIL.COM",
                             NormalizedUserName = "IVANIVANOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEeUZ97/kn0l302QMeeywNC04SSN/GGC6MAciQG8TMnamUzCPCgmzE25R9Qe6gJOmA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBXcx7XT643roODtK62IAH+sTDi/G+n9/afOOyrCQSdmzR1WCEnotm5/x3tLP688zg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b3c762a6-6b49-40a9-818b-c4472d6e1133",
+                            SecurityStamp = "0117d954-0725-49bb-9885-ec51e1a0a519",
                             TwoFactorEnabled = false,
                             UserName = "ivanivanov"
                         });
@@ -644,7 +646,7 @@ namespace Infinia.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2")
                         .HasComment("Repayment date");
 

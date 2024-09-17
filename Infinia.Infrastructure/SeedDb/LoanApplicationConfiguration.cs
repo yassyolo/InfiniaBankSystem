@@ -42,6 +42,10 @@ namespace Infinia.Infrastructure.SeedDb
                 .WithMany()
                 .HasForeignKey(x => x.AccountId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.LoanRepayments)
+                .WithOne(x => x.LoanApplication)
+                .HasForeignKey(x => x.LoanApplicationId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

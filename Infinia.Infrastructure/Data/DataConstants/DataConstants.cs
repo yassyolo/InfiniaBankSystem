@@ -57,6 +57,29 @@
             public const int EmployerMinLength = 0;
             public const int PositionMaxLength = 60;
             public const int PositionMinLength = 0;
+            public const int YearsMinValue = 0;
+            public const int YearsMaxValue = 60;
+            public const int MonthsMinValue = 0;
+            public const int MonthsMaxValue = 720;
+            public const int HouseholdMembersMinValue = 0;
+            public const int HouseholdMembersMaxValue = 20;
+            public const int MonthlyIncomeMinValue = 0;
+            public const double IncomeMaxValue = 20000;
+            public const double IncomeMinValue = 0;
+            public const double MonthlyExpensesMinValue = 0;
+            public const double MonthlyExpensesMaxValue = 20000;
+            public const int LoanAmountMaxValue = 200000;
+            public const int LoanAmountMinValue = 0;
+            public const int LoanTermMonthsMaxValue = 300;
+            public const int LoanTermMonthsMinValue = 0;
+            public const int LoanTypeMaxLength = 30;
+            public const int LoanTypeMinLength = 0;
+            public const double LoanRepaymentAmountMinValue = 0;
+            public const double LoanRepaymentAmountMaxValue = 5000;
+            public const int LoanRepaymentNumberMinValue = 1;
+            public const int LoanRepaymentNumberMaxValue = 31;
+            public const int VehicleCountMinValue = 0;  
+            public const int VehicleCountMaxValue = 6;
         }
         public static class Transaction
         {
