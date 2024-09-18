@@ -39,7 +39,7 @@ namespace Infinia.Core.Services
             return await repository.AllReadOnly<Customer>()
                 .AnyAsync(x => x.IdentityCard.EncryptedCardNumber == encryptionService.Encrypt(model.IdentityCardNumber) &&
                                x.IdentityCard.EncryptedIssuer == encryptionService.Encrypt(model.IdentityCardIssuer) &&
-                               x.IdentityCard.EncryptedDateOfIssue == encryptionService.Encrypt(model.IdentityCardIssueDate.ToString("dd.MM.yyyy")) &&
+                               x.IdentityCard.EncryptedDateOfIssue == encryptionService.Encrypt(model.IdentityCardIssueDate) &&
                                x.IdentityCard.EncryptedSex == encryptionService.Encrypt(model.IdentityCardSex) &&
                                x.IdentityCard.EncryptedNationality == encryptionService.Encrypt(model.IdentityCardNationality) &&
                                x.IdentityCard.EncryptedSSN == encryptionService.Encrypt(model.SSN) &&

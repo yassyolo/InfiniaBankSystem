@@ -4,10 +4,8 @@ using Infinia.Core.ViewModels.Loan;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using Microsoft.AspNetCore.Mvc;
 using Infinia.Extensions;
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Http.Metadata;
-=======
->>>>>>> origin/main
+using Infinia.Core.Services;
 
 namespace Infinia.Controllers
 {
@@ -34,26 +32,16 @@ namespace Infinia.Controllers
         }
 
         [HttpGet]
-<<<<<<< HEAD
         public IActionResult ApplyForLoan(string type, double rate)
         {
-            var model = new LoanApplicationViewModel
+            var model = new LoanApplicationViewModel()
             {
                 Type = type,
                 InterestRate = rate
             };
             return View(model);
-=======
-        public async Task<IActionResult> ApplyForLoan(string type, double rate)
-        {
-            /*var model = new LoanApplicationViewModel
-            {
-                Type = type,
-                InterestRate = rate
-            };*/
-            return View();
->>>>>>> origin/main
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyForLoan(LoanApplicationViewModel model)
@@ -84,7 +72,6 @@ namespace Infinia.Controllers
                 return View(model);
             }
             await loanService.ApplyForLoanAsync(model, userId);
-<<<<<<< HEAD
             return RedirectToAction(nameof(LoanApplicationsHistory));
         }
 
@@ -126,14 +113,6 @@ namespace Infinia.Controllers
             return View(model);
         }
 
-=======
-            return RedirectToAction(nameof(LoanApplicationHistory));
-        }
-
-        private object LoanApplicationHistory()
-        {
-            throw new NotImplementedException();
-        }
->>>>>>> origin/main
     }
 }
+

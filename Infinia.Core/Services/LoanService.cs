@@ -4,9 +4,14 @@ using Infinia.Infrastructure.Repository;
 using static Infinia.Core.Constants.LoanTypesConstants;
 using static Infinia.Core.Constants.LoanInterestRateConstants;
 using static Infinia.Core.Constants.LoanStatusConstants;
+using static Infinia.Core.Constants.LoanRepaymentStatus;
 using Microsoft.EntityFrameworkCore;
 using Infinia.Core.ViewModels;
 using Infinia.Infrastructure.Data.DataModels;
+using Infinia.Core.Constants;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Infinia.Core.Services
 {
@@ -14,34 +19,29 @@ namespace Infinia.Core.Services
     {
         private readonly IRepository repository;
         private readonly IEncryptionService encryptionService;
+        private readonly HttpClient httpClient;
 
         public LoanService(IRepository repository, IEncryptionService encryptionService)
         {
             this.repository = repository;
             this.encryptionService = encryptionService;
+            httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task ApplyForLoanAsync(LoanApplicationViewModel model, string userId)
         {
-<<<<<<< HEAD
             var education = new Education
             {
                 EducationLevel = model.EducationLevel
-=======
-            /*var education = new Education
-            {
-                EducationLevel = model.ApplicationEducationLevel
->>>>>>> origin/main
             };
             await repository.AddAsync(education);
             await repository.SaveChangesAsync();
             var maritalStatus = new MaritalStatus
             {
-<<<<<<< HEAD
                 Status = model.MaritalStatus
-=======
-                Status = model.MaritalStatusApplication
->>>>>>> origin/main
             };
             await repository.AddAsync(maritalStatus);
             await repository.SaveChangesAsync();
@@ -52,33 +52,21 @@ namespace Infinia.Core.Services
                 IsRetired = model.IsRetired,
                 YearsAtJob = model.YearsAtJob,
                 MonthsAtJob = model.MonthsAtJob,
-<<<<<<< HEAD
                 TotalWorkExperienceYears = model.TotalWorkExperienceYears,
                 TotalWorkExperienceMonths = model.TotalWorkExperienceMonths
-=======
-                TotalWorkExperienceYears = model.TotalWorkExperienceYearsApplication,
-                TotalWorkExperienceMonths = model.TotalWorkExperienceMonthsApplication
->>>>>>> origin/main
             };
             await repository.AddAsync(employerInfo);
             await repository.SaveChangesAsync();
             var householdInfo = new HouselholdInfo
             {
-<<<<<<< HEAD
                 NumberOfHouseholdMembers = model.NumberOfHouseholdMembers,
                 Dependents = model.Dependents,
                 MembersWithProvenIncome = model.MembersWithProvenIncome
-=======
-                NumberOfHouseholdMembers = model.NumberOfHouseholdMembersApplication,
-                Dependents = model.DependentsApplication,
-                MembersWithProvenIncome = model.MembersWithProvenIncomeApplication
->>>>>>> origin/main
             };
             await repository.AddAsync(householdInfo);
             await repository.SaveChangesAsync();
             var incomeInfo = new IncomeInfo
             {
-<<<<<<< HEAD
                 NetMonthlyIncome = model.NetMonthlyIncome,
                 FixedMonthlyExpenses = model.FixedMonthlyExpenses,
                 PermanentContractIncome = model.PermanentContractIncome,
@@ -93,22 +81,6 @@ namespace Infinia.Core.Services
             await repository.AddAsync(incomeInfo);
             await repository.SaveChangesAsync();
             var propertyStatus = new PropertyStatus
-=======
-                NetMonthlyIncome = model.NetMonthlyIncomeApplication,
-                FixedMonthlyExpenses = model.FixedMonthlyExpensesApplication,
-                PermanentContractIncome = model.PermanentContractIncomeApplication,
-                TemporaryContractIncome = model.TemporaryContractIncomeApplication,
-                CivilContractIncome = model.CivilContractIncomeApplication,
-                BusinessIncome = model.BusinessIncome,
-                PensionIncome = model.PensionIncome,
-                FreelanceIncome = model.FreelanceIncomeApplication,
-                OtherIncome = model.OtherIncomeApplication,
-                HasOtherCredits = model.HasOtherCreditsApplication
-            };
-            await repository.AddAsync(incomeInfo);
-            await repository.SaveChangesAsync();*/
-            /*var propertyStatus = new PropertyStatus
->>>>>>> origin/main
             {
                 HasApartmentOrHouse = model.HasApartmentOrHouse,
                 HasCommercialProperty = model.HasCommercialProperty,
@@ -117,19 +89,19 @@ namespace Infinia.Core.Services
                 HasPartialOwnership = model.HasPartialOwnership,
                 NoProperty = model.NoProperty,
                 VehicleCount = model.VehicleCount
-<<<<<<< HEAD
             };
             await repository.AddAsync(propertyStatus);
             await repository.SaveChangesAsync();
-            var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.CustomerId == userId && x.EncryptedIBAN == encryptionService.Encrypt(model.AccountIBAN));
+            Account account = null;  
+            var accounts = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId).ToListAsync();
+            foreach (var acc in accounts)
+            {
+                if (encryptionService.Decrypt(acc.EncryptedIBAN) == model.AccountIBAN && acc.Type == "Current")
+                {
+                    account = acc;
+                }
+            }
             var loanApplication = new LoanApplication
-=======
-            };*/
-            //await repository.AddAsync(propertyStatus);
-            await repository.SaveChangesAsync();
-            var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.CustomerId == userId && x.EncryptedIBAN == encryptionService.Encrypt(model.AccountIBAN));
-            /*var loanApplication = new LoanApplication
->>>>>>> origin/main
             {
                 ApplicationDate = DateTime.UtcNow,
                 EducationId = education.Id,
@@ -145,19 +117,82 @@ namespace Infinia.Core.Services
                 InterestRate = model.InterestRate,
                 Type = model.Type,
                 LoanRepaymentNumber = model.LoanRepaymentNumber,
-                Status = Pending
+                Status = Infinia.Core.Constants.LoanStatusConstants.Pending
             };
             await repository.AddAsync(loanApplication);
             await repository.SaveChangesAsync();
             var loanRepayment = new LoanRepayment
             {
                 LoanApplicationId = loanApplication.Id,
-<<<<<<< HEAD
                 RepaymentAmount = CalculateEMI(loanApplication.LoanAmount, loanApplication.InterestRate, loanApplication.LoanTermMonths),
                 Status = Infinia.Core.Constants.LoanRepaymentStatus.Pending
             };
             await repository.AddAsync(loanRepayment);
             await repository.SaveChangesAsync();
+
+            var accountBalance = account.Balance;
+            await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
+        }
+        public async Task<LoanApprovalViewModel> ApproveLoanAsync(LoanApplicationViewModel model, string userId, decimal accountBalance, decimal repaymentAmount)
+        { 
+            var paidAllLoansOnTime = await repository.All<LoanRepayment>().Where(x => x.LoanApplication.CustomerId == userId).Select(x => x.Status).AnyAsync(x => x.Contains(Overdue));
+            var maritalStatus = model.MaritalStatus == "Married" ? 1 : 0;
+            var educationLevel = model.EducationLevel switch
+            {
+                "Secondary" => 1,
+                "High School" => 2,
+                "Bachelor" => 3,
+                "Master" => 4,
+                "Doctorate" => 5,
+                _ => 1 
+            };
+            var jsonModel = JsonConvert.SerializeObject(new
+            {
+                NetMonthlyIncome = (int)model.NetMonthlyIncome,
+                FixedMonthlyExpenses = (int)model.FixedMonthlyExpenses,
+                PermanentContractIncome = (int)model.PermanentContractIncome,
+                TemporaryContractIncome = (int)model.TemporaryContractIncome,
+                CivilContractIncome = (int)model.CivilContractIncome,
+                BusinessIncome = (int)model.BusinessIncome,
+                PensionIncome = (int)model.PensionIncome,
+                FreelanceIncome = (int)model.FreelanceIncome,
+                OtherIncome = (int)model.OtherIncome,
+                HasApartmentOrHouse = model.HasApartmentOrHouse ? 1 : 0,
+                HasCommercialProperty = model.HasCommercialProperty ? 1 : 0,
+                HasLand = model.HasLand ? 1 : 0,
+                HasMultipleProperties = model.HasMultipleProperties ? 1 : 0,
+                HasPartialOwnership = model.HasPartialOwnership ? 1 : 0,
+                NoProperty = model.NoProperty ? 1 : 0,
+                VehicleCount = (int)model.VehicleCount,
+                MaritalStatus = maritalStatus,
+                HasOtherCredits = model.HasOtherCredits ? 1 : 0,
+                NumberOfHouseholdMembers = (int)model.NumberOfHouseholdMembers,
+                MembersWithProvenIncome = (int)model.MembersWithProvenIncome,
+                Dependents = (int)model.Dependents,
+                IsRetired = model.IsRetired ? 1 : 0,
+                YearsAtJob = (int)model.YearsAtJob,
+                MonthsAtJob = (int)model.MonthsAtJob,
+                TotalWorkExperienceYears = (int)model.TotalWorkExperienceYears,
+                TotalWorkExperienceMonths = (int)model.TotalWorkExperienceMonths,
+                EducationLevel = (int)educationLevel,
+                LoanAmount = (int)model.LoanAmount,
+                LoanTermMonths = (int)model.LoanTermMonths,
+                InterestRate = (int)model.InterestRate,
+                AccountBalance = (int)accountBalance,
+                LoanRepayment = (int)repaymentAmount,
+                HasLoans = model.HasOtherCredits ? 1 : 0,
+                PaidAllLoansOnTime = paidAllLoansOnTime ? 1 : 0,
+            });
+
+            Console.WriteLine(jsonModel);
+            var content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync("predict", content);
+
+            response.EnsureSuccessStatusCode();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var prediction = JsonConvert.DeserializeObject<LoanApprovalViewModel>(responseString);
+            return prediction;
         }
         private decimal CalculateEMI(decimal loanAmount, double annualInterestRate, int termMonths)
         {
@@ -254,15 +289,7 @@ namespace Infinia.Core.Services
                 })
                 .ToListAsync();
         }
-=======
-                RepaymentAmount = loanApplication.LoanAmount,
-                Status = Infinia.Core.Constants.LoanRepaymentStatus.Pending
-            };
-            await repository.AddAsync(loanRepayment);
-            await repository.SaveChangesAsync();*/
-        }
 
->>>>>>> origin/main
 
         public ChooseLoanTypeViewModel? GetLoanTypesAsync()
         {
@@ -275,13 +302,23 @@ namespace Infinia.Core.Services
             model.LoanTypes.Add(BusinessLoan, BusinessLoanInterestRate);
             return model;
         }
-<<<<<<< HEAD
-
         public async Task<bool> LoanApplicationExistsAsync(int id, string userId)
         {
             return await repository.All<LoanApplication>().AnyAsync(x => x.Id == id && x.CustomerId == userId);
         }
-=======
->>>>>>> origin/main
+
+        public async Task GetMissingValuesForLoanApplicationAsync(LoanApplicationViewModel model)
+        {
+            var customer = await repository.All<Customer>().FirstOrDefaultAsync(x => x.UserName == "ivanivanov");
+            var customerId = customer.Id;
+            var identityCard = await repository.All<Customer>().Select(x => x.IdentityCard).FirstOrDefaultAsync();
+            var cardNumber = encryptionService.Decrypt(identityCard.EncryptedCardNumber);
+            var cardIssuer = encryptionService.Decrypt(identityCard.EncryptedIssuer);
+            var cardDate = encryptionService.Decrypt(identityCard.EncryptedDateOfIssue);
+            var ssn = encryptionService.Decrypt(identityCard.EncryptedSSN);
+            var nationality = encryptionService.Decrypt(identityCard.EncryptedNationality);
+            var sex = encryptionService.Decrypt(identityCard.EncryptedSex);
+            var accountIBAN = await repository.All<Account>().Where(x => x.Id == 3 ).Select(x => encryptionService.Decrypt(x.EncryptedIBAN)).FirstOrDefaultAsync();
+        }
     }
 }

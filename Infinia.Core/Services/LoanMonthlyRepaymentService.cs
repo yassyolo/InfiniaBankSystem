@@ -1,57 +1,44 @@
 ﻿using Infinia.Infrastructure;
-using Infinia.Infrastructure.Data.DataModels;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using static Infinia.Core.Constants.TransactionTypeConstants;
-using static Infinia.Core.Constants.TransactionFeeConstants;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Transaction;
-using static Infinia.Infrastructure.Data.DataConstants.DataConstants;
 
 namespace Infinia.Core.Services
 {
     public class LoanMonthlyRepaymentService : BackgroundService
     {
-        private readonly IServiceProvider serviceProvider;
-        private readonly ITransactionService transactionService;
-        private readonly IEncryptionService encryptionService;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public LoanMonthlyRepaymentService(IServiceProvider serviceProvider, ITransactionService transactionService, IEncryptionService encryptionService)
+        public LoanMonthlyRepaymentService(IServiceScopeFactory serviceScopeFactory)
         {
-            this.serviceProvider = serviceProvider;
-            this.transactionService = transactionService;
-            this.encryptionService = encryptionService;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (stoppingToken.IsCancellationRequested == true) 
-            { 
-                var currentDate = DateTime.UtcNow;
+            while (!stoppingToken.IsCancellationRequested)
+            {
                 await DeductLoanRepayment();
+                await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
             }
-            await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
         }
 
         private async Task DeductLoanRepayment()
         {
-            using (var scope = serviceProvider.CreateScope())
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var transactionService = scope.ServiceProvider.GetRequiredService<ITransactionService>();
+                var encryptionService = scope.ServiceProvider.GetRequiredService<IEncryptionService>();
+
                 var bankAccount = dbContext.Accounts.FirstOrDefault(x => x.Name == "Bank account");
                 var loanRepayments = dbContext.LoanRepayments.ToList();
                 var currentDateNumber = DateTime.UtcNow.Day;
                 foreach (var loanRepayment in loanRepayments)
                 {
-                    if (loanRepayment.LoanApplication.LoanRepaymentNumber == currentDateNumber)
+                    var loanApplication = dbContext.LoanApplications.FirstOrDefault(x => x.Id == loanRepayment.LoanApplicationId);
+                    if (loanApplication.LoanRepaymentNumber == currentDateNumber)
                     {
                         var model = new TransactionWithinTheBankViewModel()
                         {
@@ -71,12 +58,10 @@ namespace Infinia.Core.Services
                             IsRead = false
                         };
                         await dbContext.Notifications.AddAsync(notification);
-
                     }
                 }
                 await dbContext.SaveChangesAsync();
             }
-            
         }
     }
 }

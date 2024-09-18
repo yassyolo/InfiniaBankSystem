@@ -12,7 +12,6 @@ namespace Infinia.Core.ViewModels
     {
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(EducationLevelMaxLength, MinimumLength = EducationLevelMinLength, ErrorMessage = LengthErrorMessage)]
-<<<<<<< HEAD
         public string EducationLevel { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
@@ -92,87 +91,7 @@ namespace Infinia.Core.ViewModels
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public bool HasOtherCredits { get; set; }
-=======
-        public string ApplicationEducationLevel { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public bool IsRetiredApplication { get; set; }
-
-        [StringLength(EmployerMaxLength, MinimumLength = EmployerMinLength, ErrorMessage = LengthErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public string EmployerNameApplication { get; set; } = string.Empty;
-
-        [StringLength(PositionMaxLength, MinimumLength = PositionMinLength, ErrorMessage = LengthErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public string PositionApplication { get; set; } = string.Empty;
-
-        [Range(YearsMinValue, YearsMinValue, ErrorMessage = InvalidYearsErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public int YearsAtJobApplicationApplication { get; set; }
-
-        [Range(MonthsMinValue, MonthsMaxValue, ErrorMessage = InvalidMonthsErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public int MonthsAtJobApplicationApplication { get; set; }
-
-        [Range(YearsMinValue, YearsMaxValue, ErrorMessage = InvalidYearsErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public int TotalWorkExperienceYearsApplication { get; set; }
-
-        [Range(MonthsMinValue, MonthsMaxValue, ErrorMessage = InvalidMonthsErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public int TotalWorkExperienceMonthsApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(HouseholdMembersMinValue, HouseholdMembersMinValue, ErrorMessage = InvalidHouseholdMembersErrorMessage)]
-        public int NumberOfHouseholdMembersApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(HouseholdMembersMinValue, HouseholdMembersMaxValue, ErrorMessage = InvalidHouseholdMembersErrorMessage)]
-        public int MembersWithProvenIncomeApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(HouseholdMembersMinValue, HouseholdMembersMaxValue, ErrorMessage = InvalidHouseholdMembersErrorMessage)]
-        public int DependentsApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        public decimal NetMonthlyIncomeApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(MonthlyExpensesMinValue, MonthlyExpensesMaxValue, ErrorMessage = InvalidMonthlyExpensesErrorMessage)]
-        public decimal FixedMonthlyExpensesApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal PermanentContractIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal TemporaryContractIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal CivilContractIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal BusinessIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal PensionIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal FreelanceIncomeApplication { get; set; }
-
-        [Range(IncomeMinValue, IncomeMaxValue, ErrorMessage = InvalidIncomeErrorMessage)]
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public decimal OtherIncomeApplication { get; set; }
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        public bool HasOtherCreditsApplication { get; set; }
->>>>>>> origin/main
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(CountryMaxLength, MinimumLength = CountryMinLength, ErrorMessage = LengthErrorMessage)]
@@ -199,7 +118,7 @@ namespace Infinia.Core.ViewModels
         public string IdentityCardIssuer { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]        
-        public DateTime IdentityCardIssueDate { get; set; }
+        public string IdentityCardIssueDate { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(NationalityMaxLength, MinimumLength = NationalityMinLength, ErrorMessage = LengthErrorMessage)]
@@ -226,11 +145,7 @@ namespace Infinia.Core.ViewModels
         public bool HasMultipleProperties { get; set; }
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-<<<<<<< HEAD
         public bool HasPartialOwnership{ get; set; }
-=======
-        public bool HasPartialOwnership { get; set; }
->>>>>>> origin/main
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public bool NoProperty { get; set; }
@@ -241,11 +156,7 @@ namespace Infinia.Core.ViewModels
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(MaritalStatusMaxLength, MinimumLength = MaritalStatusMinLength, ErrorMessage = LengthErrorMessage)]
-<<<<<<< HEAD
         public string MaritalStatus { get; set; } = string.Empty;
-=======
-        public string MaritalStatusApplication { get; set; } = string.Empty;
->>>>>>> origin/main
 
         public int AccountId { get; set; }
 
