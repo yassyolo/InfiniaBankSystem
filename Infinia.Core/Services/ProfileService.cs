@@ -68,7 +68,7 @@ namespace Infinia.Core.Services
                 {
                     Name = x.Name,
                     Email = ObfuscateEmail(x.Email),
-                    Username = x.PhoneNumber
+                    Username = x.UserName
                 })
                 .FirstOrDefaultAsync();
         }
@@ -105,7 +105,7 @@ namespace Infinia.Core.Services
             };
         }
 
-        private string ObfuscateEmail(string email)
+        private static string ObfuscateEmail(string email)
         {
             int index= email.IndexOf('@');
             return email.Substring(0, 2) + new string('*', index - 2) + email.Substring(index);

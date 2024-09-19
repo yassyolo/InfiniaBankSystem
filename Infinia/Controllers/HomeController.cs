@@ -15,6 +15,17 @@ namespace Infinia.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("LoggedInUser", "Home");
+            }
+
+            return View();
+        }
+
+        public IActionResult LoggedInUser()
+        {
+
             return View();
         }
 
