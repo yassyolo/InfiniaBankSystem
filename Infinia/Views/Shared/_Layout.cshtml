@@ -22,9 +22,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="profileSettingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Profile Settings
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="profileSettingsDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="ProfileDetails">Profile Details</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="ChangePassword">Change Password</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="ChangeUsername">Change Username</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="ForgotPassword">Forgot Password</a></li>
+                                </ul>
+                            </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -39,7 +51,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Infinia - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - Infinia
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
