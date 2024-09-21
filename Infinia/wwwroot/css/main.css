@@ -1145,3 +1145,8 @@ ul {
   background-color: #2696E9;
   color: white;
 }
+.validation {
+    color: red; /* Change text color to red */
+    padding: 5px 0; /* Add padding on top and bottom */
+    font-size: 0.9em; /* Optional: adjust font size */
+}

@@ -18,7 +18,10 @@ builder.Services.AddHostedService<LoanMonthlyRepaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddScoped<IBankAdministratorService, BankAdministratorService>();
 builder.Services.AddSingleton<LoanMonthlyRepaymentService>();
+builder.Services.AddHttpClient<ChatbotController>();
+
 builder.Services.AddHostedService(provider => provider.GetRequiredService<LoanMonthlyRepaymentService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -64,7 +67,11 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Profile}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "chatbot",
+    pattern: "{controller=Chatbot}/{action=SendMessage}/{userMessage?}",
+defaults: new { controller = "Chatbot", action = "SendMessage" });
 app.MapRazorPages();
 
 app.Run();
