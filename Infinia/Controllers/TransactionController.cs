@@ -21,6 +21,7 @@ namespace Infinia.Controllers
             this.accountService = accountService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -77,11 +78,9 @@ namespace Infinia.Controllers
             {
                 return BadRequest();
             }
-            var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
-            var model = new TransactionWithinTheBankViewModel()
-            {
-                AvailableAccounts = availableAccounts
-            };
+            var availableAccounts = await transactionService.GetAvailableCurrentAccountsForUserAsync(userId);
+            var model = new TransactionWithinTheBankViewModel();
+            model.AvailableAccounts = availableAccounts;
             return View(model);
         }
         [HttpPost]
@@ -132,20 +131,25 @@ namespace Infinia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MakeTransactionToAnotherBank(TransactionToAnotherBankViewModel model)
         {
-            if (ModelState.IsValid == false)
-            {
-                return View(model);
-            }
-            if (await transactionService.CustomerWithNameAndIBANExistsAsync(model.ReceiverIBAN, model.ReceiverName) == false)
-            {
-                ModelState.AddModelError("ReceiverIBAN", InvalidReceiverIBANErrorMessage);
-                return View(model);
-            }
             var userId = User.GetId();
             if (await profileService.CustomerWithIdExistsAsync(userId) == false)
             {
                 return BadRequest();
             }
+            if (ModelState.IsValid == false)
+            {
+                var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
+                model.AvailableAccounts = availableAccounts;                
+                return View(model);
+            }
+            if (await transactionService.CustomerWithNameAndIBANExistsAsync(model.ReceiverIBAN, model.ReceiverName) == false)
+            {
+                ModelState.AddModelError("ReceiverIBAN", InvalidReceiverIBANErrorMessage);
+                var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
+                model.AvailableAccounts = availableAccounts;
+                return View(model);
+            }
+           
             try
             {
                 await transactionService.MakeTransactionToAnotherBankAsync(model, userId);

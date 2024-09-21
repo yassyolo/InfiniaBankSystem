@@ -41,7 +41,7 @@ namespace Infinia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
                 return View(model);
             }
@@ -72,12 +72,12 @@ namespace Infinia.Controllers
             ModelState.AddModelError("", InvalidLoginAttemptErrorMessage);
             return View(model);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+        
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         public IActionResult ChangePassword()
@@ -170,7 +170,7 @@ namespace Infinia.Controllers
         public async Task<IActionResult> ProfileDetails()
         {
             var userId = User.GetId();
-            if(!(await profileService.CustomerWithIdExistsAsync(userId)))
+            if((await profileService.CustomerWithIdExistsAsync(userId)) == false)
             {
                 return BadRequest();
             }
@@ -192,14 +192,14 @@ namespace Infinia.Controllers
             {
                 return View(model);
             }
-            var userWithEmail = await userManager.FindByEmailAsync(model.Email);
-            if (userWithEmail != null)
+            var userWithEmail = await profileService.UserWithEmailExistsAsync(model.Email);
+            if (userWithEmail == true)
             {
                 ModelState.AddModelError("Email", EmailAlreadyExistsErrorMessage);
                 return View(model);
             }
-            var userWithUsername = await userManager.FindByNameAsync(model.Username);
-            if (userWithUsername != null)
+            var userWithUsername = await profileService.UserWithUsernameExistsAsync(model.Username);
+            if (userWithUsername == true)
             {
                 ModelState.AddModelError("Username", UsernameAlreadyExistsErrorMessage);
                 return View(model);
@@ -236,13 +236,6 @@ namespace Infinia.Controllers
         }
         public IActionResult RegistrationConfirmed()
         {
-            var confirmationMessage = TempData["ConfirmationMessage"] as string;
-
-            if (confirmationMessage != null)
-            {
-                ViewBag.ConfirmationMessage = confirmationMessage;
-            }
-
             return View();
         }
 
@@ -260,7 +253,7 @@ namespace Infinia.Controllers
             var result = await userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Login));
             }
             return View();
         }
@@ -271,39 +264,34 @@ namespace Infinia.Controllers
             return View(model);
         }
 
-        // POST: ForgotPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (string.IsNullOrEmpty(model.Email))
+            if (ModelState.IsValid == false)
             {
-                ModelState.AddModelError("Email", "Email is required.");
-                return View();
+                return View(model);
             }
 
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                ModelState.AddModelError("Email", "No user found with this email.");
+                ModelState.AddModelError("Email", InvalidUserWithEmailErrorMessage);
                 return View();
             }
 
-            // Generate a new password that matches the password rules
             var newPassword = GenerateRandomPassword();
 
-            // Reset the user's password
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var result = await userManager.ResetPasswordAsync(user, token, newPassword);
 
             if (result.Succeeded)
             {
-                // Send email with the new password
                 var emailBody = $"<h1>Password Reset</h1><p>Your new password is: <strong>{newPassword}</strong></p>";
                 await emailSenderService.SendEmailAsync(model.Email, "Password Reset", emailBody);
 
                 TempData["ConfirmationMessage"] = "A new password has been sent to your email.";
-                return RedirectToAction("ForgotPasswordConfirmation");
+                return RedirectToAction(nameof(Login));
             }
 
             foreach (var error in result.Errors)
@@ -311,15 +299,9 @@ namespace Infinia.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            return View();
+            return View(model);
         }
 
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
-        // Generate a random password that fits the Identity password requirements
         private string GenerateRandomPassword(int length = 12)
         {
             const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -328,23 +310,18 @@ namespace Infinia.Controllers
             const string specialChars = "!@#$%^&*";
 
             var random = new Random();
-
             var password = new StringBuilder();
-
-            // Add one character from each required set
             password.Append(upperChars[random.Next(upperChars.Length)]);
             password.Append(lowerChars[random.Next(lowerChars.Length)]);
             password.Append(digits[random.Next(digits.Length)]);
             password.Append(specialChars[random.Next(specialChars.Length)]);
 
-            // Fill remaining characters randomly
             string allChars = upperChars + lowerChars + digits + specialChars;
             for (int i = 4; i < length; i++)
             {
                 password.Append(allChars[random.Next(allChars.Length)]);
             }
 
-            // Shuffle to avoid predictable patterns
             return new string(password.ToString().ToCharArray().OrderBy(c => random.Next()).ToArray());
         }
     }
