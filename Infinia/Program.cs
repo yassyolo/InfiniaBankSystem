@@ -14,7 +14,7 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddHostedService<MonthlyFeeDeductionService>();
-
+builder.Services.AddHostedService<LoanMonthlyRepaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ILoanService, LoanService>();

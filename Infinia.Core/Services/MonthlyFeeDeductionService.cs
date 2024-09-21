@@ -50,6 +50,17 @@ namespace Infinia.Core.Services
                          account.LastMonthlyFeeDeduction.Value.Month != todaysMonth ||
                          account.LastMonthlyFeeDeduction.Value.Year != todaysYear))
                     {
+                        /*var model = new TransactionWithinTheBankViewModel()
+                        {
+                            Reason = "Loan repayment",
+                            Description = $"Loan repayment made on {DateTime.UtcNow.ToString()}",
+                            ReceiverName = "Bank account",
+                            Amount =MonthlyFeeDeductionFee,
+                            ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
+                            AccountId = account.Id
+                        };
+                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);*/
+
                         var model = new TransactionWithinTheBankViewModel
                         {
                             Reason = "Monthly fee deduction",

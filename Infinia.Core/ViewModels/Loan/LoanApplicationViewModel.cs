@@ -156,6 +156,7 @@ namespace Infinia.Core.ViewModels
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(MaritalStatusMaxLength, MinimumLength = MaritalStatusMinLength, ErrorMessage = LengthErrorMessage)]
+
         public string MaritalStatus { get; set; } = string.Empty;
 
         public int AccountId { get; set; }

@@ -33,6 +33,7 @@ namespace Infinia.Core.Services
 
         public async Task ApplyForLoanAsync(LoanApplicationViewModel model, string userId)
         {
+
             var education = new Education
             {
                 EducationLevel = model.EducationLevel
@@ -80,6 +81,8 @@ namespace Infinia.Core.Services
             };
             await repository.AddAsync(incomeInfo);
             await repository.SaveChangesAsync();
+
+            
             var propertyStatus = new PropertyStatus
             {
                 HasApartmentOrHouse = model.HasApartmentOrHouse,
@@ -92,6 +95,7 @@ namespace Infinia.Core.Services
             };
             await repository.AddAsync(propertyStatus);
             await repository.SaveChangesAsync();
+            
             Account account = null;  
             var accounts = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId).ToListAsync();
             foreach (var acc in accounts)
@@ -133,67 +137,7 @@ namespace Infinia.Core.Services
             var accountBalance = account.Balance;
             await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
         }
-        public async Task<LoanApprovalViewModel> ApproveLoanAsync(LoanApplicationViewModel model, string userId, decimal accountBalance, decimal repaymentAmount)
-        { 
-            var paidAllLoansOnTime = await repository.All<LoanRepayment>().Where(x => x.LoanApplication.CustomerId == userId).Select(x => x.Status).AnyAsync(x => x.Contains(Overdue));
-            var maritalStatus = model.MaritalStatus == "Married" ? 1 : 0;
-            var educationLevel = model.EducationLevel switch
-            {
-                "Secondary" => 1,
-                "High School" => 2,
-                "Bachelor" => 3,
-                "Master" => 4,
-                "Doctorate" => 5,
-                _ => 1 
-            };
-            var jsonModel = JsonConvert.SerializeObject(new
-            {
-                NetMonthlyIncome = (int)model.NetMonthlyIncome,
-                FixedMonthlyExpenses = (int)model.FixedMonthlyExpenses,
-                PermanentContractIncome = (int)model.PermanentContractIncome,
-                TemporaryContractIncome = (int)model.TemporaryContractIncome,
-                CivilContractIncome = (int)model.CivilContractIncome,
-                BusinessIncome = (int)model.BusinessIncome,
-                PensionIncome = (int)model.PensionIncome,
-                FreelanceIncome = (int)model.FreelanceIncome,
-                OtherIncome = (int)model.OtherIncome,
-                HasApartmentOrHouse = model.HasApartmentOrHouse ? 1 : 0,
-                HasCommercialProperty = model.HasCommercialProperty ? 1 : 0,
-                HasLand = model.HasLand ? 1 : 0,
-                HasMultipleProperties = model.HasMultipleProperties ? 1 : 0,
-                HasPartialOwnership = model.HasPartialOwnership ? 1 : 0,
-                NoProperty = model.NoProperty ? 1 : 0,
-                VehicleCount = (int)model.VehicleCount,
-                MaritalStatus = maritalStatus,
-                HasOtherCredits = model.HasOtherCredits ? 1 : 0,
-                NumberOfHouseholdMembers = (int)model.NumberOfHouseholdMembers,
-                MembersWithProvenIncome = (int)model.MembersWithProvenIncome,
-                Dependents = (int)model.Dependents,
-                IsRetired = model.IsRetired ? 1 : 0,
-                YearsAtJob = (int)model.YearsAtJob,
-                MonthsAtJob = (int)model.MonthsAtJob,
-                TotalWorkExperienceYears = (int)model.TotalWorkExperienceYears,
-                TotalWorkExperienceMonths = (int)model.TotalWorkExperienceMonths,
-                EducationLevel = (int)educationLevel,
-                LoanAmount = (int)model.LoanAmount,
-                LoanTermMonths = (int)model.LoanTermMonths,
-                InterestRate = (int)model.InterestRate,
-                AccountBalance = (int)accountBalance,
-                LoanRepayment = (int)repaymentAmount,
-                HasLoans = model.HasOtherCredits ? 1 : 0,
-                PaidAllLoansOnTime = paidAllLoansOnTime ? 1 : 0,
-            });
-
-            Console.WriteLine(jsonModel);
-            var content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("predict", content);
-
-            response.EnsureSuccessStatusCode();
-
-            var responseString = await response.Content.ReadAsStringAsync();
-            var prediction = JsonConvert.DeserializeObject<LoanApprovalViewModel>(responseString);
-            return prediction;
-        }
+    
         private decimal CalculateEMI(decimal loanAmount, double annualInterestRate, int termMonths)
         {
             double monthlyInterestRate = annualInterestRate / 12 / 100;
@@ -290,6 +234,68 @@ namespace Infinia.Core.Services
                 .ToListAsync();
         }
 
+          
+        public async Task<LoanApprovalViewModel> ApproveLoanAsync(LoanApplicationViewModel model, string userId, decimal accountBalance, decimal repaymentAmount)
+        { 
+            var paidAllLoansOnTime = await repository.All<LoanRepayment>().Where(x => x.LoanApplication.CustomerId == userId).Select(x => x.Status).AnyAsync(x => x.Contains(Overdue));
+            var maritalStatus = model.MaritalStatus == "Married" ? 1 : 0;
+            var educationLevel = model.EducationLevel switch
+            {
+                "Secondary" => 1,
+                "High School" => 2,
+                "Bachelor" => 3,
+                "Master" => 4,
+                "Doctorate" => 5,
+                _ => 1 
+            };
+            var jsonModel = JsonConvert.SerializeObject(new
+            {
+                NetMonthlyIncome = (int)model.NetMonthlyIncome,
+                FixedMonthlyExpenses = (int)model.FixedMonthlyExpenses,
+                PermanentContractIncome = (int)model.PermanentContractIncome,
+                TemporaryContractIncome = (int)model.TemporaryContractIncome,
+                CivilContractIncome = (int)model.CivilContractIncome,
+                BusinessIncome = (int)model.BusinessIncome,
+                PensionIncome = (int)model.PensionIncome,
+                FreelanceIncome = (int)model.FreelanceIncome,
+                OtherIncome = (int)model.OtherIncome,
+                HasApartmentOrHouse = model.HasApartmentOrHouse ? 1 : 0,
+                HasCommercialProperty = model.HasCommercialProperty ? 1 : 0,
+                HasLand = model.HasLand ? 1 : 0,
+                HasMultipleProperties = model.HasMultipleProperties ? 1 : 0,
+                HasPartialOwnership = model.HasPartialOwnership ? 1 : 0,
+                NoProperty = model.NoProperty ? 1 : 0,
+                VehicleCount = (int)model.VehicleCount,
+                MaritalStatus = maritalStatus,
+                HasOtherCredits = model.HasOtherCredits ? 1 : 0,
+                NumberOfHouseholdMembers = (int)model.NumberOfHouseholdMembers,
+                MembersWithProvenIncome = (int)model.MembersWithProvenIncome,
+                Dependents = (int)model.Dependents,
+                IsRetired = model.IsRetired ? 1 : 0,
+                YearsAtJob = (int)model.YearsAtJob,
+                MonthsAtJob = (int)model.MonthsAtJob,
+                TotalWorkExperienceYears = (int)model.TotalWorkExperienceYears,
+                TotalWorkExperienceMonths = (int)model.TotalWorkExperienceMonths,
+                EducationLevel = (int)educationLevel,
+                LoanAmount = (int)model.LoanAmount,
+                LoanTermMonths = (int)model.LoanTermMonths,
+                InterestRate = (int)model.InterestRate,
+                AccountBalance = (int)accountBalance,
+                LoanRepayment = (int)repaymentAmount,
+                HasLoans = model.HasOtherCredits ? 1 : 0,
+                PaidAllLoansOnTime = paidAllLoansOnTime ? 1 : 0,
+            });
+
+            Console.WriteLine(jsonModel);
+            var content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync("predict", content);
+
+            response.EnsureSuccessStatusCode();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var prediction = JsonConvert.DeserializeObject<LoanApprovalViewModel>(responseString);
+            return prediction;
+        }
 
         public ChooseLoanTypeViewModel? GetLoanTypesAsync()
         {

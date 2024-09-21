@@ -1,3 +1,4 @@
+
 ﻿using Infinia.Core.MessageConstants;
 using System.ComponentModel.DataAnnotations;
 
@@ -74,6 +75,6 @@ namespace Infinia.Core.ViewModels
 
             public int LoanRepaymentNumber { get; set; }
             public string Status { get; set; } = string.Empty;
-        }    
+    }
 }
 

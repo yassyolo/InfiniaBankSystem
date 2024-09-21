@@ -1,8 +1,26 @@
-﻿using Infinia.Infrastructure;
+﻿
+using Infinia.Infrastructure.Data.DataModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using static Infinia.Core.Constants.TransactionTypeConstants;
+using static Infinia.Core.Constants.TransactionFeeConstants;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Infinia.Core.Contracts;
+using Infinia.Core.ViewModels.Transaction;
+using static Infinia.Infrastructure.Data.DataConstants.DataConstants;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Transaction;
+using Infinia.Infrastructure;
+
 
 namespace Infinia.Core.Services
 {
@@ -17,11 +35,19 @@ namespace Infinia.Core.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+
+            while (stoppingToken.IsCancellationRequested == true) 
+            { 
+                var currentDate = DateTime.UtcNow;
+                await DeductLoanRepayment();
+            }
+            await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
+
+            /*while (!stoppingToken.IsCancellationRequested)
             {
                 await DeductLoanRepayment();
                 await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
-            }
+            }*/
         }
 
         private async Task DeductLoanRepayment()

@@ -7,6 +7,7 @@ using Infinia.Extensions;
 using Microsoft.AspNetCore.Http.Metadata;
 using Infinia.Core.Services;
 
+
 namespace Infinia.Controllers
 {
     public class LoanController : Controller
@@ -34,13 +35,14 @@ namespace Infinia.Controllers
         [HttpGet]
         public IActionResult ApplyForLoan(string type, double rate)
         {
-            var model = new LoanApplicationViewModel()
+            var model = new LoanApplicationViewModel
             {
                 Type = type,
                 InterestRate = rate
             };
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -72,6 +74,7 @@ namespace Infinia.Controllers
                 return View(model);
             }
             await loanService.ApplyForLoanAsync(model, userId);
+
             return RedirectToAction(nameof(LoanApplicationsHistory));
         }
 
@@ -112,7 +115,6 @@ namespace Infinia.Controllers
             var model = await loanService.GetCurrentLoansForCustomerAsync(userId);
             return View(model);
         }
-
     }
 }
 

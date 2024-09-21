@@ -1,34 +1,51 @@
 ﻿@model Infinia.Core.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Log in";
+    Layout = null;  // Or specify a layout if you are using one
 }
-<h1 class="text-center">@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Username"
-                           class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Username" class="form-label"></label>
-                    <span asp-validation-for="Username" class="text-danger"></span>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Infinia</title>
+    <link rel="stylesheet" href="~/css/main.css">
+</head>
+<body>
+    <header>
+        <div id="main-page">
+            <div class="navigation">
+                <div class="navigation__item navigation__item-ft">
+                    <a href="~/Home/Index" class="navigation__item-ft-name">Infinia</a>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="Password" type="password" class="form-control" autocomplete="current-password"
-                           aria-required="true" />
-                    <label asp-for="Password" class="form-label"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="login-section" class="login-section">
+            <h2>Вход</h2>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="Username">Потребителско име</label>
+                    <input asp-for="Username" placeholder="Въведете вашето потребителско име" required>
+                    <span asp-validation-for="Username" class="validation"></span>
                 </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                <div class="form-group">
+                    <label asp-for="Password">Парола</label>
+                    <input asp-for="Password" type="password" placeholder="Въведете вашата парола" required>
+                    <span asp-validation-for="Password" class="validation"></span>
                 </div>
+                <button type="submit">Login</button>
             </form>
-        </section>
-    </div>
-</div>
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Infinia created by <a href="#">Albiceleste</a>.</p>
+    </footer>
+
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
