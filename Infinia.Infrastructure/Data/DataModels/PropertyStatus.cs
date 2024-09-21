@@ -38,18 +38,5 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Comment("Vehicle count")]
         [Required]
         public int VehicleCount { get; set; }
-
-        [Comment("Residence status")]
-        [MaxLength(ResidenceStatusMaxLength)]
-        [Required]
-        public string ResidenceStatus { get; set; } = string.Empty;
-
-        [Comment("Years in residence")]
-        [Required]
-        public int YearsInResidence { get; set; }
-
-        [Comment("Months in residence")]
-        [Required]
-        public int MonthsInResidence { get; set; }
     }
 }

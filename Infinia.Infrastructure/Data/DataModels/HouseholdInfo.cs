@@ -21,9 +21,5 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Comment("Number of dependents that depend on the income of the applicant")]
         [Required]
         public int Dependents { get; set; } 
-
-        [Comment("Number of family members")]
-        [Required]
-        public int FamilyMembersCount { get; set; }
     }
 }

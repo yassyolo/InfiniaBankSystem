@@ -1,22 +1,25 @@
-﻿using Infinia.Infrastructure;
+﻿using Infinia.Core.Contracts;
+using Infinia.Core.ViewModels.Transaction;
+using Infinia.Infrastructure;
 using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.Extensions.DependencyInjection;
+using static Infinia.Core.Constants.TransactionFeeConstants;
 using Microsoft.Extensions.Hosting;
 
 namespace Infinia.Core.Services
 {
     public class MonthlyFeeDeductionService : BackgroundService
     {
-        private readonly IServiceProvider serviceProvider;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MonthlyFeeDeductionService(IServiceProvider serviceProvider)
+        public MonthlyFeeDeductionService(IServiceScopeFactory serviceScopeFactory)
         {
-            this.serviceProvider = serviceProvider;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (stoppingToken.IsCancellationRequested == false) 
+            while (!stoppingToken.IsCancellationRequested)
             {
                 var currentDate = DateTime.UtcNow;
                 if (currentDate.Day == 11)
@@ -29,18 +32,47 @@ namespace Infinia.Core.Services
 
         private async Task DeductMonthlyFeeAsync()
         {
-            using (var scope = serviceProvider.CreateScope())
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var encryptionService = scope.ServiceProvider.GetRequiredService<IEncryptionService>();
+                var transactionService = scope.ServiceProvider.GetRequiredService<ITransactionService>();
+
                 var accounts = dbContext.Accounts.ToList();
                 var todaysYear = DateTime.UtcNow.Year;
                 var todaysMonth = DateTime.UtcNow.Month;
+                var bankAccount = dbContext.Accounts.FirstOrDefault(x => x.Name == "Bank account");
 
                 foreach (var account in accounts)
                 {
-                    if (account.Type != "Bank" && account.LastMonthlyFeeDeduction.Value.Month != todaysMonth ||
-                        account.LastMonthlyFeeDeduction.Value.Year != todaysYear)
+                    if (account.Type != "Bank" &&
+                        (account.LastMonthlyFeeDeduction == null ||
+                         account.LastMonthlyFeeDeduction.Value.Month != todaysMonth ||
+                         account.LastMonthlyFeeDeduction.Value.Year != todaysYear))
                     {
+                        /*var model = new TransactionWithinTheBankViewModel()
+                        {
+                            Reason = "Loan repayment",
+                            Description = $"Loan repayment made on {DateTime.UtcNow.ToString()}",
+                            ReceiverName = "Bank account",
+                            Amount =MonthlyFeeDeductionFee,
+                            ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
+                            AccountId = account.Id
+                        };
+                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);*/
+
+                        var model = new TransactionWithinTheBankViewModel
+                        {
+                            Reason = "Monthly fee deduction",
+                            Description = $"Monthly fee deduction made on {DateTime.UtcNow}",
+                            ReceiverName = "Bank account",
+                            Amount = MonthlyFeeDeductionFee, // Define MonthlyFeeDeductionFee in your class or configuration
+                            ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
+                            AccountId = account.Id
+                        };
+
+                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);
+
                         account.Balance -= account.MonthlyFee;
                         account.LastMonthlyFeeDeduction = DateTime.UtcNow;
 
@@ -50,10 +82,12 @@ namespace Infinia.Core.Services
                             Content = $"Monthly fee was deducted from your account with name {account.Name}.",
                             CreationDate = DateTime.UtcNow,
                             IsRead = false
-                        };  
+                        };
+
                         await dbContext.Notifications.AddAsync(notification);
                     }
                 }
+
                 await dbContext.SaveChangesAsync();
             }
         }

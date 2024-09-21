@@ -1,0 +1,51 @@
+﻿@model Infinia.Core.ViewModels.LoginViewModel
+@{
+    Layout = null;  // Or specify a layout if you are using one
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Infinia</title>
+    <link rel="stylesheet" href="~/css/main.css">
+</head>
+<body>
+    <header>
+        <div id="main-page">
+            <div class="navigation">
+                <div class="navigation__item navigation__item-ft">
+                    <a href="~/Home/Index" class="navigation__item-ft-name">Infinia</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="login-section" class="login-section">
+            <h2>Вход</h2>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="Username">Потребителско име</label>
+                    <input asp-for="Username" placeholder="Въведете вашето потребителско име" required>
+                    <span asp-validation-for="Username" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Парола</label>
+                    <input asp-for="Password" type="password" placeholder="Въведете вашата парола" required>
+                    <span asp-validation-for="Password" class="validation"></span>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Infinia created by <a href="#">Albiceleste</a>.</p>
+    </footer>
+
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

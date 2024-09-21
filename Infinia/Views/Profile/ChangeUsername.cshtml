@@ -1,0 +1,42 @@
+﻿@model Infinia.Core.ViewModels.ChangeUsernameViewModel
+@{
+    ViewData["Title"] = "Change Username";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <section>
+            <form asp-action="ChangeUsername" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="CurrentUsername" class="form-control" placeholder="Current Username" />
+                    <label asp-for="CurrentUsername">Current Username</label>
+                    <span asp-validation-for="CurrentUsername" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="NewUsername" class="form-control" placeholder="New Username" />
+                    <label asp-for="NewUsername">New Username</label>
+                    <span asp-validation-for="NewUsername" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="ConfirmUsername" class="form-control" placeholder="Confirm New Username" />
+                    <label asp-for="ConfirmUsername">Confirm New Username</label>
+                    <span asp-validation-for="ConfirmUsername" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary w-100">Change Username</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -14,8 +14,12 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddHostedService<MonthlyFeeDeductionService>();
+builder.Services.AddHostedService<LoanMonthlyRepaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddSingleton<LoanMonthlyRepaymentService>();
+builder.Services.AddHostedService(provider => provider.GetRequiredService<LoanMonthlyRepaymentService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -34,6 +38,7 @@ builder.Services.AddIdentity<Customer, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllersWithViews();
 

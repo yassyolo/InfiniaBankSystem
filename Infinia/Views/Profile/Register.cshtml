@@ -1,0 +1,108 @@
+﻿@model Infinia.Core.ViewModels.RegisterViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Register - Infinia</title>
+</head>
+<body>
+    <header>
+        <div id="main-page">
+            <div class="navigation">
+                <div class="navigation__item navigation__item-ft">
+                    <a href="~/index.html" class="navigation__item-ft-name">Infinia</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="register-section" class="register-section">
+            <h2>Регистрация</h2>
+            <form asp-action="Register" method="post">
+                <div class="form-group">
+                    <label asp-for="Email">Имейл</label>
+                    <input asp-for="Email" class="form-control" placeholder="Въведете вашия имейл" />
+                    <span asp-validation-for="Email" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Парола</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Въведете желаната от вас парола" />
+                    <span asp-validation-for="Password" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">Потвърдете паролата</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Потвърдете вашата парола" />
+                    <span asp-validation-for="ConfirmPassword" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name">Име и фамилия</label>
+                    <input asp-for="Name" class="form-control" placeholder="Въведете вашето име и фамилия" />
+                    <span asp-validation-for="Name" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SSN">ЕГН</label>
+                    <input asp-for="SSN" class="form-control" placeholder="Въведете вашето ЕГН" />
+                    <span asp-validation-for="SSN" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country">Държава</label>
+                    <input asp-for="Country" class="form-control" placeholder="Въведете вашата държава" />
+                    <span asp-validation-for="Country" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City">Град</label>
+                    <input asp-for="City" class="form-control" placeholder="Въведете вашия град" />
+                    <span asp-validation-for="City" class="validation"></span>
+                </div>
+                <!-- New fields -->
+                <div class="form-group">
+                    <label asp-for="Street">Улица</label>
+                    <input asp-for="Street" class="form-control" placeholder="Въведете вашия адрес" />
+                    <span asp-validation-for="Street" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostalCode">Пощенски код</label>
+                    <input asp-for="PostalCode" class="form-control" placeholder="Въведете вашия пощенски код" />
+                    <span asp-validation-for="PostalCode" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardSex">Пол</label>
+                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете вашия пол" />
+                    <span asp-validation-for="IdentityCardSex" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardNumber">Лична карта №</label>
+                    <input asp-for="IdentityCardNumber" class="form-control" placeholder="Въведете № на вашата лична карта" />
+                    <span asp-validation-for="IdentityCardNumber" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardIssueDate">Лична карта издадена на (**дата **месец ****год)</label>
+                    <input asp-for="IdentityCardIssueDate" class="form-control" placeholder="Въведете датата на която е издадена личната Ви карта" />
+                    <span asp-validation-for="IdentityCardIssueDate" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardIssuer">Лична карта издадена от (гр. .......)</label>
+                    <input asp-for="IdentityCardIssuer" class="form-control" placeholder="Въведете кой е издал вашата лична карта" />
+                    <span asp-validation-for="IdentityCardIssuer" class="validation"></span>
+                </div>
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Infinia created by Albiceleste.</p>
+    </footer>
+
+    @section Scripts {
+        <script src="~/js/validation.js"></script>
+    }
+</body>
+</html>

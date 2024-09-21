@@ -1,0 +1,134 @@
+﻿@model Infinia.Core.ViewModels.LoanApplicationViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявка за кредит - Infinia</title>
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg main-nav">
+        <a class="navbar-brand logo" href="~/mainpage">Infinia</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+                <!-- Funds Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="fundsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Средства
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="fundsDropdown">
+                        <a class="dropdown-item" href="#">Проверка на баланс</a>
+                        <a class="dropdown-item" href="#">Транзакции</a>
+                    </div>
+                </li>
+                <!-- Loans Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="loansDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Кредити
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="loansDropdown">
+                        <a class="dropdown-item" href="#">Моите кредити</a>
+                        <a class="dropdown-item" href="~/applyforloan">Заявка за кредит</a>
+                        <a class="dropdown-item" href="#">История на заявките за кредит</a>
+                    </div>
+                </li>
+                <!-- Transfers Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="transfersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преводи
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="transfersDropdown">
+                        <a class="dropdown-item" href="~/newtranslation">Нов превод</a>
+                    </div>
+                </li>
+                <!-- Settings Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Настройки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" href="~/generalsettings">Общи</a>
+                        <a class="dropdown-item" href="~/changeusername">Потребителско име</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Loan Section -->
+    <div class="loan-cards-container mt-5">
+        <h2 class="text-center mb-4">Видове кредити и лихви 💼</h2>
+        <div class="row">
+            <!-- Consumer Loan -->
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Потребителски кредит 🏠</h5>
+                        <p class="card-text">Лихва: 8%</p>
+                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Car Loan -->
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Кредит за кола 🚗</h5>
+                        <p class="card-text">Лихва: 4%</p>
+                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Mortgage Loan -->
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Ипотечен кредит 🏡</h5>
+                        <p class="card-text">Лихва: 7%</p>
+                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Business Loan -->
+            <div class="col-md-6">
+                <div class="card text-white bg-warning mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Бизнес кредит 📊</h5>
+                        <p class="card-text">Лихва: 5%</p>
+                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Education Loan -->
+            <div class="col-md-6">
+                <div class="card text-white bg-danger mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Кредит за образование 🎓</h5>
+                        <p class="card-text">Лихва: 3%</p>
+                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

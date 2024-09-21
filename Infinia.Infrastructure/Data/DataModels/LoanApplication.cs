@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using static Infinia.Infrastructure.Data.DataConstants.DataConstants.LoanApplication;
 
 namespace Infinia.Infrastructure.Data.DataModels
 {
@@ -95,5 +96,16 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Comment("Loan application status")]
         public string Status { get; set; } = string.Empty;
 
+        [Comment("Loan application type")]
+        [MaxLength(LoanTypeMaxLength)]
+        [Required]
+        public string Type { get; set; } = string.Empty;
+
+        [Comment("Loan repayment number")]
+        [Required]
+        public int LoanRepaymentNumber { get; set; }
+
+        [Comment("Loan repayments")]
+        public IEnumerable<LoanRepayment> LoanRepayments { get; set; } = new List<LoanRepayment>();
     }
 }
