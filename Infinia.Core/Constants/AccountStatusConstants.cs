@@ -2,7 +2,7 @@
 {
     public static class AccountStatusConstants
     {
-        public const string Active = "Active";
-        public const string Inactive = "Inactive";
+        public const string Open = "Open";
+        public const string Closed = "Closed";
     }
 }

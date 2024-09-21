@@ -14,6 +14,7 @@
             public const int BranchMinLength = 2;
             public const double BalanceMinValue = 0;
             public const double BalanceMaxValue = 100000;
+            
         }
         public static class Customer
         {
@@ -21,6 +22,8 @@
             public const int NameMinLength = 2;
             public const int UsernameMaxLength = 15;
             public const int UsernameMinLength = 5;
+            public const int PasswordMaxLength = 15;
+            public const int PasswordMinLength = 8;
         }
         public static class IdentityCard
         {

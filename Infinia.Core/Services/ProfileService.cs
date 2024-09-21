@@ -110,5 +110,15 @@ namespace Infinia.Core.Services
             int index= email.IndexOf('@');
             return email.Substring(0, 2) + new string('*', index - 2) + email.Substring(index);
         }
+
+        public async Task<bool> UserWithEmailExistsAsync(string email)
+        {
+            return await repository.AllReadOnly<Customer>().AnyAsync(x => x.Email == email);
+        }
+
+        public Task<bool> UserWithUsernameExistsAsync(string username)
+        {
+            return repository.AllReadOnly<Customer>().AnyAsync(x => x.UserName == username);
+        }
     }
 }

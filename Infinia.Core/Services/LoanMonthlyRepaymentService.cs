@@ -1,21 +1,4 @@
-﻿
-using Infinia.Infrastructure.Data.DataModels;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using static Infinia.Core.Constants.TransactionTypeConstants;
-using static Infinia.Core.Constants.TransactionFeeConstants;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Infinia.Core.Contracts;
-using Infinia.Core.ViewModels.Transaction;
-using static Infinia.Infrastructure.Data.DataConstants.DataConstants;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Transaction;

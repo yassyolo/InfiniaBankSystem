@@ -7,7 +7,7 @@ namespace Infinia.Core.ViewModels.Transaction
 {
     public class TransactionWithinTheBankViewModel
     {
-        [StringLength(ReceiverNameMaxLength, MinimumLength = ReceiverNameMinLength)]
+        [StringLength(ReceiverNameMaxLength, MinimumLength = ReceiverNameMinLength, ErrorMessage = LengthErrorMessage)]
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string ReceiverName { get; set; } = string.Empty;
 
@@ -15,8 +15,9 @@ namespace Infinia.Core.ViewModels.Transaction
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string ReceiverIBAN { get; set; } = null!;
 
-        [Range(AmountMaxValue, AmountMinValue, ErrorMessage = InvalidAmountErrorMessage)]
+        
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
+        //[Range(AmountMaxValue, AmountMinValue, ErrorMessage = InvalidAmountErrorMessage)]
         public decimal Amount { get; set; }
 
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]
@@ -26,7 +27,6 @@ namespace Infinia.Core.ViewModels.Transaction
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string Reason { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public int AccountId { get; set; }
 
         public IEnumerable<AvailableAccountViewModels> AvailableAccounts { get; set; } = new List<AvailableAccountViewModels>();

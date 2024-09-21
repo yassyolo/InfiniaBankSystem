@@ -4,13 +4,10 @@ namespace Infinia.Core.ViewModels
 {
     public class ProfileDetailsViewModel
     {
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string Email { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string Username { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string Name { get; set; } = string.Empty;
     }
 }

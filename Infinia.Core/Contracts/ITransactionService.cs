@@ -12,5 +12,6 @@ namespace Infinia.Core.Contracts
         Task MakeTransactionToAnotherBankAsync(TransactionToAnotherBankViewModel model, string userId);
         Task MakeTransactionWithinTheBankAsync(TransactionWithinTheBankViewModel model, string userId);
         Task<string> GenerateCSVFileForTransactionHistory(int id);
+        Task<IEnumerable<AvailableAccountViewModels>> GetAvailableCurrentAccountsForUserAsync(string userId);
     }
 }

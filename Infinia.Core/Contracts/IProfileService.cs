@@ -13,5 +13,7 @@ namespace Infinia.Core.Contracts
         Task<bool> CustomerWithIdExistsAsync(string userId);
         Task<ProfileDetailsViewModel?> GetProfileDetailsAsync(string userId);
         Task<Customer> ReturnCustomerAsync(RegisterViewModel model);
+        Task<bool> UserWithEmailExistsAsync(string email);
+        Task<bool> UserWithUsernameExistsAsync(string username);
     }
 }

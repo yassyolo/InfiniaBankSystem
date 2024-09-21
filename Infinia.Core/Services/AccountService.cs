@@ -46,7 +46,7 @@ namespace Infinia.Core.Services
                 Type = Current,
                 Name = $"CURRENT-{accountCountForUser+1}",
                 CreationDate = creationDate,
-                Status = Active,
+                Status = Open,
                 MonthlyFee = 2m
             };
             await repository.AddAsync(currentAccount);
@@ -60,7 +60,7 @@ namespace Infinia.Core.Services
                 Type = Savings,
                 Name = $"SAVINGS-{accountCountForUser+1}",
                 CreationDate = creationDate,
-                Status = Active,
+                Status = Open,
                 MonthlyFee = 0m
             };
             await repository.AddAsync(savingsAccount);
@@ -78,8 +78,8 @@ namespace Infinia.Core.Services
         {
             var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.Id == id);
             var savingsAccount = await repository.All<Account>().FirstOrDefaultAsync(x => x.EncryptedIBAN == account.EncryptedIBAN);
-            account.Status = Inactive;
-            savingsAccount.Status = Inactive;
+            account.Status = Closed;
+            savingsAccount.Status = Closed;
             await repository.SaveChangesAsync();
         }
 

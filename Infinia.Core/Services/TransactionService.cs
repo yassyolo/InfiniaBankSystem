@@ -5,6 +5,7 @@ using Infinia.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using static Infinia.Core.Constants.TransactionTypeConstants;
 using static Infinia.Core.Constants.TransactionFeeConstants;
+using static Infinia.Core.Constants.AccountTypeConstants;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using System.Text;
 
@@ -34,7 +35,7 @@ namespace Infinia.Core.Services
                 {
                     Type = x.Type,
                     Name = x.Name,
-                    Balance = x.Balance,
+                    Balance = x.Balance.ToString(),
                     AccountId = x.Id,
                     IBAN = encryptionService.Decrypt(x.EncryptedIBAN)
                 }).ToListAsync();
@@ -213,6 +214,19 @@ namespace Infinia.Core.Services
             receiverAccount.Balance += model.Amount;
             await repository.AddAsync(transactionToAnotherBank);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AvailableAccountViewModels>> GetAvailableCurrentAccountsForUserAsync(string userId)
+        {
+            return await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId && x.Type == Current)
+                .Select(x => new AvailableAccountViewModels()
+                {
+                    Type = x.Type,
+                    Name = x.Name,
+                    Balance = x.Balance.ToString(),
+                    AccountId = x.Id,
+                    IBAN = encryptionService.Decrypt(x.EncryptedIBAN)
+                }).ToListAsync();
         }
     }
 }
