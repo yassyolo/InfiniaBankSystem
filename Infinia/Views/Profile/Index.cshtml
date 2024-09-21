@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;  // Or specify a layout if you are using one
+    Layout = null;  
 }
 
 <!DOCTYPE html>
@@ -22,10 +22,10 @@
 
             <nav class="content__navigation">
                 <div class="content__navigation-item">
-                    <a href="#!" class="content__navigation-item-ft">
+                    @* <a href="#!" class="content__navigation-item-ft">
                         <i class="ri-corner-right-up-line"></i>
                         <span class="content__navigation-item-ft-title">Предложения</span>
-                    </a>
+                    </a> *@
 
                     <a href="#!" class="content__navigation-item-ft">
                         <i class="ri-corner-right-up-line"></i>
@@ -39,11 +39,11 @@
                 </div>
 
                 <div class="content__navigation-item">
-                    <a href="@Url.Action("Login", "Profile")" class="content__navigation-item-ft button">
+                    <a asp-action="Login" asp-controller="Profile" class="content__navigation-item-ft button">
                         <span>Вход</span>
                     </a>
 
-                    <a href="@Url.Action("Register", "Profile")" class="content__navigation-item-ft button">
+                    <a asp-action="Register" asp-controller="Profile" class="content__navigation-item-ft button">
                         <span>Регистрация</span>
                     </a>
                 </div>
@@ -57,18 +57,18 @@
                 <div class="content__main-info active">
                     <h1 class="content__main-info-heading">Infinia<br><span class="content__main-info-heading-span">Bank System</span></h1>
                     <p class="content__main-info-text">Добре дошли в нашата банкова система! Управлявайте финансите си лесно и сигурно.</p>
-                    <a href="@Url.Action("Register", "Profile")" class="content__main-info-button">Отворете вашата сметка сега</a>
+                    <a asp-action="Register" asp-controller="Profile" class="content__main-info-button">Отворете вашата сметка сега</a>
                 </div>
 
                 <div class="content__main-info contentt">
-                    <h1 class="content__main-info-heading">UnicreditBulbank<br><span class="content__main-info-heading-span">Website</span></h1>
-                    <p class="content__main-info-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis provident facilis laborum, repellendus suscipit consequatur ad maiores necessitatibus amet deserunt, ducimus et corrupti ipsum laudantium quasi ab autem a eos.</p>
-                    <a href="@Url.Action("Register", "Profile")" class="content__main-info-button">Отворете вашата сметка сега</a>
+                    <h1 class="content__main-info-heading">Infinia<br><span class="content__main-info-heading-span">Bank System</span></h1>
+                    <p class="content__main-info-text">С нас всяка финансова стъпка е по-лесна – нека ви покажем как!</p>
+                    <a asp-action="Register" asp-controller="Profile" class="content__main-info-button">Отворете вашата сметка сега</a>
                 </div>
 
                 <div class="content__main-info contentt">
-                    <h1 class="content__main-info-heading">DSK Bank<br><span class="content__main-info-heading-span">Application</span></h1>
-                    <p class="content__main-info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus adipisci quaerat nam nihil placeat corrupti quis soluta voluptas a cupiditate ipsa asperiores atque, doloribus expedita labore minus aut, veritatis in?</p>
+                    <h1 class="content__main-info-heading">Infinia<br><span class="content__main-info-heading-span">Bank System</span></h1>
+                    <p class="content__main-info-text">Време е да превърнете мечтите си в реалност – ние сме тук, за да ви помогнем по пътя!</p>
                     <a href="#" class="content__main-info-button">Отворете вашата сметка сега</a>
                 </div>
 

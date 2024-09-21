@@ -1,7 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Registration Confirmation";
+﻿
+@{
+    Layout = null;
 }
-<h1>Registration Successful!</h1>
-<p>A confirmation email has been sent to your registered email</p>
-<p>Please check your inbox and click the confirmation link to activate your account.</p>
-<p>If you don't see the email after a few minutes, please check your spam folder.</p>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>RegistartionSuccessful - Infinia</title>
+</head>
+<body>
+    <header>
+        <div id="main-page">
+            <div class="navigation">
+                <div class="navigation__item navigation__item-ft">
+                    <a href="~/index.html" class="navigation__item-ft-name">Infinia</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="register-section" class="register-section">
+            <h2>Успешна регистрация</h2>
+            <form >
+                <div class="form-group">
+                    <p>Изпратен е имейл за потвърждение на въведения от Вас имейл адрес!</p>
+                    <p>Моля, проверете своята входяща кутия и кликнете на линка за потвърждение, за да ативирате профила си.</p>
+                    <p>Ако не получите имейл от нас до няколко минути, провереде папката "Спам".</p>
+                </div>
+               
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Infinia created by Albiceleste.</p>
+    </footer>
+
+    @section Scripts
+    {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>
+

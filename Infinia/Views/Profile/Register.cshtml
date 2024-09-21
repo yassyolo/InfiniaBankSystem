@@ -25,72 +25,83 @@
     <main>
         <div id="register-section" class="register-section">
             <h2>Регистрация</h2>
-            <form asp-action="Register" method="post">
+            <form asp-action="Register" asp-controller="Profile" method="post">
+                <div class="form-group">
+                    <label asp-for="Username">Потребителско име</label>
+                    <input asp-for="Username" class="form-control" placeholder="Въведете потребителско име.." />
+                    <span asp-validation-for="Username" class="validation"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="Email">Имейл</label>
-                    <input asp-for="Email" class="form-control" placeholder="Въведете вашия имейл" />
+                    <input asp-for="Email" class="form-control" placeholder="Въведете Вашия имейл.." />
                     <span asp-validation-for="Email" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password">Парола</label>
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Въведете желаната от вас парола" />
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Въведете желаната от Вас парола.." />
                     <span asp-validation-for="Password" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ConfirmPassword">Потвърдете паролата</label>
-                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Потвърдете вашата парола" />
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Потвърдете Вашата нова парола.." />
                     <span asp-validation-for="ConfirmPassword" class="validation"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Name">Име и фамилия</label>
-                    <input asp-for="Name" class="form-control" placeholder="Въведете вашето име и фамилия" />
+                    <label asp-for="Name">Пълно име</label>
+                    <input asp-for="Name" class="form-control" placeholder="Въведете Вашето име по лична карта.." />
                     <span asp-validation-for="Name" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="SSN">ЕГН</label>
-                    <input asp-for="SSN" class="form-control" placeholder="Въведете вашето ЕГН" />
+                    <input asp-for="SSN" class="form-control" placeholder="Въведете Вашето ЕГН.." />
                     <span asp-validation-for="SSN" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Country">Държава</label>
-                    <input asp-for="Country" class="form-control" placeholder="Въведете вашата държава" />
+                    <input asp-for="Country" class="form-control" placeholder="Въведете Вашата държава.." />
                     <span asp-validation-for="Country" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="City">Град</label>
-                    <input asp-for="City" class="form-control" placeholder="Въведете вашия град" />
+                    <input asp-for="City" class="form-control" placeholder="Въведете Вашия град.." />
                     <span asp-validation-for="City" class="validation"></span>
                 </div>
                 <!-- New fields -->
                 <div class="form-group">
                     <label asp-for="Street">Улица</label>
-                    <input asp-for="Street" class="form-control" placeholder="Въведете вашия адрес" />
+                    <input asp-for="Street" class="form-control" placeholder="Въведете Вашия адрес.." />
                     <span asp-validation-for="Street" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="PostalCode">Пощенски код</label>
-                    <input asp-for="PostalCode" class="form-control" placeholder="Въведете вашия пощенски код" />
+                    <input asp-for="PostalCode" class="form-control" placeholder="Въведете пощенския код на града Ви.." />
                     <span asp-validation-for="PostalCode" class="validation"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="IdentityCardSex">Пол</label>
-                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете вашия пол" />
-                    <span asp-validation-for="IdentityCardSex" class="validation"></span>
-                </div>
+                
                 <div class="form-group">
                     <label asp-for="IdentityCardNumber">Лична карта №</label>
-                    <input asp-for="IdentityCardNumber" class="form-control" placeholder="Въведете № на вашата лична карта" />
+                    <input asp-for="IdentityCardNumber" class="form-control" placeholder="Въведете № на Вашата лична карта.." />
                     <span asp-validation-for="IdentityCardNumber" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="IdentityCardIssueDate">Лична карта издадена на (**дата **месец ****год)</label>
-                    <input asp-for="IdentityCardIssueDate" class="form-control" placeholder="Въведете датата на която е издадена личната Ви карта" />
+                    <input asp-for="IdentityCardIssueDate" class="form-control" placeholder="Въведете датата, на която е издадена личната Ви карта.." />
                     <span asp-validation-for="IdentityCardIssueDate" class="validation"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="IdentityCardIssuer">Лична карта издадена от (гр. .......)</label>
-                    <input asp-for="IdentityCardIssuer" class="form-control" placeholder="Въведете кой е издал вашата лична карта" />
+                    <label asp-for="IdentityCardIssuer">Издадел на личната карта</label>
+                    <input asp-for="IdentityCardIssuer" class="form-control" placeholder="Въведете издателя на Вашата лична карта.." />
                     <span asp-validation-for="IdentityCardIssuer" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardSex">Пол</label>
+                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете Вашия пол" />
+                    <span asp-validation-for="IdentityCardSex" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardNationality">Националност</label>
+                    <input asp-for="IdentityCardNationality" class="form-control" placeholder="Въведете Вашата националност" />
+                    <span asp-validation-for="IdentityCardNationality" class="validation"></span>
                 </div>
                 <button type="submit" class="register-btn">Register</button>
             </form>
@@ -101,8 +112,10 @@
         <p>&copy; 2024 Infinia created by Albiceleste.</p>
     </footer>
 
-    @section Scripts {
-        <script src="~/js/validation.js"></script>
+    @section Scripts
+    {
+        <partial name="_ValidationScriptsPartial" />
     }
 </body>
 </html>
+

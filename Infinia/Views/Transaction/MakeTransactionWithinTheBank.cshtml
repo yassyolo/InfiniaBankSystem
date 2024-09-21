@@ -1,21 +1,20 @@
-﻿@model Infinia.Core.ViewModels.ProfileDetailsViewModel
+﻿@model Infinia.Core.ViewModels.Transaction.TransactionWithinTheBankViewModel
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Общи настройки - Infinia</title>
+    <title>Между мои сметки - Infinia</title>
     <!-- Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Начално меню -->
+    <!-- Навигационен бар -->
     <nav class="navbar navbar-expand-lg main-nav">
         <a class="navbar-brand logo" asp-controller="Home" asp-action="Index">Infinia</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,42 +67,63 @@
         </div>
     </nav>
 
-    <!-- Основно съдържание за Общи настройки -->
-    <div class="container mt-5">
-        <h2>Общи настройки</h2>
-
-        <div class="row">
-            <div class="col-md-4">
-                <!-- Секция за телефон и e-mail -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Потребителско име и E-mail</h5>
-                        <p class="card-text"><b>@Model.Username</b></p>
-                        <p class="card-text"><b>@Model.Email</b> </p>
-                        <p class="card-text"><b>@Model.Name</b></p>
-                    </div>
-                </div>
+    <!-- ТУК ДОБАВЯМЕ ФОРМАТА -->
+    <div class="container transfer-form-container mt-5">
+        <h2 class="text-center">Нареждане за превод по сметка в Infinia</h2>
+        <form method="post" asp-controller="Transaction" asp-action="TransactionWithinTheBank">
+            <div class="form-group">
+                <label asp-for="AccountId">От сметка:</label>
+                <select asp-for="AccountId" class="form-control">
+                    <option value="">Изберете сметка</option>
+                    @foreach (var account in Model.AvailableAccounts)
+                    {
+                        <option value="@account.AccountId">@account.Name - @account.IBAN</option>
+                    }
+                </select>
+                <span asp-validation-for="AccountId" class="text-danger"></span>
             </div>
 
-            <div class="col-md-8">
-                <!-- Най-често използвани настройки -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Най-често използвани настройки</h5>
-                        <ul class="list-group">
-                            <li class="list-group-item"><a asp-action="ChangePassword" asp-controller="Profile">Промяна на парола</a></li>
-                            <li class="list-group-item"><a asp-action="ChangeUsername" asp-controller="Profile">Промяна на потребителско име</a></li>
-                            <li class="list-group-item"><a asp-action="ForgotPassword" asp-controller="Profile">Забравена парола</a></li>
-                            <li class="list-group-item"><a asp-action="Logout" asp-controller="Profile">Логаут</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label asp-for="ReceiverName">Име на получател:</label>
+                <input asp-for="ReceiverName" class="form-control" placeholder="Въведете пълното име на получателя.." />
+                <span asp-validation-for="ReceiverName" class="text-danger"></span>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label asp-for="ReceiverIBAN">IBAN:</label>
+                <input asp-for="ReceiverIBAN" class="form-control" placeholder="Въведете IBAN на получателя.." />
+                <span asp-validation-for="ReceiverIBAN" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount">Сума:</label>
+                <input asp-for="Amount" class="form-control" placeholder="Въведете сума.." />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Описание:</label>
+                <input asp-for="Description" class="form-control" placeholder="Въведете описание.." />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Reason">Основание:</label>
+                <input asp-for="Reason" class="form-control" placeholder="Въведете основание.." />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Изпрати превод</button>
+        </form>
+            
     </div>
 
-    <!-- Bootstrap JS и jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  
 </body>
 </html>
+@section Scripts
+{
+    <!-- Bootstrap JS и jQuery -->
+    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> *@
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,17 +1,18 @@
-﻿@model Infinia.Core.ViewModels.ProfileDetailsViewModel
+﻿
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Общи настройки - Infinia</title>
+    <title>Преводи - Infinia</title>
     <!-- Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/main.css">
+    <!-- Font Awesome за иконки -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -68,42 +69,46 @@
         </div>
     </nav>
 
-    <!-- Основно съдържание за Общи настройки -->
+    <!-- Основно съдържание -->
     <div class="container mt-5">
-        <h2>Общи настройки</h2>
-
+        <h2 class="text-center mb-4">Нов превод</h2>
         <div class="row">
+            <!-- Първа колона -->
             <div class="col-md-4">
-                <!-- Секция за телефон и e-mail -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Потребителско име и E-mail</h5>
-                        <p class="card-text"><b>@Model.Username</b></p>
-                        <p class="card-text"><b>@Model.Email</b> </p>
-                        <p class="card-text"><b>@Model.Name</b></p>
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-university"></i> Между мои сметки</h5>
+                        <p class="card-text">Превод между мои сметки в Infinia.</p>
+                        <a asp-controller="Transaction" asp-action="MakeTransactionBetweenMyAccounts" class="btn btn-outline-light">Създай нов превод</a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8">
-                <!-- Най-често използвани настройки -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Най-често използвани настройки</h5>
-                        <ul class="list-group">
-                            <li class="list-group-item"><a asp-action="ChangePassword" asp-controller="Profile">Промяна на парола</a></li>
-                            <li class="list-group-item"><a asp-action="ChangeUsername" asp-controller="Profile">Промяна на потребителско име</a></li>
-                            <li class="list-group-item"><a asp-action="ForgotPassword" asp-controller="Profile">Забравена парола</a></li>
-                            <li class="list-group-item"><a asp-action="Logout" asp-controller="Profile">Логаут</a></li>
-                        </ul>
+            <!-- Втора колона -->
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-money-check"></i> По сметка в Infinia</h5>
+                        <p class="card-text">Превод към клиент в Infinia.</p>
+                        <a asp-controller="Transaction" asp-action="MakeTransactionWithinTheBank" class="btn btn-outline-light">Създай нов превод</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Трета колона -->
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-landmark"></i> Междубанков - лева</h5>
+                        <p class="card-text">Превод по сметка в друга банка в България.</p>
+                        <a asp-controller="Transaction" asp-action="MakeTransactionToAnotherBank" class="btn btn-outline-light">Създай нов превод</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row">
 
-    <!-- Bootstrap JS и jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap JS и jQuery -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

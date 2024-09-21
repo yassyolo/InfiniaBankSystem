@@ -1,41 +1,123 @@
 ﻿@model Infinia.Core.ViewModels.ChangeUsernameViewModel
 @{
-    ViewData["Title"] = "Change Username";
+    Layout = null;
 }
 
-<h1 class="text-center">@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смяна на потребителско име - Infinia</title>
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигационен бар -->
+    <nav class="navbar navbar-expand-lg main-nav">
+        <a class="navbar-brand logo" asp-controller="Home" asp-action="Index">Infinia</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+                <!-- Dropdown за "Средства" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="fundsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Средства
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="fundsDropdown">
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Index">Проверка на сметки</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Кредити" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="loansDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Кредити
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="loansDropdown">
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="CurrentLoans">Моите кредити</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="ChooseLoanType">Заявка за кредит</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="LoanApplicationHistory">История на заявките за кредити</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Преводи" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="transfersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преводи
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="transfersDropdown">
+                        <a class="dropdown-item" asp-controller="Transaction" asp-action="Index">Нов превод</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Настройки" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Настройки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <section>
-            <form asp-action="ChangeUsername" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-floating mb-3">
-                    <input asp-for="CurrentUsername" class="form-control" placeholder="Current Username" />
-                    <label asp-for="CurrentUsername">Current Username</label>
-                    <span asp-validation-for="CurrentUsername" class="text-danger"></span>
+    <!-- Смяна на потребителско име -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center title">Смяна на потребителско име</h1>
+                <p class="text-center subtitle">За да смените потребителското име, попълнете нужните полета.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="ChangeUsername" asp-controller="Profile" method="post" id="changeUsernameForm">
+                            <div class="form-group">
+                                <label asp-for="CurrentUsername">Текущо потребителско име:</label>
+                                <input asp-for="CurrentUsername" class="form-control" placeholder="Въведете текущото потребителско име" required />
+                                <span asp-validation-for="CurrentUsername" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NewUsername">Ново потребителско име:</label>
+                                <input asp-for="NewUsername" class="form-control" placeholder="Въведете новото потребителско име" required />
+                                <span asp-validation-for="NewUsername" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ConfirmUsername">Потвърдете новото потребителско име:</label>
+                                <input asp-for="ConfirmUsername" class="form-control" placeholder="Потвърдете новото потребителско име" required />
+                                <span asp-validation-for="ConfirmUsername" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Смени потребителското име</button>
+                            <div id="successMessage" class="alert alert-success text-center" style="display: none;">
+                                <span>&#10004;</span> Успешно сменихте потребителското име!
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <div class="form-floating mb-3">
-                    <input asp-for="NewUsername" class="form-control" placeholder="New Username" />
-                    <label asp-for="NewUsername">New Username</label>
-                    <span asp-validation-for="NewUsername" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input asp-for="ConfirmUsername" class="form-control" placeholder="Confirm New Username" />
-                    <label asp-for="ConfirmUsername">Confirm New Username</label>
-                    <span asp-validation-for="ConfirmUsername" class="text-danger"></span>
-                </div>
-
-                <div>
-                    <button type="submit" class="btn btn-primary w-100">Change Username</button>
-                </div>
-            </form>
-        </section>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+ @*    <script>
+        // Логика за показване на съобщението за успешна смяна
+        document.getElementById('changeUsernameForm').addEventListener('submit', function (event) {
+            // Optional: You can add custom validation logic here
+            event.preventDefault(); // Prevents the form from submitting
+            document.getElementById('successMessage').style.display = 'block';
+            // Here you can also call AJAX to submit the form data if needed
+        });
+    </script> *@
+</body>
+</html>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

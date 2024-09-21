@@ -1,0 +1,145 @@
+﻿@model Infinia.Core.ViewModels.BankAdministrator.BranchAnalysisSelectedBranchAndIntervalViewModel
+
+@{
+    ViewData["Title"] = "Branch Analysis";
+}
+
+<h2>Branch Analysis</h2>
+
+<form id="branchAnalysisForm">
+    <div>
+        <label for="branchName">Select Branch:</label>
+        <input type="text" id="branchName" name="BranchName" required />
+    </div>
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="StartInterval" required />
+    </div>
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="EndInterval" required />
+    </div>
+    <button type="submit">Analyze</button>
+</form>
+
+<div id="analysisResults" style="display:none;">
+    <h3>All Time Analysis</h3>
+    <div id="allTimeChart" style="max-width: 600px; height: 300px;"></div>
+    <div id="allTimeBalanceChart" style="max-width: 600px; height: 300px;"></div>
+
+    <h3>Selected Interval Analysis</h3>
+    <div id="intervalChart" style="max-width: 600px; height: 300px;"></div>
+    <div id="intervalBalanceChart" style="max-width: 600px; height: 300px;"></div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.getElementById('branchAnalysisForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const branchName = document.getElementById('branchName').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            const response = await fetch(`@Url.Action("GetBranchAnalysis")?branchName=${branchName}&startDate=${startDate}&endDate=${endDate}`);
+            const data = await response.json();
+
+            visualizeData(data);
+            document.getElementById('analysisResults').style.display = 'block';
+        });
+
+        function visualizeData(data) {
+            const accountLabels = ['Total Accounts', 'Active Accounts', 'Inactive Accounts', 'Total Transaction Volume'];
+            const balanceLabels = ['Total Balance', 'Average Balance'];
+
+            // All Time Chart
+            const allTimeOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                series: [{
+                    name: 'All Time Analysis',
+                    data: [
+                        data.allTimeStatistics.totalAccounts,
+                        data.allTimeStatistics.activeAccounts,
+                        data.allTimeStatistics.inactiveAccounts,
+                        data.allTimeStatistics.totalTransactionVolume
+                    ]
+                }],
+                xaxis: {
+                    categories: accountLabels
+                }
+            };
+
+            const allTimeChart = new ApexCharts(document.querySelector("#allTimeChart"), allTimeOptions);
+            allTimeChart.render();
+
+            // All Time Balance Chart
+            const allTimeBalanceOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                series: [{
+                    name: 'All Time Balance Analysis',
+                    data: [
+                        data.allTimeStatistics.totalBalance,
+                        data.allTimeStatistics.averageBalance
+                    ]
+                }],
+                xaxis: {
+                    categories: balanceLabels
+                }
+            };
+
+            const allTimeBalanceChart = new ApexCharts(document.querySelector("#allTimeBalanceChart"), allTimeBalanceOptions);
+            allTimeBalanceChart.render();
+
+            // Selected Interval Chart
+            const intervalOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                series: [{
+                    name: 'Selected Interval Analysis',
+                    data: [
+                        data.selectedIntervalStatistics.totalAccounts,
+                        data.selectedIntervalStatistics.activeAccounts,
+                        data.selectedIntervalStatistics.inactiveAccounts,
+                        data.selectedIntervalStatistics.totalTransactionVolume
+                    ]
+                }],
+                xaxis: {
+                    categories: accountLabels
+                }
+            };
+
+            const intervalChart = new ApexCharts(document.querySelector("#intervalChart"), intervalOptions);
+            intervalChart.render();
+
+            // Selected Interval Balance Chart
+            const intervalBalanceOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                series: [{
+                    name: 'Selected Interval Balance Analysis',
+                    data: [
+                        data.selectedIntervalStatistics.totalBalance,
+                        data.selectedIntervalStatistics.averageBalance
+                    ]
+                }],
+                xaxis: {
+                    categories: balanceLabels
+                }
+            };
+
+            const intervalBalanceChart = new ApexCharts(document.querySelector("#intervalBalanceChart"), intervalBalanceOptions);
+            intervalBalanceChart.render();
+        }
+    </script>
+}
