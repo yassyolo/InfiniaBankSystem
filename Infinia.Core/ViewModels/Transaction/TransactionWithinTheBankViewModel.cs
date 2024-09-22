@@ -10,14 +10,11 @@ namespace Infinia.Core.ViewModels.Transaction
         [StringLength(ReceiverNameMaxLength, MinimumLength = ReceiverNameMinLength, ErrorMessage = LengthErrorMessage)]
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string ReceiverName { get; set; } = string.Empty;
-
-        [StringLength(IBANMaxLength, MinimumLength = EncryptedReceiverIBANMinLength, ErrorMessage = LengthErrorMessage)]
+      
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         public string ReceiverIBAN { get; set; } = null!;
-
         
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        //[Range(AmountMaxValue, AmountMinValue, ErrorMessage = InvalidAmountErrorMessage)]
         public decimal Amount { get; set; }
 
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]

@@ -94,8 +94,8 @@
             public const int DescriptionMinLength = 0;
             public const int ReasonMaxLength = 100;
             public const int ReasonMinLength = 0;
-            public const double AmountMinValue = 0;
-            public const double AmountMaxValue = 100000;
+            public const decimal AmountMinValue = 0;
+            public const decimal AmountMaxValue = 100000;
             public const int IBANMaxLength = 18;
             public const int EncryptedReceiverIBANMinLength = 18;
             public const int BicMaxLength = 4;

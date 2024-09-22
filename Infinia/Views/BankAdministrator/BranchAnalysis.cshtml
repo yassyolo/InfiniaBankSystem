@@ -50,7 +50,7 @@
         });
 
         function visualizeData(data) {
-            const accountLabels = ['Total Accounts', 'Active Accounts', 'Inactive Accounts', 'Total Transaction Volume'];
+            const accountLabels = ['Total Accounts', 'Open Accounts', 'Closed Accounts', 'Total Transaction Volume'];
             const balanceLabels = ['Total Balance', 'Average Balance'];
 
             // All Time Chart
@@ -63,8 +63,8 @@
                     name: 'All Time Analysis',
                     data: [
                         data.allTimeStatistics.totalAccounts,
-                        data.allTimeStatistics.activeAccounts,
-                        data.allTimeStatistics.inactiveAccounts,
+                        data.allTimeStatistics.openAccounts,
+                        data.allTimeStatistics.closedAccounts,
                         data.allTimeStatistics.totalTransactionVolume
                     ]
                 }],
@@ -107,8 +107,8 @@
                     name: 'Selected Interval Analysis',
                     data: [
                         data.selectedIntervalStatistics.totalAccounts,
-                        data.selectedIntervalStatistics.activeAccounts,
-                        data.selectedIntervalStatistics.inactiveAccounts,
+                        data.selectedIntervalStatistics.openAccounts,
+                        data.selectedIntervalStatistics.closedAccounts,
                         data.selectedIntervalStatistics.totalTransactionVolume
                     ]
                 }],
@@ -143,3 +143,85 @@
         }
     </script>
 }
+<style>
+    /* General styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2, h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Form container styling */
+    #branchAnalysisForm {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        #branchAnalysisForm div {
+            margin-bottom: 15px;
+        }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input[type="text"], input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+    /* Chart container styling */
+    #analysisResults {
+        max-width: 1200px;
+        margin: 40px auto 0;
+    }
+
+        #analysisResults h3 {
+            margin-top: 40px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+    /* Chart grid styling */
+    #allTimeChart, #allTimeBalanceChart, #intervalChart, #intervalBalanceChart {
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    </style>

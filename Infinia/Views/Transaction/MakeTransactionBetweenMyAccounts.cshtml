@@ -1,7 +1,8 @@
-﻿@model Infinia.Core.ViewModels.Transaction.TransactionWithinTheBankViewModel
+﻿@model Infinia.Core.ViewModels.Transaction.TransactionBetweenMyAccountsViewModel
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -67,63 +68,57 @@
         </div>
     </nav>
 
-    <!-- ТУК ДОБАВЯМЕ ФОРМАТА -->
     <div class="container transfer-form-container mt-5">
-        <h2 class="text-center">Нареждане за превод по сметка в Infinia</h2>
-        <form method="post" asp-controller="Transaction" asp-action="MakeTransactionWithinTheBank">
+        <h2 class="text-center">Създай нов превод между мои сметки</h2>
+        <form asp-action="MakeTransactionBetweenMyAccounts" asp-controller="Transaction" method="post">
             <div class="form-group">
-                <label asp-for="AccountId">От сметка:</label>
-                <select asp-for="AccountId" class="form-control">
-                    <option value="">Изберете сметка:</option>
+                <label asp-for="AccountIdFromWhichWeWantToSendMoney">От сметка:</label>
+                <select asp-for="AccountIdFromWhichWeWantToSendMoney" class="form-control" required>
+                    <option value="">Изберете сметка, от която да пратите пари..</option>
                     @foreach (var account in Model.AvailableAccounts)
                     {
                         <option value="@account.AccountId">@account.Name - @account.IBAN</option>
                     }
                 </select>
-                <span asp-validation-for="AccountId" class="text-danger"></span>
+                <span asp-validation-for="AccountIdFromWhichWeWantToSendMoney" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="ReceiverName">Име на получател:</label>
-                <input asp-for="ReceiverName" class="form-control" placeholder="Въведете пълното име на получателя.." />
-                <span asp-validation-for="ReceiverName" class="text-danger"></span>
+                <label asp-for="AccountIdFromWhichWeWantToReceiveMoney">Към сметка:</label>
+                <select asp-for="AccountIdFromWhichWeWantToReceiveMoney" class="form-control" required>
+                    <option value="">Изберете сметка, по която да получите пари:</option>
+                    @foreach (var account in Model.AvailableAccounts)
+                    {
+                        <option value="@account.AccountId">@account.Name - @account.IBAN</option>
+                    }
+                </select>
+                <span asp-validation-for="AccountIdFromWhichWeWantToReceiveMoney" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="ReceiverIBAN">IBAN на получател:</label>
-                <input asp-for="ReceiverIBAN" class="form-control" placeholder="Въведете IBAN на получателя.." />
-                <span asp-validation-for="ReceiverIBAN" class="text-danger"></span>
-            </div>
-
             <div class="form-group">
                 <label asp-for="Amount">Сума:</label>
-                <input asp-for="Amount" class="form-control" placeholder="Въведете сума.." />
+                <input type="number" asp-for="Amount" class="form-control" placeholder="Въведете сума.." required>
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Description">Описание:</label>
-                <input asp-for="Description" class="form-control" placeholder="Въведете описание (по желание).." />
+                <input type="text" asp-for="Description" class="form-control" placeholder="Въведете описаниe (по желание)..">
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Reason">Основание:</label>
-                <input asp-for="Reason" class="form-control" placeholder="Въведете основание.." />
+                <input type="text" asp-for="Reason" class="form-control" placeholder="Въведете основание.." required>
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Изпрати превод</button>
         </form>
-            
     </div>
-   
-  
+
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
 @section Scripts
-{
-    <!-- Bootstrap JS и jQuery -->
-    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> *@
+ {
     <partial name="_ValidationScriptsPartial" />
 }

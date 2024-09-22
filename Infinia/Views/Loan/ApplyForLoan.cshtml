@@ -14,121 +14,341 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar -->
+    <!-- Навигационен бар -->
     <nav class="navbar navbar-expand-lg main-nav">
-        <a class="navbar-brand logo" href="~/mainpage">Infinia</a>
+        <a class="navbar-brand logo" asp-controller="Home" asp-action="Index">Infinia</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
-                <!-- Funds Dropdown -->
+                <!-- Dropdown за "Средства" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="fundsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Средства
                     </a>
                     <div class="dropdown-menu" aria-labelledby="fundsDropdown">
-                        <a class="dropdown-item" href="#">Проверка на баланс</a>
-                        <a class="dropdown-item" href="#">Транзакции</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Index">Проверка на сметки</a>
                     </div>
                 </li>
-                <!-- Loans Dropdown -->
+                <!-- Dropdown за "Кредити" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="loansDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Кредити
                     </a>
                     <div class="dropdown-menu" aria-labelledby="loansDropdown">
-                        <a class="dropdown-item" href="#">Моите кредити</a>
-                        <a class="dropdown-item" href="~/applyforloan">Заявка за кредит</a>
-                        <a class="dropdown-item" href="#">История на заявките за кредит</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="CurrentLoans">Моите кредити</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="ChooseLoanType">Заявка за кредит</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="LoanApplicationHistory">История на заявките за кредити</a>
                     </div>
                 </li>
-                <!-- Transfers Dropdown -->
+                <!-- Dropdown за "Преводи" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transfersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Преводи
                     </a>
                     <div class="dropdown-menu" aria-labelledby="transfersDropdown">
-                        <a class="dropdown-item" href="~/newtranslation">Нов превод</a>
+                        <a class="dropdown-item" asp-controller="Transaction" asp-action="Index">Нов превод</a>
                     </div>
                 </li>
-                <!-- Settings Dropdown -->
+                <!-- Dropdown за "Настройки" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Настройки
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <a class="dropdown-item" href="~/generalsettings">Общи</a>
-                        <a class="dropdown-item" href="~/changeusername">Потребителско име</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Loan Section -->
-    <div class="loan-cards-container mt-5">
-        <h2 class="text-center mb-4">Видове кредити и лихви 💼</h2>
-        <div class="row">
-            <!-- Consumer Loan -->
-            <div class="col-md-4">
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Потребителски кредит 🏠</h5>
-                        <p class="card-text">Лихва: 8%</p>
-                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Car Loan -->
-            <div class="col-md-4">
-                <div class="card text-white bg-info mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Кредит за кола 🚗</h5>
-                        <p class="card-text">Лихва: 4%</p>
-                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Mortgage Loan -->
-            <div class="col-md-4">
-                <div class="card text-white bg-success mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Ипотечен кредит 🏡</h5>
-                        <p class="card-text">Лихва: 7%</p>
-                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <!-- Business Loan -->
-            <div class="col-md-6">
-                <div class="card text-white bg-warning mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Бизнес кредит 📊</h5>
-                        <p class="card-text">Лихва: 5%</p>
-                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
+    <div class="container apply-loan-form mt-5">
+        <h2 class="text-center">Заявка за кредит</h2>
+        <form asp-action="SubmitLoanApplication" asp-controller="Loan">
+            <!-- Лични данни -->
+            <div class="form-section">
+                <h4>1. Лични данни</h4>
+
+                <div class="form-group">
+                    <label asp-for="SSN">ЕГН:</label>
+                    <input asp-for="SSN" class="form-control" placeholder="Въведете Вашето ЕГН.." />
+                    <span asp-validation-for="SSN" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IdentityCardNumber">Лична карта №</label>
+                    <input asp-for="IdentityCardNumber" class="form-control" placeholder="Въведете № на Вашата лична карта.." />
+                    <span asp-validation-for="IdentityCardNumber" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardIssueDate">Лична карта издадена на (**дата **месец ****год)</label>
+                    <input asp-for="IdentityCardIssueDate" class="form-control" placeholder="Въведете датата, на която е издадена личната Ви карта.." />
+                    <span asp-validation-for="IdentityCardIssueDate" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardIssuer">Издадел на личната карта</label>
+                    <input asp-for="IdentityCardIssuer" class="form-control" placeholder="Въведете издателя на Вашата лична карта.." />
+                    <span asp-validation-for="IdentityCardIssuer" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardSex">Пол</label>
+                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете Вашия пол" />
+                    <span asp-validation-for="IdentityCardSex" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityCardNationality">Националност</label>
+                    <input asp-for="IdentityCardNationality" class="form-control" placeholder="Въведете Вашата националност" />
+                    <span asp-validation-for="IdentityCardNationality" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Country">Държава</label>
+                    <input asp-for="Country" class="form-control" placeholder="Въведете Вашата държава.." />
+                    <span asp-validation-for="Country" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City">Град</label>
+                    <input asp-for="City" class="form-control" placeholder="Въведете Вашия град.." />
+                    <span asp-validation-for="City" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Street">Улица</label>
+                    <input asp-for="Street" class="form-control" placeholder="Въведете Вашия адрес.." />
+                    <span asp-validation-for="Street" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostalCode">Пощенски код</label>
+                    <input asp-for="PostalCode" class="form-control" placeholder="Въведете пощенския код на града Ви.." />
+                    <span asp-validation-for="PostalCode" class="validation"></span>
+                </div>
+
+            </div>
+
+
+            <!-- Основна информация -->
+            <div class="form-section">
+                <h4>2. Основна информация</h4>
+                <div class="form-group">
+                    <label asp-for="LoanAmount">Размер на кредита:</label>
+                    <input asp-for="LoanAmount" class="form-control" placeholder="Въведете сума.." />
+                    <span asp-validation-for="LoanAmount" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LoanTermMonths">Период на погасяване (в месеци):</label>
+                    <input asp-for="LoanTermMonths" class="form-control" placeholder="Въведете брой месеци, за които искате да погасите кредита.." />
+                    <span asp-validation-for="LoanTermMonths" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LoanRepaymentNumber">Число за погасяване:</label>
+                    <input asp-for="LoanRepaymentNumber" class="form-control" placeholder="Въведете число от месеца за погасяване на кредита.." />
+                    <span asp-validation-for="LoanRepaymentNumber" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AccountIBAN">IBAN на Вашата сметката за погасяване на кредита:</label>
+                    <input asp-for="AccountIBAN" class="form-control" placeholder="Въведете IBAN" />
+                    <span asp-validation-for="AccountIBAN" class="validation"></span>
                 </div>
             </div>
-            <!-- Education Loan -->
-            <div class="col-md-6">
-                <div class="card text-white bg-danger mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Кредит за образование 🎓</h5>
-                        <p class="card-text">Лихва: 3%</p>
-                        <a href="~/creditsblank" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
+
+            <!-- Образование -->
+            <div class="form-section">
+                <h4>3. Образование</h4>
+                <div class="form-group">
+                    <label for="education">Ниво на образование:</label>
+                    <select class="form-control" id="education" required>
+                        <option value="1">Основно</option>
+                        <option value="2">Средно</option>
+                        <option value="3">Бакалавър</option>
+                        <option value="4">Магистър</option>
+                        <option value="5">Доктор</option>
+                    </select>
+                    <span asp-validation-for="EducationLevel" class="validation"></span>
                 </div>
             </div>
-        </div>
+
+            <!-- Информация за работодател -->
+            <div class="form-section">
+                <h4>4. Информация за работодател</h4>
+                <div class="form-group">
+                    <label asp-for="EmployerName">Име на работодател:</label>
+                    <input asp-for="EmployerName" class="form-control" id="employer" placeholder="Въведете пълното име на Вашия работодател.." required>
+                    <span asp-validation-for="EmployerName" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Position">Позиция:</label>
+                    <input asp-for="Position" class="form-control" id="position" placeholder="Въведете позиция.." required>
+                    <span asp-validation-for="Position" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="YearsAtJob">Години стаж на позицията:</label>
+                    <input asp-for="YearsAtJob" class="form-control" id="yearsInJob" placeholder="Години стаж при текущия работодател.." required>
+                    <span asp-validation-for="YearsAtJob" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MonthsAtJob">Месеци стаж на позицията:</label>
+                    <input asp-for="MonthsAtJob" class="form-control" id="monthsInJob" placeholder="Месеци стаж при текущия работодател.." required>
+                    <span asp-validation-for="MonthsAtJob" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalWorkExperienceYears">Общ брой години работен опит:</label>
+                    <input asp-for="TotalWorkExperienceYears" class="form-control" id="totalYearsExperience" placeholder="Общ брой години работен опит.." required>
+                    <span asp-validation-for="TotalWorkExperienceYears" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalWorkExperienceMonths">Общ брой месеци работен опит:</label>
+                    <input asp-for="TotalWorkExperienceMonths" class="form-control" id="totalMonthsExperience" placeholder="Общ брой месеци работен опит.." required>
+                    <span asp-validation-for="TotalWorkExperienceMonths" class="validation"></span>
+                </div>
+            </div>
+
+            <!-- Информация за домакинство -->
+            <div class="form-section">
+                <h4>5. Информация за домакинство</h4>
+                <div class="form-group">
+                    <label asp-for="NumberOfHouseholdMembers">Членове на домакинството:</label>
+                    <input asp-for="NumberOfHouseholdMembers" class="form-control" id="householdMembers" placeholder="Брой членове" required>
+                    <span asp-validation-for="NumberOfHouseholdMembers" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dependents">Зависими членове:</label>
+                    <input asp-for="Dependents" class="form-control" id="dependants" placeholder="Брой зависими членове" required>
+                    <span asp-validation-for="Dependents" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MembersWithProvenIncome">Членове с доказан доход:</label>
+                    <input asp-for="MembersWithProvenIncome" class="form-control" id="incomeHouseholdMembers" placeholder="Брой членове с доказан доход" required>
+                    <span asp-validation-for="MembersWithProvenIncome" class="validation"></span>
+                </div>
+            </div>
+
+            <!-- Информация за доходи -->
+            <div class="form-section">
+                <h4>6. Информация за доходи</h4>
+                <div class="form-group">
+                    <label asp-for="NetMonthlyIncome">Нето доход:</label>
+                    <input asp-for="NetMonthlyIncome" class="form-control" id="netIncome" placeholder="Въведете нето доход.." required>
+                    <span asp-validation-for="NetMonthlyIncome" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FixedMonthlyExpenses">Фиксирани месечни разходи:</label>
+                    <input asp-for="FixedMonthlyExpenses" class="form-control" id="fixedExpenses" placeholder="Въведете фиксирани месечни разходи.." required>
+                    <span asp-validation-for="FixedMonthlyExpenses" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PermanentContractIncome">Доход от постоянен договор:</label>
+                    <input asp-for="PermanentContractIncome" class="form-control" id="permanent-contract" placeholder="Въведете доход от постоянен договор.." required>
+                    <span asp-validation-for="PermanentContractIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TemporaryContractIncome">Доход от временен договор:</label>
+                    <input asp-for="TemporaryContractIncome" class="form-control" placeholder="Въведете доход от временен договор.." required>
+                    <span asp-validation-for="TemporaryContractIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CivilContractIncome">Доход от граждански договор:</label>
+                    <input asp-for="CivilContractIncome" class="form-control" placeholder="Въведете доход от граждански договор.." required>
+                    <span asp-validation-for="CivilContractIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BusinessIncome">Доход от бизнес:</label>
+                    <input asp-for="BusinessIncome" class="form-control" placeholder="Въведете доход от бизнес договор.." required>
+                    <span asp-validation-for="BusinessIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PensionIncome">Доход от пенсия:</label>
+                    <input asp-for="PensionIncome" class="form-control" placeholder="Въведете доход от пенсия.." required>
+                    <span asp-validation-for="PensionIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FreelanceIncome">Доход от фрийленс:</label>
+                    <input asp-for="FreelanceIncome" class="form-control" placeholder="Въведете доход от фрийленс.."  required>
+                    <span asp-validation-for="FreelanceIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="OtherIncome">Други доходи:</label>
+                    <input asp-for="OtherIncome" class="form-control" placeholder="Въведете други доходи.." required>
+                    <span asp-validation-for="OtherIncome" class="validation"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HasOtherCredits">Имате ли други кредити?</label>
+                    <input type="checkbox" asp-for="HasOtherCredits" />
+                    <span asp-validation-for="HasOtherCredits" class="validation"></span>
+                </div>
+
+
+                <!-- Информация за имущество -->
+                <div class="form-section">
+                    <h4>7. Информация за имущество</h4>
+
+                    <div class="form-group">
+                        <label asp-for="HasApartmentOrHouse">Имате ли къща или апартамент?</label>
+                        <input type="checkbox" asp-for="HasApartmentOrHouse" />
+                        <span asp-validation-for="HasApartmentOrHouse" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="HasCommercialProperty">Имате ли обществено имущество?</label>
+                        <input type="checkbox" asp-for="HasCommercialProperty" />
+                        <span asp-validation-for="HasCommercialProperty" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="HasLand">Имате ли земя?</label>
+                        <input type="checkbox" asp-for="HasLand" />
+                        <span asp-validation-for="HasLand" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="HasMultipleProperties">Имате ли няколко обекта?</label>
+                        <input type="checkbox" asp-for="HasMultipleProperties" />
+                        <span asp-validation-for="HasMultipleProperties" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="HasPartialOwnership">Имате ли споделено имущество?</label>
+                        <input type="checkbox" asp-for="HasPartialOwnership" />
+                        <span asp-validation-for="HasPartialOwnership" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="NoProperty">Имате ли други имуществени обекти?</label>
+                        <input type="checkbox" asp-for="NoProperty" />
+                        <span asp-validation-for="NoProperty" class="validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="VehicleCount">Колко коли притежавате:</label>
+                        <input asp-for="VehicleCount" class="form-control" id="number-cars" placeholder="Въведете брой коли.." required>
+                        <span asp-validation-for="VehicleCount" class="validation"></span>
+                        <!-- Подаване на формуляра -->
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Подай заявка</button>
+        </form>
     </div>
 
-    <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
+@section Scripts
+{
+    <!-- Bootstrap JS и jQuery -->
+    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> *@
+    <partial name="_ValidationScriptsPartial" />
+}

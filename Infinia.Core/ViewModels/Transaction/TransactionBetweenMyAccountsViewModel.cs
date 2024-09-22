@@ -13,7 +13,7 @@ namespace Infinia.Core.ViewModels.Transaction
         public int AccountIdFromWhichWeWantToReceiveMoney { get; set; }
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(AmountMaxValue, AmountMinValue, ErrorMessage = InvalidAmountErrorMessage)]
+        //[Range(AmountMaxValue, AmountMinValue, ErrorMessage = InvalidAmountErrorMessage)]
         public decimal Amount { get; set; }
 
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]

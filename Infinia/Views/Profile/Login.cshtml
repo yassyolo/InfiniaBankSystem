@@ -16,7 +16,7 @@
         <div id="main-page">
             <div class="navigation">
                 <div class="navigation__item navigation__item-ft">
-                    <a href="~/Home/Index" class="navigation__item-ft-name">Infinia</a>
+                    <a asp-action="Index" asp-asp-controller="Profile" class="navigation__item-ft-name">Infinia</a>
                 </div>
             </div>
         </div>
@@ -36,6 +36,10 @@
                     <input asp-for="Password" type="password" placeholder="Въведете Вашата парола.." required>
                     <span asp-validation-for="Password" class="validation"></span>
                 </div>
+                <!-- Forgot Password button -->
+                <div class="form-group">
+                    <a asp-controller="Profile" asp-action="ForgotPassword" class="forgot-password-btn">Forgot Password?</a>
+                </div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -53,3 +57,17 @@
     }
 </body>
 </html>
+<style>
+    .forgot-password-btn {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .forgot-password-btn:hover {
+        text-decoration: underline;
+    }
+</style>

@@ -1,7 +1,3 @@
-
-﻿using Infinia.Core.MessageConstants;
-using System.ComponentModel.DataAnnotations;
-
 namespace Infinia.Core.ViewModels
 {
     public class LoanApplicationHistoryViewModel

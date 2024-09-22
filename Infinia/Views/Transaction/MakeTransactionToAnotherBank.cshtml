@@ -1,7 +1,8 @@
-﻿@model Infinia.Core.ViewModels.Transaction.TransactionWithinTheBankViewModel
+﻿@model Infinia.Core.ViewModels.Transaction.TransactionToAnotherBankViewModel
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -67,14 +68,15 @@
         </div>
     </nav>
 
-    <!-- ТУК ДОБАВЯМЕ ФОРМАТА -->
+    <!-- Transfer Form -->
     <div class="container transfer-form-container mt-5">
-        <h2 class="text-center">Нареждане за превод по сметка в Infinia</h2>
-        <form method="post" asp-controller="Transaction" asp-action="MakeTransactionWithinTheBank">
+        <h2 class="text-center">Нареждане за междубанков превод</h2>
+        <form asp-action="MakeTransactionToAnotherBank" asp-controller="Transaction" method="post">
+            <!-- От сметка (Account to send from) -->
             <div class="form-group">
                 <label asp-for="AccountId">От сметка:</label>
-                <select asp-for="AccountId" class="form-control">
-                    <option value="">Изберете сметка:</option>
+                <select asp-for="AccountId" class="form-control" required>
+                    <option value="">Изберете сметка, от която да пратите пари..</option>
                     @foreach (var account in Model.AvailableAccounts)
                     {
                         <option value="@account.AccountId">@account.Name - @account.IBAN</option>
@@ -83,30 +85,43 @@
                 <span asp-validation-for="AccountId" class="text-danger"></span>
             </div>
 
+            <!-- Име на получател (Receiver Name) -->
             <div class="form-group">
                 <label asp-for="ReceiverName">Име на получател:</label>
-                <input asp-for="ReceiverName" class="form-control" placeholder="Въведете пълното име на получателя.." />
+                <input asp-for="ReceiverName" class="form-control" placeholder="Въведете пълното име на получателя.." required />
                 <span asp-validation-for="ReceiverName" class="text-danger"></span>
             </div>
 
+            <!-- IBAN -->
             <div class="form-group">
-                <label asp-for="ReceiverIBAN">IBAN на получател:</label>
-                <input asp-for="ReceiverIBAN" class="form-control" placeholder="Въведете IBAN на получателя.." />
+                <label asp-for="ReceiverIBAN">IBAN на получателя:</label>
+                <input asp-for="ReceiverIBAN" class="form-control" placeholder="Въведете IBAN на получателя.." required />
                 <span asp-validation-for="ReceiverIBAN" class="text-danger"></span>
             </div>
 
+            <!-- Сума (Amount) -->
             <div class="form-group">
                 <label asp-for="Amount">Сума:</label>
-                <input asp-for="Amount" class="form-control" placeholder="Въведете сума.." />
+                <input asp-for="Amount" class="form-control" placeholder="Въведете сума.." required />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
 
+            <!-- BIC -->
+            <div class="form-group">
+                <label asp-for="BIC">BIC:</label>
+                <input asp-for="BIC" class="form-control" placeholder="Въведете BIC на банката на получателя.." />
+                <span asp-validation-for="BIC" class="text-danger"></span>
+            </div>
+
+           
+
+            <!-- Description (Optional) -->
             <div class="form-group">
                 <label asp-for="Description">Описание:</label>
                 <input asp-for="Description" class="form-control" placeholder="Въведете описание (по желание).." />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
+            <!-- Основание (Reason) -->
             <div class="form-group">
                 <label asp-for="Reason">Основание:</label>
                 <input asp-for="Reason" class="form-control" placeholder="Въведете основание.." />
@@ -114,10 +129,14 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Изпрати превод</button>
         </form>
-            
     </div>
-   
-  
+
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Input validation script -->
+    
 </body>
 </html>
 @section Scripts

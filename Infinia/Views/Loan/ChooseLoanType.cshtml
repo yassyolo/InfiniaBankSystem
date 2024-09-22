@@ -1,4 +1,4 @@
-﻿@model Infinia.Core.ViewModels.Transaction.TransactionWithinTheBankViewModel
+﻿
 @{
     Layout = null;
 }
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Между мои сметки - Infinia</title>
+    <title>Заявка за кредит - Infinia</title>
     <!-- Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/main.css">
@@ -67,63 +67,69 @@
         </div>
     </nav>
 
-    <!-- ТУК ДОБАВЯМЕ ФОРМАТА -->
-    <div class="container transfer-form-container mt-5">
-        <h2 class="text-center">Нареждане за превод по сметка в Infinia</h2>
-        <form method="post" asp-controller="Transaction" asp-action="MakeTransactionWithinTheBank">
-            <div class="form-group">
-                <label asp-for="AccountId">От сметка:</label>
-                <select asp-for="AccountId" class="form-control">
-                    <option value="">Изберете сметка:</option>
-                    @foreach (var account in Model.AvailableAccounts)
-                    {
-                        <option value="@account.AccountId">@account.Name - @account.IBAN</option>
-                    }
-                </select>
-                <span asp-validation-for="AccountId" class="text-danger"></span>
+    <!-- Основна секция за кредити -->
+    <div class="loan-cards-container mt-5">
+        <h2 class="text-center mb-4">Видове кредити и лихви 💼</h2>
+        <div class="row">
+            <!-- Потребителски кредит -->
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Потребителски кредит 🏠</h5>
+                        <p class="card-text">Лихва: 8%</p>
+                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Personal Loan" asp-route-rate="8.0" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
             </div>
+            <!-- Кредит за кола -->
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Кредит за кола 🚗</h5>
+                        <p class="card-text">Лихва: 4%</p>
+                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Car Loan" asp-route-rate="4.0"  class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Ипотечен кредит -->
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Ипотечен кредит 🏡</h5>
+                        <p class="card-text">Лихва: 7%</p>
+                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Mortgage Loan" asp-route-rate="5.0" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="ReceiverName">Име на получател:</label>
-                <input asp-for="ReceiverName" class="form-control" placeholder="Въведете пълното име на получателя.." />
-                <span asp-validation-for="ReceiverName" class="text-danger"></span>
+        <div class="row">
+            <!-- Бизнес кредит -->
+            <div class="col-md-6">
+                <div class="card text-white bg-warning mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Бизнес кредит 📊</h5>
+                        <p class="card-text">Лихва: 5%</p>
+                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Business Loan" asp-route-rate="3.0"  class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="ReceiverIBAN">IBAN на получател:</label>
-                <input asp-for="ReceiverIBAN" class="form-control" placeholder="Въведете IBAN на получателя.." />
-                <span asp-validation-for="ReceiverIBAN" class="text-danger"></span>
+            <!-- Кредит за образование -->
+            <div class="col-md-6">
+                <div class="card text-white bg-danger mb-3 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Кредит за образование 🎓</h5>
+                        <p class="card-text">Лихва: 3%</p>
+                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Education Loan" asp-route-rate="2.0" class="btn btn-outline-light">Заяви кредит</a>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Amount">Сума:</label>
-                <input asp-for="Amount" class="form-control" placeholder="Въведете сума.." />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description">Описание:</label>
-                <input asp-for="Description" class="form-control" placeholder="Въведете описание (по желание).." />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Reason">Основание:</label>
-                <input asp-for="Reason" class="form-control" placeholder="Въведете основание.." />
-                <span asp-validation-for="Reason" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Изпрати превод</button>
-        </form>
-            
+        </div>
     </div>
-   
-  
+
+
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-@section Scripts
-{
-    <!-- Bootstrap JS и jQuery -->
-    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> *@
-    <partial name="_ValidationScriptsPartial" />
-}
