@@ -25,12 +25,14 @@ namespace Infinia.Core.Services
 
         public async Task<bool> CustomerWithNameAndIBANExistsAsync(string receiverIBAN, string receiverName)
         {
-            return await repository.AllReadOnly<Account>().AnyAsync(x => x.Name == receiverName && encryptionService.Decrypt(x.EncryptedIBAN) == receiverIBAN);
+            var accounts = await repository.AllReadOnly<Account>().ToListAsync();
+            var customer = await repository.AllReadOnly<Customer>().FirstOrDefaultAsync(x => x.Name == receiverName);
+            return accounts.Any(x => x.CustomerId == customer.Id && encryptionService.Decrypt(x.EncryptedIBAN) == receiverIBAN);
         }
 
         public async Task<IEnumerable<AvailableAccountViewModels>?> GetAvailableAccountsAsync(string userId)
         {
-            return await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId)
+            return await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId && x.Type == Current)
                 .Select(x => new AvailableAccountViewModels()
                 {
                     Type = x.Type,
@@ -39,7 +41,6 @@ namespace Infinia.Core.Services
                     AccountId = x.Id,
                     IBAN = encryptionService.Decrypt(x.EncryptedIBAN)
                 }).ToListAsync();
-
         }
 
         public async Task<TransactionHistoryViewModel?> GetTransactionsForAccountAsync(int id)
@@ -79,12 +80,12 @@ namespace Infinia.Core.Services
             var receiverAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == model.AccountIdFromWhichWeWantToReceiveMoney && x.CustomerId == userId);
             if (receiverAccount == null)
             {
-                throw new InvalidOperationException("Invalid receiver account");
+                throw new InvalidOperationException(InvalidAccountErrorMessage);
             }
             var senderAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == model.AccountIdFromWhichWeWantToSendMoney && x.CustomerId == userId);
             if(senderAccount == null)
             {
-                   throw new InvalidOperationException("Invalid sender account");
+                   throw new InvalidOperationException(InvalidAccountErrorMessage);
             }
             var transactionBetweenMyAccounts = new Transaction()
             {
@@ -106,11 +107,6 @@ namespace Infinia.Core.Services
 
         public async Task MakeTransactionToAnotherBankAsync(TransactionToAnotherBankViewModel model, string userId)
         {
-            var receiverAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.EncryptedIBAN == encryptionService.Encrypt(model.ReceiverIBAN) && x.Customer.Name == model.ReceiverName);
-            if (receiverAccount == null)
-            {
-                throw new InvalidOperationException(InvalidAccountErrorMessage);
-            }
             var senderAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == model.AccountId && x.CustomerId == userId);
             if (senderAccount == null)
             {
@@ -118,28 +114,43 @@ namespace Infinia.Core.Services
             }
             var transactionToAnotherBank = new Transaction()
             {
-                Type = WithinTheBank,
-                ReceiverName = receiverAccount.Name,
+                Type = ToAnotherBank,
+                ReceiverName = model.ReceiverName,
                 EncryptedReceiverIBAN = encryptionService.Encrypt(model.ReceiverIBAN),
                 Amount = model.Amount,
                 Description = model.Description,
                 Reason = model.Reason,
                 AccountId = model.AccountId,
                 TransactionDate = DateTime.UtcNow,
-                Fee = FeeToAnotherBank
+                Fee = FeeToAnotherBank,
+                Bic = model.BIC
             };
             senderAccount.Balance -= model.Amount;
+            senderAccount.Balance -= FeeToAnotherBank;
             await repository.AddAsync(transactionToAnotherBank);
             await repository.SaveChangesAsync();
         }
         //TODO: Implement the transaction history with you as receiver
         public async Task MakeTransactionWithinTheBankAsync(TransactionWithinTheBankViewModel model, string userId)
         {
-            var receiverAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.EncryptedIBAN == encryptionService.Encrypt(model.ReceiverIBAN) && x.Customer.Name == model.ReceiverName);
+            var receivers = await repository.AllReadOnly<Customer>().Where(x => x.Name == model.ReceiverName).ToListAsync();
+            Account? receiverAccount = null;
+            foreach (var receiver in receivers)
+            {
+                var receiverAccounts = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == receiver.Id && x.Type == Current).ToListAsync();
+                receiverAccount = receiverAccounts.FirstOrDefault(account => encryptionService.Decrypt(account.EncryptedIBAN) == model.ReceiverIBAN);
+
+                if (receiverAccount != null)
+                {
+                    break; 
+                }
+            }
+
             if (receiverAccount == null)
             {
                 throw new InvalidOperationException(InvalidAccountErrorMessage);
             }
+           
             var senderAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == model.AccountId && x.CustomerId == userId);
             if (senderAccount == null)
             {
@@ -159,6 +170,7 @@ namespace Infinia.Core.Services
             };
             receiverAccount.Balance += model.Amount;
             senderAccount.Balance -= model.Amount;
+            senderAccount.Balance -= FeeWithinTheBank;
             await repository.AddAsync(transactionWithinTheBank);
             await repository.SaveChangesAsync();
         }

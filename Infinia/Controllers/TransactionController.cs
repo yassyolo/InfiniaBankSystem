@@ -5,6 +5,7 @@ using Infinia.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using static Infinia.Core.MessageConstants.ErrorMessages;
+using static Infinia.Infrastructure.Data.DataConstants.DataConstants.Transaction;
 
 namespace Infinia.Controllers
 {
@@ -55,6 +56,16 @@ namespace Infinia.Controllers
                 ModelState.AddModelError("AccountIdFromWhichWeWantToReceiveMoney", InvalidReceivalAccountErrorMessage);
                 return View(model);
             }
+            if (model.Amount < AmountMinValue || model.Amount > AmountMaxValue )
+            {
+                ModelState.AddModelError("Amount", InvalidAmountErrorMessage);
+                return View(model);
+            }
+            if (await accountService.AmountGreaterThanSenderAccountBalance(model.AccountIdFromWhichWeWantToSendMoney, model.Amount) == true)
+            {
+                ModelState.AddModelError("AccountIdFromWhichWeWantToSendMoney", AmountGreaterThanSenderAccountBalanceErrorMessage);
+                return View(model);
+            }
             var userId = User.GetId();
             if (await profileService.CustomerWithIdExistsAsync(userId) == false)
             {
@@ -89,6 +100,16 @@ namespace Infinia.Controllers
         {
             if (ModelState.IsValid == false)
             {
+                return View(model);
+            }
+            if (model.Amount < AmountMinValue || model.Amount > AmountMaxValue)
+            {
+                ModelState.AddModelError("Amount", InvalidAmountErrorMessage);
+                return View(model);
+            }
+            if (await accountService.AmountGreaterThanSenderAccountBalance(model.AccountId, model.Amount) == true)
+            {
+                ModelState.AddModelError("AccountId", AmountGreaterThanSenderAccountBalanceErrorMessage);
                 return View(model);
             }
             if (await transactionService.CustomerWithNameAndIBANExistsAsync(model.ReceiverIBAN, model.ReceiverName) == false)
@@ -131,25 +152,35 @@ namespace Infinia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MakeTransactionToAnotherBank(TransactionToAnotherBankViewModel model)
         {
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
             var userId = User.GetId();
             if (await profileService.CustomerWithIdExistsAsync(userId) == false)
             {
                 return BadRequest();
             }
-            if (ModelState.IsValid == false)
+            if (model.Amount < AmountMinValue || model.Amount > AmountMaxValue)
             {
-                var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
-                model.AvailableAccounts = availableAccounts;                
+                ModelState.AddModelError("Amount", InvalidAmountErrorMessage);
                 return View(model);
             }
-            if (await transactionService.CustomerWithNameAndIBANExistsAsync(model.ReceiverIBAN, model.ReceiverName) == false)
+            if (model.ReceiverIBAN.Length != IBANMaxLength)
             {
-                ModelState.AddModelError("ReceiverIBAN", InvalidReceiverIBANErrorMessage);
-                var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
-                model.AvailableAccounts = availableAccounts;
+                ModelState.AddModelError("ReceiverIBAN", InvalidIbanErrorMessage);
                 return View(model);
             }
-           
+            if (model.ReceiverIBAN.Substring(4,4) != model.BIC)
+            {
+                ModelState.AddModelError("BIC", InvalidBICErrorMessage);
+                return View(model);
+            }
+            if (await accountService.AmountGreaterThanSenderAccountBalance(model.AccountId, model.Amount) == true)
+            {
+                ModelState.AddModelError("AccountId", AmountGreaterThanSenderAccountBalanceErrorMessage);
+                return View(model);
+            }                       
             try
             {
                 await transactionService.MakeTransactionToAnotherBankAsync(model, userId);

@@ -21,7 +21,7 @@ namespace Infinia.Core.Services
             var allTimeStatistics = new BranchAnalysisStatisticsViewModel();
             allTimeStatistics.TotalAccounts = await repository.AllReadOnly<Account>().CountAsync(x => x.Branch == branchName);
             allTimeStatistics.TotalBalance = await repository.AllReadOnly<Account>().Where(x => x.Branch == branchName).SumAsync(x => x.Balance);
-            allTimeStatistics.OpenAccounts = await repository.AllReadOnly<Account>().CountAsync(x => x.Branch == branchName && x.Status == AccountStatusConstants.Open);
+            allTimeStatistics.OpenAccounts = await repository.AllReadOnly<Account>().CountAsync(x => x.Branch == branchName && x.Status == "Open");
             allTimeStatistics.ClosedAccounts = await repository.AllReadOnly<Account>().CountAsync(x => x.Branch == branchName && x.Status == AccountStatusConstants.Closed);
             allTimeStatistics.AverageBalance = allTimeStatistics.TotalBalance / allTimeStatistics.TotalAccounts;
             allTimeStatistics.TotalTransactionVolume = await repository.AllReadOnly<Transaction>().Where(x => x.Account.Branch == branchName).SumAsync(x => x.Amount);

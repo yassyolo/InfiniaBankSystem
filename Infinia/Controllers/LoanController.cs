@@ -21,15 +21,10 @@ namespace Infinia.Controllers
             this.profileService = profileService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpGet]
         public IActionResult ChooseLoanType()
         {
-            var model = loanService.GetLoanTypesAsync();
-            return View(model);
+            return View();
         }
 
         [HttpGet]

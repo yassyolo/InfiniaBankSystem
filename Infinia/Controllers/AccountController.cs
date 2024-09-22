@@ -14,6 +14,7 @@ namespace Infinia.Controllers
         public AccountController(IAccountService accountService, IProfileService profileService)
         {
             this.profileService = profileService;
+            this.accountService = accountService;
         }
 
         public async Task<IActionResult> Index()
@@ -50,7 +51,7 @@ namespace Infinia.Controllers
             {
                 return BadRequest();
             }
-            if (await profileService.CustomerWithIdentityCardNumberExists(model.IdentityCardNumber, userId))
+            if (await profileService.CustomerWithIdentityCardNumberExists(model.IdentityCardNumber, userId) == false)
             {
                 ModelState.AddModelError("IdentityCardNumber", InvalidIdentityCardNumberErrorMessage);
                 return View(model);

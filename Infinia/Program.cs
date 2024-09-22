@@ -72,6 +72,13 @@ app.MapControllerRoute(
     name: "chatbot",
     pattern: "{controller=Chatbot}/{action=SendMessage}/{userMessage?}",
 defaults: new { controller = "Chatbot", action = "SendMessage" });
+app.MapControllerRoute(
+       name: "applyForLoan",
+          pattern: "{controller=Loan}/{action=ApplyForLoan}/{type?}/{rate?}/");
+app.MapControllerRoute(
+    name: "branchAnalysis",
+    pattern: "{controller=BankAdministrator}/{action=GetBranchAnalysis}/{branchName?}/{startDate?}/{endDate?}");
 app.MapRazorPages();
+
 
 app.Run();

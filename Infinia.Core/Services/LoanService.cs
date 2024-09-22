@@ -241,11 +241,11 @@ namespace Infinia.Core.Services
             var maritalStatus = model.MaritalStatus == "Married" ? 1 : 0;
             var educationLevel = model.EducationLevel switch
             {
-                "Secondary" => 1,
-                "High School" => 2,
-                "Bachelor" => 3,
-                "Master" => 4,
-                "Doctorate" => 5,
+                "Основно" => 1,
+                "Средно" => 2,
+                "Бакалавър" => 3,
+                "Магистър" => 4,
+                "Доктор" => 5,
                 _ => 1 
             };
             var jsonModel = JsonConvert.SerializeObject(new
@@ -295,18 +295,6 @@ namespace Infinia.Core.Services
             var responseString = await response.Content.ReadAsStringAsync();
             var prediction = JsonConvert.DeserializeObject<LoanApprovalViewModel>(responseString);
             return prediction;
-        }
-
-        public ChooseLoanTypeViewModel? GetLoanTypesAsync()
-        {
-            var model = new ChooseLoanTypeViewModel();
-
-            model.LoanTypes.Add(PersonalLoan, PersonalLoanInterestRate);
-            model.LoanTypes.Add(MortgageLoan, MorgageLoanInterestRate);
-            model.LoanTypes.Add(CarLoan, CarLoanInterestRate);
-            model.LoanTypes.Add(EducationLoan, EducationLoanInterestRate);
-            model.LoanTypes.Add(BusinessLoan, BusinessLoanInterestRate);
-            return model;
         }
         public async Task<bool> LoanApplicationExistsAsync(int id, string userId)
         {

@@ -6,6 +6,6 @@
         public const double CarLoanInterestRate = 4.0;
         public const double PersonalLoanInterestRate = 8.0;
         public const double BusinessLoanInterestRate = 3.0;
-        public const double EducationLoanInterestRate = 6.0;
+        public const double EducationLoanInterestRate = 2.0;
     }
 }

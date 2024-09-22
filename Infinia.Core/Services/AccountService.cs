@@ -34,7 +34,7 @@ namespace Infinia.Core.Services
 
         public async Task CreateAccountAsync(CreateAccountViewModel model, string userId)
         {
-            var accountCountForUser =  await repository.AllReadOnly<Account>().CountAsync(x => x.CustomerId == userId);
+            var accountCountForUser =  await repository.AllReadOnly<Account>().CountAsync(x => x.CustomerId == userId && x.Type == Current);
             var creationDate = DateTime.Now;
             var encryptedIban = encryptionService.Encrypt(GenerateIban());
             var currentAccount = new Account
@@ -72,6 +72,8 @@ namespace Infinia.Core.Services
                 CreationDate = creationDate,
                 IsRead = false
             };
+            await repository.AddAsync(notification);
+            await repository.SaveChangesAsync();
         }
 
         public async Task DeleteAccountAsync(int id)
@@ -148,6 +150,11 @@ namespace Infinia.Core.Services
                     Status = x.Status,
                     MonthlyFee = x.MonthlyFee
                 }).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> AmountGreaterThanSenderAccountBalance(int accountIdFromWhichWeWantToSendMoney, decimal amount)
+        {
+            return await repository.AllReadOnly<Account>().AnyAsync(x => x.Id == accountIdFromWhichWeWantToSendMoney && x.Balance < amount);
         }
     }
 }

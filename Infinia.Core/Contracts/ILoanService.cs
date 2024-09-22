@@ -10,7 +10,6 @@ namespace Infinia.Core.Contracts
         Task<IEnumerable<CurrentLoanViewModel>?> GetCurrentLoansForCustomerAsync(string userId);
         Task<LoanApplicationHistoryViewModel?> GetLoanApplicationDetailsAsync(int id, string userId);
         Task<IEnumerable<LoanApplicationHistoryViewModel>?> GetLoanApplicationHistoryForCustomerAsync(string userId);
-        ChooseLoanTypeViewModel? GetLoanTypesAsync();
         Task GetMissingValuesForLoanApplicationAsync(LoanApplicationViewModel model);
         Task<bool> LoanApplicationExistsAsync(int id, string userId);
     }
