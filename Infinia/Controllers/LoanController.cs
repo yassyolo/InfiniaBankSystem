@@ -28,7 +28,7 @@ namespace Infinia.Controllers
         }
 
         [HttpGet]
-        public IActionResult ApplyForLoan(string type, double rate)
+        public IActionResult ApplyForLoan(string type, decimal rate)
         {
             var model = new LoanApplicationViewModel
             {
@@ -55,12 +55,12 @@ namespace Infinia.Controllers
             }
             if (await profileService.CustomerWithIdentityCardExists(model, userId) == false)
             {
-                ModelState.AddModelError("", InavlidCustomerIdentityCardErrorMessage);
+                ModelState.AddModelError("SSN", InavlidCustomerIdentityCardErrorMessage);
                 return View(model);
             }
             if (await profileService.CustomerWithAddressExists(model, userId) == false)
             {
-                ModelState.AddModelError("", InavlidCustomerAddressErrorMessage);
+                ModelState.AddModelError("Country", InavlidCustomerAddressErrorMessage);
                 return View(model);
             }
             if (await profileService.CustomerWithAccountIBANExists(model.AccountIBAN, userId) == false)

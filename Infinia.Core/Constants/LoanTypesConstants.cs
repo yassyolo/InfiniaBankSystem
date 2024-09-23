@@ -2,10 +2,10 @@
 {
     public static class LoanTypesConstants
     {
-        public const string PersonalLoan = "Personal Loan";
-        public const string MortgageLoan = "Mortgage Loan";
-        public const string BusinessLoan = "Business Loan";
-        public const string CarLoan = "Car Loan";
-        public const string EducationLoan = "Education Loan";
+        public const string PersonalLoan = "Потребителски кредит";
+        public const string MortgageLoan = "Ипотечен кредит";
+        public const string BusinessLoan = "Бизнес кредит";
+        public const string CarLoan = "Ауто кредит";
+        public const string EducationLoan = "Кредит за образование";
     }
 }

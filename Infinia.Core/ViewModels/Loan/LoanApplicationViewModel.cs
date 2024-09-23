@@ -42,7 +42,7 @@ namespace Infinia.Core.ViewModels
         public int TotalWorkExperienceMonths{ get; set; }
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [Range(HouseholdMembersMinValue, HouseholdMembersMinValue, ErrorMessage = InvalidHouseholdMembersErrorMessage)]
+        [Range(HouseholdMembersMinValue, HouseholdMembersMaxValue, ErrorMessage = InvalidHouseholdMembersErrorMessage)]
         public int NumberOfHouseholdMembers{ get; set; }
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
@@ -173,7 +173,7 @@ namespace Infinia.Core.ViewModels
         [Range(LoanTermMonthsMinValue, LoanTermMonthsMaxValue, ErrorMessage = InvalidLoanTermMonthsErrorMessage)]
         public int LoanTermMonths { get; set; }
 
-        public double InterestRate { get; set; }
+        public decimal InterestRate { get; set; }
 
         public string Type { get; set; } = string.Empty;
 

@@ -65,7 +65,7 @@ namespace Infinia.Core.ViewModels
 
             public int LoanTermMonths { get; set; }
 
-            public double InterestRate { get; set; }
+            public string InterestRate { get; set; } = string.Empty;
 
             public string Type { get; set; } = string.Empty;
 

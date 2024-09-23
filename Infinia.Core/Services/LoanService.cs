@@ -26,7 +26,7 @@ namespace Infinia.Core.Services
             this.repository = repository;
             this.encryptionService = encryptionService;
             httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+            httpClient.BaseAddress = new Uri("https://creditscoringapi-czdnd3gvcydze4fw.canadacentral-01.azurewebsites.net/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -125,10 +125,11 @@ namespace Infinia.Core.Services
             };
             await repository.AddAsync(loanApplication);
             await repository.SaveChangesAsync();
+            //TODO: Implement the logic for loan repayment
             var loanRepayment = new LoanRepayment
             {
                 LoanApplicationId = loanApplication.Id,
-                RepaymentAmount = CalculateEMI(loanApplication.LoanAmount, loanApplication.InterestRate, loanApplication.LoanTermMonths),
+                RepaymentAmount = CalculateEMI(model.LoanAmount, model.InterestRate, model.LoanTermMonths),
                 Status = Infinia.Core.Constants.LoanRepaymentStatus.Pending
             };
             await repository.AddAsync(loanRepayment);
@@ -137,14 +138,14 @@ namespace Infinia.Core.Services
             var accountBalance = account.Balance;
             await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
         }
-    
-        private decimal CalculateEMI(decimal loanAmount, double annualInterestRate, int termMonths)
-        {
-            double monthlyInterestRate = annualInterestRate / 12 / 100;
-            double emiDouble = (double)loanAmount * monthlyInterestRate * Math.Pow(1 + monthlyInterestRate, termMonths) /
-                              (Math.Pow(1 + monthlyInterestRate, termMonths) - 1);
 
-            return (decimal)emiDouble;
+        private decimal CalculateEMI(decimal loanAmount, decimal annualInterestRate, int termMonths)
+        {
+            decimal monthlyInterestRate = annualInterestRate / 12 / 100;
+            decimal emi = (loanAmount * monthlyInterestRate * (decimal)Math.Pow((double)(1 + monthlyInterestRate), termMonths)) /
+                           ((decimal)Math.Pow((double)(1 + monthlyInterestRate), termMonths) - 1);
+
+            return emi;
         }
 
         public async Task<IEnumerable<CurrentLoanViewModel>?> GetCurrentLoansForCustomerAsync(string userId)
@@ -156,7 +157,7 @@ namespace Infinia.Core.Services
                     Id = x.Id,
                     LoanAmount = x.LoanAmount,
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate,
+                    InterestRate = x.InterestRate.ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                 })
@@ -180,7 +181,7 @@ namespace Infinia.Core.Services
                     Id = x.Id,
                     LoanAmount = x.LoanAmount,
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate,
+                    InterestRate = x.InterestRate.ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                     Status = x.Status,
@@ -226,7 +227,7 @@ namespace Infinia.Core.Services
                     Id = x.Id,
                     LoanAmount = x.LoanAmount,
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate,
+                    InterestRate = x.InterestRate.ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                     Status = x.Status,
@@ -238,14 +239,21 @@ namespace Infinia.Core.Services
         public async Task<LoanApprovalViewModel> ApproveLoanAsync(LoanApplicationViewModel model, string userId, decimal accountBalance, decimal repaymentAmount)
         { 
             var paidAllLoansOnTime = await repository.All<LoanRepayment>().Where(x => x.LoanApplication.CustomerId == userId).Select(x => x.Status).AnyAsync(x => x.Contains(Overdue));
-            var maritalStatus = model.MaritalStatus == "Married" ? 1 : 0;
+            var maritalStatus = model.MaritalStatus switch
+            {
+                "Женен" => 1,
+                "Неженен" => 0,
+                "Женена" => 1,
+                "Неженена" => 0,
+                _ => 0
+            };
             var educationLevel = model.EducationLevel switch
             {
-                "Основно" => 1,
-                "Средно" => 2,
-                "Бакалавър" => 3,
-                "Магистър" => 4,
-                "Доктор" => 5,
+                "1" => 1,
+                "2" => 2,
+                "3" => 3,
+                "4" => 4,
+                "5" => 5,
                 _ => 1 
             };
             var jsonModel = JsonConvert.SerializeObject(new

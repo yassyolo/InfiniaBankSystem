@@ -19,9 +19,15 @@ namespace Infinia.Core.Services
 
         public async Task<bool> CustomerWithAccountIBANExists(string accountIBAN, string userId)
         {
-            return await repository.AllReadOnly<Account>()
-                .AnyAsync(x => x.EncryptedIBAN == encryptionService.Encrypt(accountIBAN)
-                          && x.CustomerId == userId);
+            var account = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId)
+                .Select(x => new
+                {
+                   EncryptedIBAN = x.EncryptedIBAN
+                }).FirstOrDefaultAsync();
+
+            var decryptedIBAN = encryptionService.Decrypt(account.EncryptedIBAN);
+
+            return decryptedIBAN == accountIBAN;
         }
 
         public async Task<bool> CustomerWithAddressExists(LoanApplicationViewModel model, string userId)
@@ -36,14 +42,29 @@ namespace Infinia.Core.Services
 
         public async Task<bool> CustomerWithIdentityCardExists(LoanApplicationViewModel model, string userId)
         {
-            return await repository.AllReadOnly<Customer>()
-                .AnyAsync(x => x.IdentityCard.EncryptedCardNumber == encryptionService.Encrypt(model.IdentityCardNumber) &&
-                               x.IdentityCard.EncryptedIssuer == encryptionService.Encrypt(model.IdentityCardIssuer) &&
-                               x.IdentityCard.EncryptedDateOfIssue == encryptionService.Encrypt(model.IdentityCardIssueDate) &&
-                               x.IdentityCard.EncryptedSex == encryptionService.Encrypt(model.IdentityCardSex) &&
-                               x.IdentityCard.EncryptedNationality == encryptionService.Encrypt(model.IdentityCardNationality) &&
-                               x.IdentityCard.EncryptedSSN == encryptionService.Encrypt(model.SSN) &&
-                               x.Id == userId);
+            var customer = await repository.AllReadOnly<Customer>()
+                .Where(x => x.Id == userId)
+                .Select(x => new 
+                {
+                    EncryptedCardNumber = x.IdentityCard.EncryptedCardNumber,
+                    EncryptedIssuer = x.IdentityCard.EncryptedIssuer,
+                    EncryptedSex = x.IdentityCard.EncryptedSex,
+                    EncryptedNationality = x.IdentityCard.EncryptedNationality,
+                    EncryptedSSN = x.IdentityCard.EncryptedSSN
+                })
+                .FirstOrDefaultAsync();
+
+            var decryptedCardNumber = encryptionService.Decrypt(customer.EncryptedCardNumber);
+            var decryptedIssuer = encryptionService.Decrypt(customer.EncryptedIssuer);
+            var decryptedSex = encryptionService.Decrypt(customer.EncryptedSex);
+            var decryptedNationality = encryptionService.Decrypt(customer.EncryptedNationality);
+            var decryptedSSN = encryptionService.Decrypt(customer.EncryptedSSN);
+
+            return decryptedCardNumber == model.IdentityCardNumber &&
+                   decryptedIssuer == model.IdentityCardIssuer &&
+                   decryptedSex == model.IdentityCardSex &&
+                   decryptedNationality == model.IdentityCardNationality &&
+                   decryptedSSN == model.SSN;
         }
 
         public async Task<bool> CustomerWithIdentityCardNumberExists(string identityCardNumber, string userId)

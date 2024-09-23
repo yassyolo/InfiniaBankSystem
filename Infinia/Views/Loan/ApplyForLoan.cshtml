@@ -70,7 +70,9 @@
 
     <div class="container apply-loan-form mt-5">
         <h2 class="text-center">Заявка за кредит</h2>
-        <form asp-action="SubmitLoanApplication" asp-controller="Loan">
+        <form asp-action="ApplyForLoan" asp-controller="Loan">
+            <input type="hidden" asp-for="Type" />
+            <input type="hidden" asp-for="InterestRate" />
             <!-- Лични данни -->
             <div class="form-section">
                 <h4>1. Лични данни</h4>
@@ -163,8 +165,8 @@
             <div class="form-section">
                 <h4>3. Образование</h4>
                 <div class="form-group">
-                    <label for="education">Ниво на образование:</label>
-                    <select class="form-control" id="education" required>
+                    <label asp-for="EducationLevel">Ниво на образование:</label>
+                    <select asp-for="EducationLevel" class="form-control" id="education" required>
                         <option value="1">Основно</option>
                         <option value="2">Средно</option>
                         <option value="3">Бакалавър</option>
@@ -215,18 +217,23 @@
                 <h4>5. Информация за домакинство</h4>
                 <div class="form-group">
                     <label asp-for="NumberOfHouseholdMembers">Членове на домакинството:</label>
-                    <input asp-for="NumberOfHouseholdMembers" class="form-control" id="householdMembers" placeholder="Брой членове" required>
+                    <input asp-for="NumberOfHouseholdMembers" class="form-control" id="householdMembers" placeholder="Брой членове.." required>
                     <span asp-validation-for="NumberOfHouseholdMembers" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Dependents">Зависими членове:</label>
-                    <input asp-for="Dependents" class="form-control" id="dependants" placeholder="Брой зависими членове" required>
+                    <input asp-for="Dependents" class="form-control" id="dependants" placeholder="Брой зависими членове.." required>
                     <span asp-validation-for="Dependents" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="MembersWithProvenIncome">Членове с доказан доход:</label>
-                    <input asp-for="MembersWithProvenIncome" class="form-control" id="incomeHouseholdMembers" placeholder="Брой членове с доказан доход" required>
+                    <input asp-for="MembersWithProvenIncome" class="form-control" id="incomeHouseholdMembers" placeholder="Брой членове с доказан доход.." required>
                     <span asp-validation-for="MembersWithProvenIncome" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaritalStatus">Семейно положение:</label>
+                    <input asp-for="MaritalStatus" class="form-control" id="incomeHouseholdMembers" placeholder="Семейно положение.." required>
+                    <span asp-validation-for="MaritalStatus" class="validation"></span>
                 </div>
             </div>
 

@@ -34,6 +34,8 @@ namespace Infinia.Infrastructure.SeedDb
                 .OnDelete(DeleteBehavior.Restrict);
             builder.Property(x => x.LoanAmount)
                 .HasColumnType("decimal(18, 4)");
+            builder.Property(x => x.InterestRate)
+                .HasColumnType("decimal(18, 4)");
             builder.HasOne(x => x.Customer)
                 .WithMany(x => x.LoanApplications)
                 .HasForeignKey(x => x.CustomerId)

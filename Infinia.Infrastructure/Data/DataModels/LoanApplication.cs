@@ -75,7 +75,7 @@ namespace Infinia.Infrastructure.Data.DataModels
 
         [Comment("Interest rate")]
         [Required]
-        public double InterestRate { get; set; }
+        public decimal InterestRate { get; set; }
 
         [Comment("Loan application customer identifier")]
         [ForeignKey(nameof(Customer))]
