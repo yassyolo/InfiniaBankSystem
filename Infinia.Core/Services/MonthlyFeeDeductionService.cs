@@ -22,7 +22,7 @@ namespace Infinia.Core.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 var currentDate = DateTime.UtcNow;
-                if (currentDate.Day == 11)
+                if (currentDate.Day == 23)
                 {
                     await DeductMonthlyFeeAsync();
                 }
@@ -38,42 +38,31 @@ namespace Infinia.Core.Services
                 var encryptionService = scope.ServiceProvider.GetRequiredService<IEncryptionService>();
                 var transactionService = scope.ServiceProvider.GetRequiredService<ITransactionService>();
 
-                var accounts = dbContext.Accounts.ToList();
+                var accounts = dbContext.Accounts.Where(x => x.Type == "Current").ToList();
                 var todaysYear = DateTime.UtcNow.Year;
                 var todaysMonth = DateTime.UtcNow.Month;
                 var bankAccount = dbContext.Accounts.FirstOrDefault(x => x.Name == "Bank account");
 
                 foreach (var account in accounts)
                 {
-                    if (account.Type != "Bank" &&
+                    if (
                         (account.LastMonthlyFeeDeduction == null ||
                          account.LastMonthlyFeeDeduction.Value.Month != todaysMonth ||
                          account.LastMonthlyFeeDeduction.Value.Year != todaysYear))
                     {
-                        /*var model = new TransactionWithinTheBankViewModel()
-                        {
-                            Reason = "Loan repayment",
-                            Description = $"Loan repayment made on {DateTime.UtcNow.ToString()}",
-                            ReceiverName = "Bank account",
-                            Amount =MonthlyFeeDeductionFee,
-                            ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
-                            AccountId = account.Id
-                        };
-                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);*/
 
                         var model = new TransactionWithinTheBankViewModel
                         {
                             Reason = "Monthly fee deduction",
                             Description = $"Monthly fee deduction made on {DateTime.UtcNow}",
                             ReceiverName = "Bank account",
-                            Amount = MonthlyFeeDeductionFee, // Define MonthlyFeeDeductionFee in your class or configuration
+                            Amount = MonthlyFeeDeductionFee, 
                             ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
                             AccountId = account.Id
                         };
 
-                        await transactionService.MakeTransactionWithinTheBankAsync(model, account.CustomerId);
+                        await transactionService.MakeMonthlyFeeDeductionTransactionAsync(model, account.CustomerId);
 
-                        account.Balance -= account.MonthlyFee;
                         account.LastMonthlyFeeDeduction = DateTime.UtcNow;
 
                         var notification = new Notification

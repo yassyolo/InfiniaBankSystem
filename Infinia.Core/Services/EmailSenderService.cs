@@ -24,7 +24,6 @@ namespace Infinia.Core.Services
 
             using (var client = new SmtpClient())
             {
-                // Bypass SSL certificate validation in development (not recommended for production)
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
                 await client.ConnectAsync(smtpServer, port, MailKit.Security.SecureSocketOptions.StartTls);

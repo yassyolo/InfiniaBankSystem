@@ -39,5 +39,26 @@ namespace Infinia.Core.Services
                 SelectedIntervalStatistics = selectedIntervalStatistics
             };
         }
+
+        public async Task<CashFlowCombinedWeeklyData> GetHistoricalDataAsync(string branchName)
+        {
+            var today = DateTime.UtcNow;
+            var model = new CashFlowCombinedWeeklyData();
+            for (int i = 0; i < 6; i++)
+            {
+                var startDate = today.AddDays(-7 * i);
+                var endDate = startDate.AddDays(7);
+                model.HistoricalData.Add(new WeeklyCashFlowViewModel
+                {
+                    Date = startDate.ToString("yyyy-MM-dd"),
+                    AccountMaintenanceFees = await repository.AllReadOnly<Transaction>().Where(x => x.Account.Branch == branchName && x.TransactionDate >= startDate && x.TransactionDate <= endDate && x.Reason == "Monthly fee deduction").SumAsync(x => x.Amount),
+                    LoanRepayments = await repository.AllReadOnly<Transaction>().Where(x => x.Account.Branch == branchName && x.TransactionDate >= startDate && x.TransactionDate <= endDate && x.Reason == "Loan repayment").SumAsync(x => x.Amount),
+                    TransactionFees = await repository.AllReadOnly<Transaction>().Where(x => x.Account.Branch == branchName && x.TransactionDate >= startDate && x.TransactionDate <= endDate).SumAsync(x => x.Fee),
+                    LoanDisbursements = await repository.AllReadOnly<LoanApplication>().Where(x => x.Account.Branch == branchName && x.ApplicationDate >= startDate && x.ApplicationDate <= endDate && x.Status == "Approved").SumAsync(x => x.LoanAmount),
+                });
+
+            }
+            return model;
+        }
     }
 }

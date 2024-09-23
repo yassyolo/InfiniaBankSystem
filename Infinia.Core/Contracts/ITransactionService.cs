@@ -5,6 +5,7 @@ namespace Infinia.Core.Contracts
 {
     public interface ITransactionService
     {
+        Task MakeMonthlyFeeDeductionTransactionAsync(TransactionWithinTheBankViewModel model, string userId);
         Task<bool> CustomerWithNameAndIBANExistsAsync(string receiverIBAN, string receiverName);
         Task<IEnumerable<AvailableAccountViewModels>?> GetAvailableAccountsAsync(string userId);
         Task<TransactionHistoryViewModel?> GetTransactionsForAccountAsync(int id);

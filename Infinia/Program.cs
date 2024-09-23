@@ -78,6 +78,9 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "branchAnalysis",
     pattern: "{controller=BankAdministrator}/{action=GetBranchAnalysis}/{branchName?}/{startDate?}/{endDate?}");
+app.MapControllerRoute(
+    name: "branchCashflowForecast",
+    pattern: "{controller=BankAdministrator}/{action=ForecastCashflow}/{branchName?}");
 app.MapRazorPages();
 
 

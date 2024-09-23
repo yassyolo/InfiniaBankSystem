@@ -1,14 +1,11 @@
 ﻿using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Loan;
 using Infinia.Infrastructure.Repository;
-using static Infinia.Core.Constants.LoanTypesConstants;
-using static Infinia.Core.Constants.LoanInterestRateConstants;
 using static Infinia.Core.Constants.LoanStatusConstants;
 using static Infinia.Core.Constants.LoanRepaymentStatus;
 using Microsoft.EntityFrameworkCore;
 using Infinia.Core.ViewModels;
 using Infinia.Infrastructure.Data.DataModels;
-using Infinia.Core.Constants;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
