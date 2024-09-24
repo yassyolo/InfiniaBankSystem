@@ -1,11 +1,8 @@
 ﻿using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels;
-using Infinia.Core.ViewModels.Loan;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using Microsoft.AspNetCore.Mvc;
 using Infinia.Extensions;
-using Microsoft.AspNetCore.Http.Metadata;
-using Infinia.Core.Services;
 
 
 namespace Infinia.Controllers

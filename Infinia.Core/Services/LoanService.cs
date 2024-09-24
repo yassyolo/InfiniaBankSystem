@@ -79,7 +79,7 @@ namespace Infinia.Core.Services
             await repository.AddAsync(incomeInfo);
             await repository.SaveChangesAsync();
 
-            
+
             var propertyStatus = new PropertyStatus
             {
                 HasApartmentOrHouse = model.HasApartmentOrHouse,
@@ -92,8 +92,8 @@ namespace Infinia.Core.Services
             };
             await repository.AddAsync(propertyStatus);
             await repository.SaveChangesAsync();
-            
-            Account account = null;  
+
+            Account account = null;
             var accounts = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId).ToListAsync();
             foreach (var acc in accounts)
             {
@@ -133,7 +133,19 @@ namespace Infinia.Core.Services
             await repository.SaveChangesAsync();
 
             var accountBalance = account.Balance;
-            await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
+            var creditScoreModel = await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
+            loanApplication.RiskGroup = creditScoreModel.RiskGroup;
+            loanApplication.CreditScore = creditScoreModel.CreditScore;
+            loanApplication.ProbabilityOfApproval = creditScoreModel.ProbabilityOfApproval;
+            if (creditScoreModel.CreditScore >= 700 && creditScoreModel.RiskGroup == "Low")
+            {
+                loanApplication.Status = Infinia.Core.Constants.LoanStatusConstants.Approved;
+            }
+            else
+            {
+                loanApplication.Status = Infinia.Core.Constants.LoanStatusConstants.Rejected;
+            }
+            await repository.SaveChangesAsync();
         }
 
         private decimal CalculateEMI(decimal loanAmount, decimal annualInterestRate, int termMonths)
@@ -176,9 +188,9 @@ namespace Infinia.Core.Services
                 .Select(x => new LoanApplicationHistoryViewModel
                 {
                     Id = x.Id,
-                    LoanAmount = x.LoanAmount,
+                    LoanAmount = x.LoanAmount.ToString("F2"),
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate.ToString(),
+                    InterestRate = ((int)x.InterestRate).ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                     Status = x.Status,
@@ -210,8 +222,11 @@ namespace Infinia.Core.Services
                     HasPartialOwnership = x.PropertyStatus.HasPartialOwnership,
                     NoProperty = x.PropertyStatus.NoProperty,
                     VehicleCount = x.PropertyStatus.VehicleCount,
-                    MaritalStatus = x.MaritalStatus.Status,  
-                })
+                    MaritalStatus = x.MaritalStatus.Status,
+                    ProbabilityOfApproval = x.ProbabilityOfApproval,
+                    CreditScore = x.CreditScore,
+                    RiskGroup = x.RiskGroup
+                 })
                 .FirstOrDefaultAsync();
         }
 
@@ -222,16 +237,15 @@ namespace Infinia.Core.Services
                 .Select(x => new LoanApplicationHistoryViewModel
                 {
                     Id = x.Id,
-                    LoanAmount = x.LoanAmount,
+                    LoanAmount = x.LoanAmount.ToString("F2"),
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate.ToString(),
+                    InterestRate = ((int)x.InterestRate).ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                     Status = x.Status,
                 })
                 .ToListAsync();
         }
-
           
         public async Task<LoanApprovalViewModel> ApproveLoanAsync(LoanApplicationViewModel model, string userId, decimal accountBalance, decimal repaymentAmount)
         { 
@@ -298,7 +312,13 @@ namespace Infinia.Core.Services
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var prediction = JsonConvert.DeserializeObject<LoanApprovalViewModel>(responseString);
+            var loanApprovalResponse = JsonConvert.DeserializeObject<LoanApprovalResponseViewModel>(responseString);
+            var prediction = new LoanApprovalViewModel
+            {
+                ProbabilityOfApproval = loanApprovalResponse.probability,
+                CreditScore = loanApprovalResponse.credit_score,
+                RiskGroup = loanApprovalResponse.risk_category
+            };
             return prediction;
         }
         public async Task<bool> LoanApplicationExistsAsync(int id, string userId)

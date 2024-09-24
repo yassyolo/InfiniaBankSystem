@@ -61,7 +61,7 @@ namespace Infinia.Core.ViewModels
             
             public string MaritalStatus { get; set; } = string.Empty;
 
-            public decimal LoanAmount { get; set; }
+            public string LoanAmount { get; set; } = string.Empty;
 
             public int LoanTermMonths { get; set; }
 
@@ -71,6 +71,11 @@ namespace Infinia.Core.ViewModels
 
             public int LoanRepaymentNumber { get; set; }
             public string Status { get; set; } = string.Empty;
+        public double ProbabilityOfApproval { get; set; }
+
+        public double CreditScore { get; set; }
+
+        public string RiskGroup { get; set; } = string.Empty;
     }
 }
 

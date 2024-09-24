@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Infinia.Core.ViewModels.LoanApplicationHistoryViewModel>
 @{
     Layout = null;
 }
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заявка за кредит - Infinia</title>
+    <title>История на заявките за кредити - Infinia</title>
     <!-- Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/main.css">
@@ -67,69 +67,60 @@
         </div>
     </nav>
 
-    <!-- Основна секция за кредити -->
-    <div class="loan-cards-container mt-5">
-        <h2 class="text-center mb-4">Видове кредити и лихви 💼</h2>
-        <div class="row">
-            <!-- Потребителски кредит -->
-            <div class="col-md-4">
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Потребителски кредит 🏠</h5>
-                        <p class="card-text">Лихва: 8%</p>
-                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Personal Loan" asp-route-rate="8.0" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Кредит за кола -->
-            <div class="col-md-4">
-                <div class="card text-white bg-info mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Ауто кредит 🚗</h5>
-                        <p class="card-text">Лихва: 4%</p>
-                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Car Loan" asp-route-rate="4.0"  class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Ипотечен кредит -->
-            <div class="col-md-4">
-                <div class="card text-white bg-success mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Ипотечен кредит 🏡</h5>
-                        <p class="card-text">Лихва: 7%</p>
-                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Mortgage Loan" asp-route-rate="5.0" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+         <!-- История на заявките за кредити -->
+    <div class="container mt-5 history-credits-page">
+      <h2 class="text-center mb-4">История на заявките за кредити</h2>
+      @foreach(var loan in Model)
+        {            
+          <!-- Примерна кредитна заявка -->
+          <div class="col-md-6 mb-4">
+              <div class="card">
+                  <div class="card-body">
+                      @switch (@loan.Type)
+					  {
+						  case "Personal Loan":
+                                <h5 class="card-title">Потребителски кредит</h5>
+                                break;
+                            case "Car Loan":
+                                <h5 class="card-title">Ауто кредит</h5>
+                                break;
+                            case "Morgage Loan":
+                                <h5 class="card-title">Ипотечен кредит</h5>
+                                break;
+                            case "Business Loan":
+                                <h5 class="card-title">Бизнес кредит</h5>
+                                break;
+                            case "Education Loan":
+                                <h5 class="card-title">Кредит за образование</h5>
+                                break;
+                      }
+                                <h5 class="card-title">@loan.Type</h5>
+                      <p class="card-text"><strong>Сума на кредита:</strong>@loan.LoanAmount лв.</p>
+                      <p class="card-text"><strong>Период:</strong>@loan.LoanTermMonths месеца</p>
+                      <p class="card-text"><strong>Лихва:</strong>@loan.InterestRate.ToString() %</p>
+                      <p class="card-text"><strong>Дата на плащане всеки месец:</strong>@loan.LoanRepaymentNumber-то число</p>
+                        @if (loan.Status == "Approved")
+                        {
+                            <p class="card-text"><strong>Статус:</strong>Одобрен</p>
+                        }
+                        else if (loan.Status == "Rejected")
+                        {
+                            <p class="card-text"><strong>Статус:</strong>Отхвърлен</p>
+                        }
+                        else
+                        {
+                            <p class="card-text"><strong>Статус:</strong>Изчакващ</p>
+                        }                      
+                      <a asp-controller="Loan" asp-action="LoanApplication" asp-route-id="@loan.Id"class="btn">Вижте повече информация за кредита си:</a>
+                  </div>
+              </div>
+          </div>
+          
+        }
+     
 
-        <div class="row">
-            <!-- Бизнес кредит -->
-            <div class="col-md-6">
-                <div class="card text-white bg-warning mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Бизнес кредит 📊</h5>
-                        <p class="card-text">Лихва: 5%</p>
-                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Business Loan" asp-route-rate="3.0"  class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Кредит за образование -->
-            <div class="col-md-6">
-                <div class="card text-white bg-danger mb-3 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Кредит за образование 🎓</h5>
-                        <p class="card-text">Лихва: 3%</p>
-                        <a asp-action="ApplyForLoan" asp-controller="Loan" asp-route-type="Education Loan" asp-route-rate="2.0" class="btn btn-outline-light">Заяви кредит</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Bootstrap JS и jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS и jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

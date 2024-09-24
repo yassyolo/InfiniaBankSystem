@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using static Infinia.Infrastructure.Data.DataConstants.DataConstants.LoanApplication;
 
+//TODO: ADD NEW PROPERTIES TO DEPLOYMENT SERVER
 namespace Infinia.Infrastructure.Data.DataModels
 {
     [Comment("Loan application entity")]
@@ -107,5 +108,14 @@ namespace Infinia.Infrastructure.Data.DataModels
 
         [Comment("Loan repayments")]
         public IEnumerable<LoanRepayment> LoanRepayments { get; set; } = new List<LoanRepayment>();
+
+        [Comment("Loan application approval rate")]
+        public double ProbabilityOfApproval { get; set; }
+
+        [Comment("Loan application credit score")]
+        public double CreditScore { get; set; }
+
+        [Comment("Loan application risk group")]
+        public string RiskGroup { get; set; } = string.Empty;
     }
 }

@@ -1,1152 +1,1625 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 .register-section {
-  width: 100%;
-  max-width: 500px;
-  margin: 50px auto;
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.register-section h2 {
-  font-size: 30px;
-  margin-bottom: 20px;
-  color: #630460;
-  text-align: center;
-}
+    .register-section h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+        color: #630460;
+        text-align: center;
+    }
 
 .form-group {
-  margin-bottom: 20px;
-  position: relative;
+    margin-bottom: 20px;
+    position: relative;
 }
 
-.form-group label {
-  font-size: 16px;
-  color: #0033A0;
-  margin-bottom: 5px;
-  display: block;
-}
+    .form-group label {
+        font-size: 16px;
+        color: #0033A0;
+        margin-bottom: 5px;
+        display: block;
+    }
 
-.form-group input {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid #630460;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
+    .form-group input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #630460;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
 
-.form-group input:focus {
-  border-color: #DA1884;
-}
+        .form-group input:focus {
+            border-color: #DA1884;
+        }
 
-.form-group input::placeholder {
-  color: #999;
-}
+        .form-group input::placeholder {
+            color: #999;
+        }
 
-.form-group input[type=text],
-.form-group input[type=email],
-.form-group input[type=password] {
-  background: #fafafa;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
+        .form-group input[type=text],
+        .form-group input[type=email],
+        .form-group input[type=password] {
+            background: #fafafa;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
 
 .register-btn {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(to right, #630460, #DA1884);
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(to right, #630460, #DA1884);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 30px;
 }
 
-.register-btn:hover {
-  background: #F4ABB7;
-  transform: translateY(-3px);
-}
+    .register-btn:hover {
+        background: #F4ABB7;
+        transform: translateY(-3px);
+    }
 
 footer {
-  background-color: #4B2C82;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 14px;
-  font-family: "Roboto", sans-serif;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
-  margin-top: 40px;
+    background-color: #4B2C82;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 40px;
 }
-footer p {
-  margin: 0;
-}
-footer a {
-  color: #F04B89;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-footer a:hover {
-  color: #00ADEF;
-  text-decoration: underline;
-}
-footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #F04B89, #00ADEF, #4B2C82);
-}
+
+    footer p {
+        margin: 0;
+    }
+
+    footer a {
+        color: #F04B89;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+        footer a:hover {
+            color: #00ADEF;
+            text-decoration: underline;
+        }
+
+    footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #F04B89, #00ADEF, #4B2C82);
+    }
 
 /* Основни цветове на Experian */
 :root {
-  --primary-color: #4b0082; /* Индиго за навигационния бар */
-  --secondary-color: #ff69b4; /* Розов за hover ефекти */
-  --text-color: #ffffff; /* Бял за текста */
-  --background-color: #f2f2f2; /* Светъл фон */
+    --primary-color: #4b0082; /* Индиго за навигационния бар */
+    --secondary-color: #ff69b4; /* Розов за hover ефекти */
+    --text-color: #ffffff; /* Бял за текста */
+    --background-color: #f2f2f2; /* Светъл фон */
 }
 
 /* Общи стилове за body */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
 }
 
 /* Стил за навигационния бар */
 .navbar-experian {
-  background-color: var(--primary-color); /* Цветът на фона на навигацията */
-  padding: 20px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color); /* Цветът на фона на навигацията */
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-  color: var(--text-color); /* Текстът е бял */
-  font-size: 30px;
-  font-weight: bold;
-  text-transform: uppercase;
+    color: var(--text-color); /* Текстът е бял */
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-.navbar-brand:hover {
-  color: var(--secondary-color); /* При hover става розов */
-}
+    .navbar-brand:hover {
+        color: var(--secondary-color); /* При hover става розов */
+    }
 
 .nav-link {
-  color: var(--text-color); /* Белият текст в бутоните */
-  font-size: 18px;
-  padding: 10px 20px;
-  transition: color 0.3s ease;
+    color: var(--text-color); /* Белият текст в бутоните */
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
 }
 
-.nav-link:hover {
-  color: var(--secondary-color); /* При hover текстът става розов */
-}
+    .nav-link:hover {
+        color: var(--secondary-color); /* При hover текстът става розов */
+    }
 
 .navbar {
-  display: flex;
-  justify-content: flex-start; /* Преместване на бутоните наляво */
-  margin-top: 30px; /* Разстояние отгоре */
-  padding-left: 100px; /* Допълнително разстояние от ляво за бутоните */
-  background-color: var(--primary-color); /* Фонът на навигационния бар е индигов */
+    display: flex;
+    justify-content: flex-start; /* Преместване на бутоните наляво */
+    margin-top: 30px; /* Разстояние отгоре */
+    padding-left: 100px; /* Допълнително разстояние от ляво за бутоните */
+    background-color: var(--primary-color); /* Фонът на навигационния бар е индигов */
 }
 
 /* Преместване на бутоните по-наляво и центриране */
 .nav-item {
-  margin: 0 53px;
+    margin: 0 53px;
 }
 
 /* Стил за dropdown менютата */
 .dropdown-menu {
-  background-color: var(--primary-color);
-  border: none;
+    background-color: var(--primary-color);
+    border: none;
 }
 
 .dropdown-item {
-  color: var(--text-color);
+    color: var(--text-color);
 }
 
-.dropdown-item:hover {
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-}
+    .dropdown-item:hover {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
 
 /* Центриране на основния текст в страницата */
 h1 {
-  text-align: center;
-  color: var(--primary-color); /* Цветът на заглавието */
-  font-size: 36px;
-  margin-top: 100px; /* Пространство отгоре */
+    text-align: center;
+    color: var(--primary-color); /* Цветът на заглавието */
+    font-size: 36px;
+    margin-top: 100px; /* Пространство отгоре */
 }
 
 p {
-  text-align: center;
-  color: linear-gradient(to right, #0e42ac, #890685); /* Тъмен текст */
-  font-size: 18px;
-  margin-top: 10px;
+    text-align: center;
+    color: linear-gradient(to right, #0e42ac, #890685); /* Тъмен текст */
+    font-size: 18px;
+    margin-top: 10px;
 }
 
 /* Вкарване на каросел */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
 }
 
 .carousel-container {
-  display: flex;
-  justify-content: flex-end; /* Изместване вдясно */
+    display: flex;
+    justify-content: flex-end; /* Изместване вдясно */
 }
 
 .card-list .card-item {
-  list-style: none;
+    list-style: none;
 }
 
-.card-list .card-item .card-link {
-  width: 335px;
-  display: block;
-  background: #fff;
-  padding: 18px;
-  border-radius: 12px;
-  text-decoration: none;
-  border: 1.5px solid transparent;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
-  transition: 0.2s ease;
-  margin-left: 20px;
-}
+    .card-list .card-item .card-link {
+        width: 335px;
+        display: block;
+        background: #fff;
+        padding: 18px;
+        border-radius: 12px;
+        text-decoration: none;
+        border: 1.5px solid transparent;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+        transition: 0.2s ease;
+        margin-left: 20px;
+    }
 
-.card-list .card-item .card-link:hover {
-  border-color: #5352f0;
-}
+        .card-list .card-item .card-link:hover {
+            border-color: #5352f0;
+        }
 
 .card-list .card-link .card-image {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  border-radius: 10px;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .card-list .card-link .badge {
-  color: #5352f0;
-  padding: 8px 16px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin: 16px 0 18px;
-  background: #DDE4FF;
-  width: fit-content;
-  border-radius: 50px;
+    color: #5352f0;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 16px 0 18px;
+    background: #DDE4FF;
+    width: fit-content;
+    border-radius: 50px;
 }
 
-.card-list .card-link .badge.designer {
-  color: #b22485;
-  background: #f7dff5;
-}
+    .card-list .card-link .badge.designer {
+        color: #b22485;
+        background: #f7dff5;
+    }
 
-.card-list .card-link .badge.marketer {
-  color: #b25a2b;
-  background: #ffe3d2;
-}
+    .card-list .card-link .badge.marketer {
+        color: #b25a2b;
+        background: #ffe3d2;
+    }
 
-.card-list .card-link .badge.gamer {
-  color: #205c20;
-  background: #d6f8d6;
-}
+    .card-list .card-link .badge.gamer {
+        color: #205c20;
+        background: #d6f8d6;
+    }
 
-.card-list .card-link .badge.editor {
-  color: #856404;
-  background: #fff3cd;
-}
+    .card-list .card-link .badge.editor {
+        color: #856404;
+        background: #fff3cd;
+    }
 
 .card-list .card-link .card-title {
-  font-size: 1.19rem;
-  color: #000;
-  font-weight: 600;
+    font-size: 1.19rem;
+    color: #000;
+    font-weight: 600;
 }
 
 .card-list .card-link .card-button {
-  height: 35px;
-  width: 35px;
-  color: #5372F0;
-  border-radius: 50%;
-  margin: 30px 0 5px;
-  background: none;
-  cursor: pointer;
-  border: 2px solid #5372F0;
-  transform: rotate(-45deg);
-  transition: 0.4s ease;
+    height: 35px;
+    width: 35px;
+    color: #5372F0;
+    border-radius: 50%;
+    margin: 30px 0 5px;
+    background: none;
+    cursor: pointer;
+    border: 2px solid #5372F0;
+    transform: rotate(-45deg);
+    transition: 0.4s ease;
 }
 
 .card-list .card-link:hover .card-button {
-  background: #5372F0;
-  color: #fff;
+    background: #5372F0;
+    color: #fff;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+    font-family: "Poppins", sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 /* Стил за навигационния бар */
 .navbar {
-  background-color: #4b0082; /* Цветът на Experian */
+    background-color: #4b0082; /* Цветът на Experian */
 }
 
 .navbar-brand {
-  color: #fff;
-  font-size: 24px;
+    color: #fff;
+    font-size: 24px;
 }
 
 .nav-link {
-  color: #fff;
-  font-size: 18px;
-  margin-right: 20px;
+    color: #fff;
+    font-size: 18px;
+    margin-right: 20px;
 }
 
-.nav-link:hover {
-  color: #ff69b4; /* Розов при hover */
-}
+    .nav-link:hover {
+        color: #ff69b4; /* Розов при hover */
+    }
 
 h2 {
-  color: #4b0082;
-  margin-bottom: 30px;
+    color: #4b0082;
+    margin-bottom: 30px;
 }
 
 .card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
-  color: #4b0082;
+    color: #4b0082;
 }
 
 .card-text {
-  color: #4b0082;
+    color: #4b0082;
 }
 
 .card-link {
-  color: #ff69b4;
+    color: #ff69b4;
 }
 
-.card-link:hover {
-  text-decoration: underline;
-}
+    .card-link:hover {
+        text-decoration: underline;
+    }
 
 .list-group-item a {
-  color: #4b0082;
+    color: #4b0082;
 }
 
-.list-group-item a:hover {
-  color: #ff69b4;
-}
+    .list-group-item a:hover {
+        color: #ff69b4;
+    }
 
 .card-body .card-title {
-  color: #4b0082 !important;
+    color: #4b0082 !important;
 }
 
 .card-body .card-text {
-  color: #4b0082 !important;
+    color: #4b0082 !important;
 }
 
 .container {
-  margin-top: 80px; /* Премества формата по-надолу */
+    margin-top: 80px; /* Премества формата по-надолу */
 }
 
 form {
-  margin-top: -20px; /* Ще премести формата нагоре */
+    margin-top: -20px; /* Ще премести формата нагоре */
 }
 
 .form-container {
-  max-width: 400px; /* Ограничаване на широчината на формата */
-  margin: 0 auto; /* Центриране на формата */
-  background-color: #fff; /* Фон на формата */
-  padding: 30px; /* Вътрешни разстояния */
-  border-radius: 10px; /* Заоблени краища */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Лек ефект на сянка */
+    max-width: 400px; /* Ограничаване на широчината на формата */
+    margin: 0 auto; /* Центриране на формата */
+    background-color: #fff; /* Фон на формата */
+    padding: 30px; /* Вътрешни разстояния */
+    border-radius: 10px; /* Заоблени краища */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Лек ефект на сянка */
 }
 
 h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #4B0082; /* Текст в цвета на Experian */
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4B0082; /* Текст в цвета на Experian */
 }
 
 .description {
-  text-align: center;
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #fff; /* По-малък и сив текст за описание */
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #fff; /* По-малък и сив текст за описание */
 }
 
 /* Стил за формата */
 .form-group label {
-  font-size: 16px;
-  color: #4B0082; /* Цветът на текста */
+    font-size: 16px;
+    color: #4B0082; /* Цветът на текста */
 }
 
 /* Стил за бутона */
 .btn-primary {
-  background-color: #DA1884;
-  border-color: #DA1884;
-  height: 45px;
-  font-size: 18px;
-  border-radius: 25px;
-  transition: background-color 0.3s ease;
-  margin-top: 35px;
+    background-color: #DA1884;
+    border-color: #DA1884;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+    margin-top: 35px;
 }
 
-.btn-primary:hover {
-  background-color: #FF69B4;
-}
+    .btn-primary:hover {
+        background-color: #FF69B4;
+    }
 
 /* Коригиране на разстоянието между полетата */
 .form-group {
-  margin-bottom: 5px; /* Намалява разстоянието между полетата */
+    margin-bottom: 5px; /* Намалява разстоянието между полетата */
 }
 
 .container {
-  margin-top: 80px; /* Премества формата по-надолу */
+    margin-top: 80px; /* Премества формата по-надолу */
 }
 
 .form-container {
-  max-width: 400px; /* Ограничаване на широчината на формата */
-  margin: 0 auto; /* Центриране на формата */
-  background-color: #fff; /* Фон на формата */
-  padding: 30px; /* Вътрешни разстояния */
-  border-radius: 10px; /* Заоблени краища */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Лек ефект на сянка */
+    max-width: 400px; /* Ограничаване на широчината на формата */
+    margin: 0 auto; /* Центриране на формата */
+    background-color: #fff; /* Фон на формата */
+    padding: 30px; /* Вътрешни разстояния */
+    border-radius: 10px; /* Заоблени краища */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Лек ефект на сянка */
 }
 
 h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #4B0082; /* Текст в цвета на Experian */
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4B0082; /* Текст в цвета на Experian */
 }
 
 .description {
-  text-align: center;
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #555; /* По-малък и сив текст за описание */
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555; /* По-малък и сив текст за описание */
 }
 
 /* Стил за формата */
 .form-group label {
-  font-size: 16px;
-  color: #4B0082; /* Цветът на текста */
+    font-size: 16px;
+    color: #4B0082; /* Цветът на текста */
 }
 
 /* Стил за бутона */
 .btn-primary {
-  background-color: #DA1884;
-  border-color: #DA1884;
-  height: 45px;
-  font-size: 18px;
-  border-radius: 25px;
-  transition: background-color 0.3s ease;
+    background-color: #DA1884;
+    border-color: #DA1884;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: #FF69B4;
-}
+    .btn-primary:hover {
+        background-color: #FF69B4;
+    }
 
 /* Основни стилове за картите */
 .card {
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  padding: 20px;
-  height: 280px; /* Задаваме еднаква височина за всички карти */
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 20px;
+    height: 280px; /* Задаваме еднаква височина за всички карти */
 }
 
 /* Стил за заглавията на картите */
 .card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff; /* Заглавията в картите са с бял текст */
-  display: flex;
-  align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff; /* Заглавията в картите са с бял текст */
+    display: flex;
+    align-items: center;
 }
 
 /* Стил за текста в картите */
 .card-text {
-  font-size: 1rem;
-  color: #fff;
+    font-size: 1rem;
+    color: #fff;
 }
 
 /* Увеличаване на иконите и запазване на цветовете */
 .card-title i {
-  font-size: 2.5rem; /* Големина на иконите */
-  margin-right: 10px;
+    font-size: 2.5rem; /* Големина на иконите */
+    margin-right: 10px;
 }
 
 /* Цветове за иконите */
 .icon-green {
-  color: #28a745; /* Зелен цвят */
+    color: #28a745; /* Зелен цвят */
 }
 
 .icon-yellow {
-  color: #ffc107; /* Жълт цвят */
+    color: #ffc107; /* Жълт цвят */
 }
 
 .icon-blue {
-  color: #007bff; /* Син цвят */
+    color: #007bff; /* Син цвят */
 }
 
 .icon-lightblue {
-  color: #17a2b8; /* Светлосин цвят */
+    color: #17a2b8; /* Светлосин цвят */
 }
 
 /* Стил за бутоните */
 .btn-outline-light {
-  font-weight: bold;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  padding: 0.5rem 1.5rem;
-  transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.btn-outline-light:hover {
-  background-color: #fff;
-  color: #4b0082;
-}
+    .btn-outline-light:hover {
+        background-color: #fff;
+        color: #4b0082;
+    }
 
 /* Ховър ефект за картите */
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Мобилна версия за по-добро изравняване */
 @media (max-width: 768px) {
-  .card {
-    margin-bottom: 1.5rem;
-  }
+    .card {
+        margin-bottom: 1.5rem;
+    }
 }
 /* Стилизация за контейнера и разстоянието от навбара */
 .container {
-  max-width: 1200px;
-  margin: 50px auto; /* Добавяне на разстояние между контейнера и навбара */
-  padding: 20px;
+    max-width: 1200px;
+    margin: 50px auto; /* Добавяне на разстояние между контейнера и навбара */
+    padding: 20px;
 }
 
 /* Разстояние между картите */
 .card + .card {
-  margin-left: 50px;
+    margin-left: 50px;
 }
 
 /* Промяна на цвета на заглавието (текста "Нов превод") в цветовете на Experian */
 h2 {
-  color: #4b0082; /* Синьо, основен цвят на Experian */
-  text-align: center; /* Центриране на текста */
-  font-size: 2rem; /* Размер на текста */
-  margin-top: 100px;
-  margin-bottom: 1.5rem; /* Разстояние под заглавието */
+    color: #4b0082; /* Синьо, основен цвят на Experian */
+    text-align: center; /* Центриране на текста */
+    font-size: 2rem; /* Размер на текста */
+    margin-top: 100px;
+    margin-bottom: 1.5rem; /* Разстояние под заглавието */
 }
 
 /* Стилове за полетата на формата, които засягат само страницата за преводи */
 .transfer-form-container {
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
-  margin-top: 50px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin-top: 50px;
 }
 
 h2 {
-  text-align: center;
-  margin-top: 20px; /* Променяй тази стойност според нуждите ти */
-  font-size: 2rem;
-  color: #4b0082; /* Цветът, който използваш */
+    text-align: center;
+    margin-top: 20px; /* Променяй тази стойност според нуждите ти */
+    font-size: 2rem;
+    color: #4b0082; /* Цветът, който използваш */
 }
 
 .transfer-form-container h2 {
-  color: #4b0082;
-  margin-bottom: 30px;
-  font-size: 28px;
-  font-weight: 600;
+    color: #4b0082;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .transfer-form-container .form-group label {
-  font-weight: 600;
-  color: #4b0082;
+    font-weight: 600;
+    color: #4b0082;
 }
 
 .transfer-form-container .form-control {
-  border-radius: 8px;
-  border: 1px solid #4b0082;
-  padding: 10px;
-  font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #4b0082;
+    padding: 10px;
+    font-size: 16px;
 }
 
-.transfer-form-container .form-control:focus {
-  border-color: #DA1884;
-  box-shadow: 0 0 5px rgba(218, 24, 132, 0.5);
-}
+    .transfer-form-container .form-control:focus {
+        border-color: #DA1884;
+        box-shadow: 0 0 5px rgba(218, 24, 132, 0.5);
+    }
 
 .transfer-form-container .btn-primary {
-  background-color: #DA1884;
-  border-color: #DA1884;
-  height: 50px;
-  font-size: 18px;
-  border-radius: 25px;
-  transition: background-color 0.3s ease;
+    background-color: #DA1884;
+    border-color: #DA1884;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
 }
 
-.transfer-form-container .btn-primary:hover {
-  background-color: #FF69B4;
-}
+    .transfer-form-container .btn-primary:hover {
+        background-color: #FF69B4;
+    }
 
 /* Общ стил за полетата */
 .form-control, .custom-select {
-  height: 50px; /* По-голяма височина за всички полета */
-  font-size: 16px; /* По-голям текст за по-добра четливост */
-  padding: 10px;
-  border-radius: 8px; /* Заоблени краища */
-  width: 100%; /* Ширина 100%, за да запълва целия контейнер */
-  box-sizing: border-box; /* Уверява се, че полетата се вместват коректно в контейнера */
-  border: 2px solid #4B0082; /* Граница в цвета на темата */
-  color: #4B0082; /* Цветът на текста */
+    height: 50px; /* По-голяма височина за всички полета */
+    font-size: 16px; /* По-голям текст за по-добра четливост */
+    padding: 10px;
+    border-radius: 8px; /* Заоблени краища */
+    width: 100%; /* Ширина 100%, за да запълва целия контейнер */
+    box-sizing: border-box; /* Уверява се, че полетата се вместват коректно в контейнера */
+    border: 2px solid #4B0082; /* Граница в цвета на темата */
+    color: #4B0082; /* Цветът на текста */
 }
 
 /* Специфично за select полетата */
 .custom-select {
-  appearance: none; /* Премахва стандартната стилизация на браузъра */
-  background-color: #fff; /* Фон на падащото меню */
-  padding-right: 40px; /* Оставя място за иконата на стрелката */
+    appearance: none; /* Премахва стандартната стилизация на браузъра */
+    background-color: #fff; /* Фон на падащото меню */
+    padding-right: 40px; /* Оставя място за иконата на стрелката */
 }
 
-/* Стил за иконата на стрелката в select полетата */
-.custom-select:after {
-  content: "▼"; /* Символ за надолу сочеща стрелка */
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; /* Стрелката няма да пречи на клика */
-  color: #4B0082; /* Цветът на стрелката */
-  font-size: 18px; /* Размерът на стрелката */
-}
+    /* Стил за иконата на стрелката в select полетата */
+    .custom-select:after {
+        content: "▼"; /* Символ за надолу сочеща стрелка */
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none; /* Стрелката няма да пречи на клика */
+        color: #4B0082; /* Цветът на стрелката */
+        font-size: 18px; /* Размерът на стрелката */
+    }
 
 /* Стилизация за input полетата с datalist */
 input[list] {
-  border: 2px solid #4B0082; /* Граница в цвета на темата */
-  padding: 10px;
-  border-radius: 5px;
-  transition: border-color 0.3s;
+    border: 2px solid #4B0082; /* Граница в цвета на темата */
+    padding: 10px;
+    border-radius: 5px;
+    transition: border-color 0.3s;
 }
 
-input[list]:focus {
-  border-color: #DA1884; /* Цветът при фокусиране */
-  outline: none;
-}
+    input[list]:focus {
+        border-color: #DA1884; /* Цветът при фокусиране */
+        outline: none;
+    }
 
-input[list]::placeholder {
-  color: #aaa; /* Цветът на placeholder текста */
-}
+    input[list]::placeholder {
+        color: #aaa; /* Цветът на placeholder текста */
+    }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Полетата с иконки */
 .input-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #4B0082; /* Цветът на иконките */
-  pointer-events: none;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #4B0082; /* Цветът на иконките */
+    pointer-events: none;
 }
 
 /* Responsive дизайн */
 @media (max-width: 768px) {
-  .form-control, .custom-select {
-    font-size: 14px;
-    height: 45px;
-  }
+    .form-control, .custom-select {
+        font-size: 14px;
+        height: 45px;
+    }
 }
 /* Основни стилове */
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Основната секция (съдържанието) да запълва наличното място */
 main {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 /* Footer styling - ще се показва само най-отдолу */
 footer {
-  width: 100%;
-  background-color: #4b0082;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 14px;
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    width: 100%;
+    background-color: #4b0082;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-footer a {
-  color: #ff69b4;
-  text-decoration: none;
-}
+    footer a {
+        color: #ff69b4;
+        text-decoration: none;
+    }
 
-footer a:hover {
-  text-decoration: underline;
-}
+        footer a:hover {
+            text-decoration: underline;
+        }
 
 /* Login section styling */
 .login-section {
-  width: 100%;
-  max-width: 500px;
-  margin: 200px auto;
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 200px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.login-section h2 {
-  font-size: 32px;
-  margin-bottom: 50px;
-  color: #630460;
-}
+    .login-section h2 {
+        font-size: 32px;
+        margin-bottom: 50px;
+        color: #630460;
+    }
 
-.login-section form .form-group {
-  margin-bottom: 20px;
-}
+    .login-section form .form-group {
+        margin-bottom: 20px;
+    }
 
-.login-section form .form-group label {
-  font-size: 18px; /* Увеличен шрифт за label-ите */
-  margin-bottom: 5px;
-  display: block;
-  color: #0033A0;
-}
+        .login-section form .form-group label {
+            font-size: 18px; /* Увеличен шрифт за label-ите */
+            margin-bottom: 5px;
+            display: block;
+            color: #0033A0;
+        }
 
-.login-section form .form-group input {
-  padding: 12px;
-  font-size: 16px;
-  width: 100%;
-  border: 1px solid #630460;
-  border-radius: 5px;
-  transition: border-color 0.3s;
-}
+        .login-section form .form-group input {
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #630460;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
 
-.login-section form .form-group input:focus {
-  border-color: #DA1884;
-  outline: none;
-}
+            .login-section form .form-group input:focus {
+                border-color: #DA1884;
+                outline: none;
+            }
 
-/* Button styling */
-.login-section form button {
-  padding: 12px 30px;
-  background-color: #DA1884;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
-}
+    /* Button styling */
+    .login-section form button {
+        padding: 12px 30px;
+        background-color: #DA1884;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
 
-.login-section form button:hover {
-  background-color: #F4ABB7;
-  transform: translateY(-5px);
-}
+        .login-section form button:hover {
+            background-color: #F4ABB7;
+            transform: translateY(-5px);
+        }
 
 .loan-cards-container {
-  padding-top: 40px;
-}
-.loan-cards-container h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #4B0082;
-}
-.loan-cards-container .row {
-  display: flex;
-  justify-content: center; /* Центрира картите */
-  flex-wrap: wrap; /* Позволява картите да се пренареждат на нов ред при нужда */
-  gap: 20px; /* Разстояние между картите */
-}
-.loan-cards-container .col-md-4, .loan-cards-container .col-md-6 {
-  flex: 1 1 300px; /* Гъвкава ширина на картите, минимално 300px */
-  max-width: 350px; /* Максимална ширина на картите */
-}
-.loan-cards-container .card {
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  padding: 20px;
-  height: 280px; /* Височина на картите */
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.loan-cards-container .card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #fff;
-}
-.loan-cards-container .card-text {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: #fff;
-}
-.loan-cards-container .btn-outline-light {
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-.loan-cards-container .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding-top: 40px;
 }
 
-/* Уеднаквяване на бутоните */
-.loan-cards-container .card .btn-outline-light {
-  width: 80%; /* Уеднаквяване на ширината */
-  height: 50px; /* Фиксиране на височината */
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 30px;
-  padding: 0;
-  line-height: 50px; /* Центриране на текста вертикално */
-  margin-top: 20px; /* Добавяне на разстояние от текста */
-  transition: background-color 0.3s, color 0.3s;
-}
+    .loan-cards-container h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #4B0082;
+    }
+
+    .loan-cards-container .row {
+        display: flex;
+        justify-content: center; /* Центрира картите */
+        flex-wrap: wrap; /* Позволява картите да се пренареждат на нов ред при нужда */
+        gap: 20px; /* Разстояние между картите */
+    }
+
+    .loan-cards-container .col-md-4, .loan-cards-container .col-md-6 {
+        flex: 1 1 300px; /* Гъвкава ширина на картите, минимално 300px */
+        max-width: 350px; /* Максимална ширина на картите */
+    }
+
+    .loan-cards-container .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        padding: 20px;
+        height: 280px; /* Височина на картите */
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .loan-cards-container .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #fff;
+    }
+
+    .loan-cards-container .card-text {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .loan-cards-container .btn-outline-light {
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .loan-cards-container .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Уеднаквяване на бутоните */
+    .loan-cards-container .card .btn-outline-light {
+        width: 80%; /* Уеднаквяване на ширината */
+        height: 50px; /* Фиксиране на височината */
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 30px;
+        padding: 0;
+        line-height: 50px; /* Центриране на текста вертикално */
+        margin-top: 20px; /* Добавяне на разстояние от текста */
+        transition: background-color 0.3s, color 0.3s;
+    }
 
 /* Подреждане на картите */
 @media (min-width: 768px) {
-  .loan-cards-container .row:nth-child(1) .col-md-4 {
-    max-width: 32%; /* За първия ред - три карти по 32% ширина */
-  }
-  .loan-cards-container .row:nth-child(2) .col-md-6 {
-    max-width: 48%; /* За втория ред - две карти по 48% ширина */
-  }
+    .loan-cards-container .row:nth-child(1) .col-md-4 {
+        max-width: 32%; /* За първия ред - три карти по 32% ширина */
+    }
+
+    .loan-cards-container .row:nth-child(2) .col-md-6 {
+        max-width: 48%; /* За втория ред - две карти по 48% ширина */
+    }
 }
 /* Мобилна версия */
 @media (max-width: 767px) {
-  .card {
-    max-width: 100%; /* В мобилен режим картите ще заемат цялата ширина */
-    margin-bottom: 20px; /* Разстояние между картите */
-  }
-}
-.apply-loan-form .form-section {
-  margin-bottom: 40px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-}
-.apply-loan-form .form-section h4 {
-  color: #4B0082; /* Цветът на заглавията */
-  margin-bottom: 20px;
-}
-.apply-loan-form .form-group label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #4B0082;
-}
-.apply-loan-form .form-control {
-  border-radius: 8px;
-  padding: 12px;
-  border: 2px solid #4B0082;
-}
-.apply-loan-form .radio-options {
-  display: inline-flex; /* Правим елементите подредени в линия */
-  gap: 10px; /* Разстояние между Да и Не */
-  align-items: center;
-}
-.apply-loan-form .radio-options input[type=radio] {
-  margin: 0 3px 0 0; /* Минимално разстояние между радио бутоните и текста */
-  transform: scale(1.1); /* Малко увеличение на радио бутоните */
-}
-.apply-loan-form .radio-options label {
-  font-weight: 500;
-  color: #4B0082;
-  margin-left: 5px; /* Допълнителен марджин за текстовете */
-}
-.apply-loan-form .btn-primary {
-  background-color: #DA1884;
-  border-color: #DA1884;
-  font-size: 18px;
-  padding: 10px;
-  border-radius: 25px;
-  margin-top: 20px;
-}
-.apply-loan-form .btn-primary:hover {
-  background-color: #F04B89;
-}
-.apply-loan-form h2 {
-  margin-bottom: 100px;
-  /*margin-top: 130px; /* Увеличи стойността за повече разстояние */
-  text-align: center;
-  color: #4B0082; /* Може да е в текущия стил */
+    .card {
+        max-width: 100%; /* В мобилен режим картите ще заемат цялата ширина */
+        margin-bottom: 20px; /* Разстояние между картите */
+    }
 }
 
+.apply-loan-form .form-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+    .apply-loan-form .form-section h4 {
+        color: #4B0082; /* Цветът на заглавията */
+        margin-bottom: 20px;
+    }
+
+.apply-loan-form .form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4B0082;
+}
+
+.apply-loan-form .form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 2px solid #4B0082;
+}
+
+.apply-loan-form .radio-options {
+    display: inline-flex; /* Правим елементите подредени в линия */
+    gap: 10px; /* Разстояние между Да и Не */
+    align-items: center;
+}
+
+    .apply-loan-form .radio-options input[type=radio] {
+        margin: 0 3px 0 0; /* Минимално разстояние между радио бутоните и текста */
+        transform: scale(1.1); /* Малко увеличение на радио бутоните */
+    }
+
+    .apply-loan-form .radio-options label {
+        font-weight: 500;
+        color: #4B0082;
+        margin-left: 5px; /* Допълнителен марджин за текстовете */
+    }
+
+.apply-loan-form .btn-primary {
+    background-color: #DA1884;
+    border-color: #DA1884;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 25px;
+    margin-top: 20px;
+}
+
+    .apply-loan-form .btn-primary:hover {
+        background-color: #F04B89;
+    }
+
+.apply-loan-form h2 {
+    margin-bottom: 100px;
+    /*margin-top: 130px; /* Увеличи стойността за повече разстояние */
+    text-align: center;
+    color: #4B0082; /* Може да е в текущия стил */
+}
+
+#funds-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("/dist/images/funds.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "Montserrat";
+}
+
+    #funds-page .account {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2em;
+    }
+
+        #funds-page .account p {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #funds-page .account button {
+            color: #fff;
+            background-color: #2696E9;
+            letter-spacing: 1px;
+        }
+
+    #funds-page .funds {
+        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(to right, #0e42ac, #890685);
+        width: 900px;
+        height: 225px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        border: 3px solid black;
+        border-radius: 2em;
+    }
+
+    #funds-page .funds__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+        #funds-page .funds__details h3 {
+            color: #fff;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        #funds-page .funds__details h1 {
+            color: #fff;
+            letter-spacing: 2px;
+            font-size: 25px;
+        }
+
+    #funds-page .funds__details-account {
+        height: 30px;
+        display: flex;
+    }
+
+    #funds-page .funds__details-account-text {
+        flex-grow: 1;
+        padding: 0 8px;
+        font-size: 12px;
+        border: 1px solid #cccccc;
+        border-right: none;
+        outline: none;
+    }
+
+        #funds-page .funds__details-account-text:hover {
+            background-color: #eeeeee;
+        }
+
+    #funds-page .funds__details-account-copy {
+        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #dddddd;
+        color: #333333;
+        outline: none;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+    }
+
+        #funds-page .funds__details-account-copy:hover {
+            background-color: #cccccc;
+        }
+
+    #funds-page .funds__details-buttons {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #funds-page .funds__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #funds-page .funds__info-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #funds-page .funds__info-container-balance {
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+        letter-spacing: 1px;
+        margin-right: 35px;
+    }
+
+        #funds-page .funds__info-container-balance p {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #funds-page .funds__info-container-balance h1 {
+            margin: 8px 0;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+    #funds-page .funds .funds__details-pennies {
+        color: darkgrey;
+    }
+
+    #funds-page .funds .funds__details-pennies-currency {
+        color: darkgrey;
+    }
+
+    #funds-page .funds__button {
+        background-color: #fff;
+        color: black;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        margin-right: 25px;
+    }
+
+        #funds-page .funds__button span {
+            margin-left: 8px;
+        }
+
+        #funds-page .funds__button:hover {
+            background-color: #2696E9;
+            color: white;
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        #funds-page .funds__button:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+hr {
+    background-color: #fff;
+}
+
+/* Стилове само за страницата historyofcredits.html */
+.history-credits-page {
+    margin-top: 40px;
+    /* Отстъп между картите */
+}
+
+    .history-credits-page h2 {
+        color: #4B0082;
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .history-credits-page .card {
+        border: 1px solid #4B0082;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        padding: 20px;
+        background-color: #fff;
+        height: 100%;
+    }
+
+        .history-credits-page .card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .history-credits-page .card .card-title {
+            font-size: 1.8rem;
+            color: #4B0082;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .history-credits-page .card .card-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .history-credits-page .card strong {
+            color: #4B0082;
+        }
+
+        .history-credits-page .card .btn {
+            background-color: #DA1884;
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .history-credits-page .card .btn:hover {
+                background-color: #F04B89;
+            }
+
+        .history-credits-page .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .history-credits-page .row {
+        margin-bottom: 30px;
+    }
+
+    .history-credits-page .col-md-6 {
+        display: flex;
+        justify-content: center;
+    }
+
+/* Мобилни стилове */
+@media (max-width: 768px) {
+    .history-credits-page .card {
+        margin-bottom: 20px;
+    }
+}
+/* Стилове за loan-details.html */
+.loan-details {
+    /* Основен стил за секциите */
+    /* Основни параграфи в секциите */
+    /* Стилен акцент за "strong" елементи в текста */
+    /* Подравняване на основния заглавен текст */
+    /* Стилове за радио бутони и полетата с отговори Да/Не */
+    /* Стил за формуляра */
+    /* Подравняване и стилизиране на таблиците или разпределените данни */
+    /* Стилове за бутони */
+}
+
+    .loan-details .form-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+        .loan-details .form-section h4 {
+            color: #4B0082; /* Цветът на заглавията */
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .loan-details .form-section p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+            .loan-details .form-section p strong {
+                color: #4B0082;
+            }
+
+    .loan-details h2 {
+        color: #4B0082; /* Основен цветен акцент за заглавията */
+        margin-bottom: 30px;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .loan-details .radio-options {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+        .loan-details .radio-options input[type=radio] {
+            margin: 0 5px 0 0; /* Разстояние между радио бутона и текста */
+        }
+
+    .loan-details .form-group label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #4B0082;
+    }
+
+    .loan-details .table-info {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .loan-details .table-info th, .loan-details .table-info td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .loan-details .table-info th {
+            background-color: #4B0082;
+            color: white;
+            font-weight: bold;
+        }
+
+        .loan-details .table-info td {
+            color: #333;
+        }
+
+    .loan-details .btn {
+        background-color: #DA1884;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+        .loan-details .btn:hover {
+            background-color: #F04B89;
+        }
+
+/* Стилове само за mycredits.html */
+.my-credits {
+    margin-top: 100px;
+    /* Заглавие на страницата */
+    /* Стилове за картите */
+    /* Заглавие на всяка карта */
+    /* Текст в картите */
+    /* Подчертаване на важната информация */
+    /* Контейнерът за бланките */
+    /* Стилизиране на редовете */
+}
+
+    .my-credits h2 {
+        color: #4B0082; /* Основен лилав цвят */
+        margin-top: 50px; /* Добавяме повече разстояние над заглавието */
+        margin-bottom: 30px;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .my-credits .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        padding: 20px;
+    }
+
+        .my-credits .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .my-credits .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4B0082;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .my-credits .card-text {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+        .my-credits .card-text strong {
+            color: #DA1884;
+        }
+
+    .my-credits .container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        max-width: 1200px;
+        margin: 100px auto; /* Увеличаваме margin-top на 100px за да се бутнат надолу */
+    }
+
+    .my-credits .row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .my-credits .col-md-6 {
+        display: flex;
+        justify-content: center;
+    }
+
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 header {
-  height: 100vh;
+    height: 100vh;
 }
 
 section {
-  padding: 100px 200px;
+    padding: 100px 200px;
 }
 
 a {
-  text-decoration: none;
-  color: whitesmoke;
+    text-decoration: none;
+    color: whitesmoke;
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 #main-page {
-  background-image: url("/dist/images/background.jpg");
-  background-size: cover;
-  background-position: center;
-}
-#main-page .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#main-page .content__navigation {
-  z-index: 1000;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(to right, #0e42ac, #890685);
-  position: fixed;
-  height: 65px;
-  width: 75%;
-  margin-top: 3em;
-  border-radius: 40px;
-  font-size: 18px;
-  font-family: "Montserrat";
-  letter-spacing: 0.5px;
-}
-#main-page .content__navigation-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#main-page .content__navigation-item-ft {
-  margin: 0 25px;
-}
-#main-page .content__navigation-item-ft-name {
-  font-size: 30px;
-  font-weight: bold;
-  font-family: "Playpen Sans";
-  letter-spacing: 2px;
-  font-weight: 500;
-  margin-left: 15px;
-}
-#main-page .content__navigation-item-ft-title {
-  position: relative;
-  transition: margin 0.4s;
-}
-#main-page .content__navigation-item-ft-title::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 1.5px;
-  background-color: white;
-  transition: width 0.4s ease-out;
-}
-#main-page .content__navigation-item-ft-title:hover {
-  margin-left: 1em;
-}
-#main-page .content__navigation-item-ft-title:hover::after {
-  width: 100%;
-}
-#main-page .content__navigation-item-ft:hover i {
-  opacity: 1;
-  visibility: visible;
-}
-#main-page .content__navigation-item-ft i {
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s, visibility 0.4s;
-}
-#main-page .content__main {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #2696E9;
-}
-#main-page .content__main-info {
-  z-index: 778;
-  color: #fff;
-  width: 70%;
-  margin-top: 50px;
-  display: none;
-}
-#main-page .content__main-info.active {
-  display: block;
-}
-#main-page .content__main-info-heading {
-  font-size: 4em;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  line-height: 75px;
-  margin-bottom: 40px;
-}
-#main-page .content__main-info-heading-span {
-  font-size: 1.2em;
-  font-weight: 600;
-}
-#main-page .content__main-info-text {
-  margin-bottom: 65px;
-}
-#main-page .content__main-info-button {
-  background-color: #fff;
-  padding: 15px 35px;
-  color: #1690AC;
-  font-size: 1.1em;
-  font-weight: 500;
-  border-radius: 2px;
-}
-#main-page .content__main-icons {
-  z-index: 778;
-  position: absolute;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
-  transition: 0.5s ease;
-}
-#main-page .content__main-icons a {
-  font-size: 1.6em;
-  transition: 0.3s ease;
-}
-#main-page .content__main-icons a:not(:last-child) {
-  margin-bottom: 20px;
-}
-#main-page .content__main-icons a:hover {
-  transform: scale(1.3);
-}
-#main-page .content__main-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  clip-path: circle(0% at 0 50%);
-}
-#main-page .content__main-video.active {
-  clip-path: circle(150% at 0 50%);
-  transition: 2s ease;
-  transition-property: clip-path;
-}
-#main-page .content__main-slider {
-  z-index: 888;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(80px);
-  margin-bottom: 12px;
-}
-#main-page .content__main-slider-btn {
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
-  transition: 0.3s ease;
-}
-#main-page .content__main-slider-btn.active {
-  background: #2696E9;
-}
-#main-page .content__main-slider-btn:not(:last-child) {
-  margin-right: 20px;
-}
-#main-page .content__main-slider-btn:hover {
-  transform: scale(1.2);
-}
-#main-page .content__main::before {
-  z-index: 777;
-  content: "";
-  position: absolute;
-  background: rgba(3, 96, 251, 0.3);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+    background-image: url("/dist/images/background.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
+    #main-page .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #main-page .content__navigation {
+        z-index: 1000;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(to right, #0e42ac, #890685);
+        position: fixed;
+        height: 65px;
+        width: 75%;
+        margin-top: 3em;
+        border-radius: 40px;
+        font-size: 18px;
+        font-family: "Montserrat";
+        letter-spacing: 0.5px;
+    }
+
+    #main-page .content__navigation-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #main-page .content__navigation-item-ft {
+        margin: 0 25px;
+    }
+
+    #main-page .content__navigation-item-ft-name {
+        font-size: 30px;
+        font-weight: bold;
+        font-family: "Playpen Sans";
+        letter-spacing: 2px;
+        font-weight: 500;
+        margin-left: 15px;
+    }
+
+    #main-page .content__navigation-item-ft-title {
+        position: relative;
+        transition: margin 0.4s;
+    }
+
+        #main-page .content__navigation-item-ft-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 1.5px;
+            background-color: white;
+            transition: width 0.4s ease-out;
+        }
+
+        #main-page .content__navigation-item-ft-title:hover {
+            margin-left: 1em;
+        }
+
+            #main-page .content__navigation-item-ft-title:hover::after {
+                width: 100%;
+            }
+
+    #main-page .content__navigation-item-ft:hover i {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #main-page .content__navigation-item-ft i {
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s;
+    }
+
+    #main-page .content__main {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #2696E9;
+    }
+
+    #main-page .content__main-info {
+        z-index: 778;
+        color: #fff;
+        width: 70%;
+        margin-top: 50px;
+        display: none;
+    }
+
+        #main-page .content__main-info.active {
+            display: block;
+        }
+
+    #main-page .content__main-info-heading {
+        font-size: 4em;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        line-height: 75px;
+        margin-bottom: 40px;
+    }
+
+    #main-page .content__main-info-heading-span {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    #main-page .content__main-info-text {
+        margin-bottom: 65px;
+    }
+
+    #main-page .content__main-info-button {
+        background-color: #fff;
+        padding: 15px 35px;
+        color: #1690AC;
+        font-size: 1.1em;
+        font-weight: 500;
+        border-radius: 2px;
+    }
+
+    #main-page .content__main-icons {
+        z-index: 778;
+        position: absolute;
+        right: 30px;
+        display: flex;
+        flex-direction: column;
+        transition: 0.5s ease;
+    }
+
+        #main-page .content__main-icons a {
+            font-size: 1.6em;
+            transition: 0.3s ease;
+        }
+
+            #main-page .content__main-icons a:not(:last-child) {
+                margin-bottom: 20px;
+            }
+
+            #main-page .content__main-icons a:hover {
+                transform: scale(1.3);
+            }
+
+    #main-page .content__main-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        clip-path: circle(0% at 0 50%);
+    }
+
+        #main-page .content__main-video.active {
+            clip-path: circle(150% at 0 50%);
+            transition: 2s ease;
+            transition-property: clip-path;
+        }
+
+    #main-page .content__main-slider {
+        z-index: 888;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(80px);
+        margin-bottom: 12px;
+    }
+
+    #main-page .content__main-slider-btn {
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+        transition: 0.3s ease;
+    }
+
+        #main-page .content__main-slider-btn.active {
+            background: #2696E9;
+        }
+
+        #main-page .content__main-slider-btn:not(:last-child) {
+            margin-right: 20px;
+        }
+
+        #main-page .content__main-slider-btn:hover {
+            transform: scale(1.2);
+        }
+
+    #main-page .content__main::before {
+        z-index: 777;
+        content: "";
+        position: absolute;
+        background: rgba(3, 96, 251, 0.3);
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
 .button {
-  display: flex;
-  justify-content: center;
-  border-radius: 1em;
-  background-color: whitesmoke;
-  color: black;
-  width: 150px;
-  padding: 8px;
-  transition: ease-out 0.3s;
+    display: flex;
+    justify-content: center;
+    border-radius: 1em;
+    background-color: whitesmoke;
+    color: black;
+    width: 150px;
+    padding: 8px;
+    transition: ease-out 0.3s;
 }
-.button:hover {
-  box-shadow: inset 125px 0 0 0 #2696E9;
-  cursor: pointer;
-  background-color: #2696E9;
-  color: white;
-}
-.validation {
-    color: red; /* Change text color to red */
-    padding: 5px 0; /* Add padding on top and bottom */
-    font-size: 0.9em; /* Optional: adjust font size */
-}
+
+    .button:hover {
+        box-shadow: inset 125px 0 0 0 #2696E9;
+        cursor: pointer;
+        background-color: #2696E9;
+        color: white;
+    }
