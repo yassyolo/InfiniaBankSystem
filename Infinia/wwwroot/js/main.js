@@ -27,3 +27,21 @@ buttons.forEach((btn, i) => {
     });
 });
 
+// Copy field action
+document.querySelectorAll(".funds__details-account").forEach(copyLinkContainer => {
+  const inputField = copyLinkContainer.querySelector(".funds__details-account-text");
+  const copyButton = copyLinkContainer.querySelector(".funds__details-account-copy");
+
+  copyButton.addEventListener("click", () => {
+      const text = inputField.value;
+
+      inputField.select();
+      navigator.clipboard.writeText(text).then(() => {
+        inputField.value = "Copied!";
+        setTimeout(() => inputField.value = text, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  });
+})
+

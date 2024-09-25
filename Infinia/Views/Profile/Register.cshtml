@@ -16,7 +16,7 @@
         <div id="main-page">
             <div class="navigation">
                 <div class="navigation__item navigation__item-ft">
-                    <a asp-action="Index" asp-controller="Profil" class="navigation__item-ft-name">Infinia</a>
+                    <a asp-action="Index" asp-controller="Profil" class="navigation__item-ft-name"></a>
                 </div>
             </div>
         </div>
@@ -25,6 +25,9 @@
     <main>
         <div id="register-section" class="register-section">
             <h2>Регистрация</h2>
+            <div class="login-link">
+                <p>Вече имате профил? <a asp-action="Login" asp-controller="Profile">Влезте тук</a>.</p>
+            </div>
             <form asp-action="Register" asp-controller="Profile" method="post">
                 <div class="form-group">
                     <label asp-for="Username">Потребителско име</label>
@@ -95,12 +98,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="IdentityCardSex">Пол</label>
-                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете Вашия пол" />
+                    <input asp-for="IdentityCardSex" class="form-control" placeholder="Въведете Вашия пол.." />
                     <span asp-validation-for="IdentityCardSex" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="IdentityCardNationality">Националност</label>
-                    <input asp-for="IdentityCardNationality" class="form-control" placeholder="Въведете Вашата националност" />
+                    <input asp-for="IdentityCardNationality" class="form-control" placeholder="Въведете Вашата националност.." />
                     <span asp-validation-for="IdentityCardNationality" class="validation"></span>
                 </div>
                 <button type="submit" class="register-btn">Register</button>
@@ -119,3 +122,25 @@
 </body>
 </html>
 
+<style>
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom:30px;
+    }
+
+        .login-link p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .login-link a {
+            color: #2696E9;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+            .login-link a:hover {
+                color: #1874cc;
+            }</style>

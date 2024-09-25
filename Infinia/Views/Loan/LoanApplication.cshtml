@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подробности за вашия кредит - Infinia</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/main.css">
@@ -22,6 +24,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
+                <!-- Камбанка за известия -->
+                <li class="nav-item">
+                    <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </a>
+                </li>
+                <!-- Dropdown за "Chatbot" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="chatToggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="material-symbols-outlined">chat</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="chatToggle" style="width: 800px;  right: 0; left: 0; ">
+                        <div class="dropdown-item chatbot">
+                            <h5 class="text-center">Chatbot</h5>
+                            <div id="chatbox" class="border rounded p-3" style="height: 300px; overflow-y: auto; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow for depth */
+        border: 1px solid #ccc; color:black">
+                                <!-- Chat messages will be displayed here -->
+                            </div>
+                            <div class="input-group mt-3">
+                                <input type="text" id="userMessage" class="form-control" placeholder="Type your message..." />
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" id="sendButton">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <!-- Dropdown за "Средства" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="fundsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,122 +97,288 @@
     </nav>
 
     <div class="container loan-details mt-5">
-        <h2 class="text-center mb-4">Подробности за вашия кредит</h2>
+        <h2 class="text-center mb-4">Подробности за Вашия кредит</h2>
 
         <!-- Основна информация -->
         <div class="form-section">
             <h4>1. Основна информация</h4>
-            <p><strong>Сума на кредита:</strong>@Model.LoanAmount лв.</p>
-            <p><strong>Период:</strong>@Model.LoanTermMonths месеца</p>
-            <p><strong>Лихва:</strong>@Model.InterestRate %</p>
+            <p><strong>Сума на кредита: </strong>@Model.LoanAmount лв.</p>
+            <p><strong>Период за погасяване: </strong>@Model.LoanTermMonths месеца</p>
+            <p><strong>Лихва: </strong>@Model.InterestRate %</p>
             @switch (@Model.Type)
             {
                 case "Personal Loan":
-                    <p><strong>Тип на кредита:</strong>Потребителски кредит</p>
+                    <p><strong>Тип на кредита: </strong>Потребителски кредит</p>
                     break;
                 case "Car Loan":
-                    <p><strong>Тип на кредита:</strong>Ауто кредит</p>
+                    <p><strong>Тип на кредита: </strong>Ауто кредит</p>
                     break;
                 case "Morgage Loan":
-                    <p><strong>Тип на кредита:</strong>Ипотечен кредит</p>
+                    <p><strong>Тип на кредита: </strong>Ипотечен кредит</p>
                     break;
                 case "Business Loan":
-                    <p><strong>Тип на кредита:</strong>Бизнес кредит</p>
+                    <p><strong>Тип на кредита: </strong>Бизнес кредит</p>
                     break;
                 case "Education Loan":
-                    <p><strong>Тип на кредита:</strong>Кредит за образование </p>
+                    <p><strong>Тип на кредита: </strong>Кредит за образование </p>
                     break;
             }
             
-            <p><strong>Дата на плащане всеки месец:</strong>@Model.LoanRepaymentNumber-то число</p>
-            <p><strong>Статус:</strong>@Model.Status Одобрен</p>
+            <p><strong>Дата на плащане всеки месец: </strong>@Model.LoanRepaymentNumber-то число</p>
+            @if (Model.Status == "Approved")
+            {
+                <p><strong>Статус: </strong>Одобрен</p>
+            }
+            else if (Model.Status == "Rejected")
+            {
+                <p><strong>Статус: </strong>Отхвърлен</p>
+            }
+            else
+            {
+                <p><strong>Статус: </strong>Изчакващ</p>
+            }
+           
         </div>
 
         <!-- Образование -->
         <div class="form-section">
             <h4>2. Образование</h4>
-            <p><strong>Ниво на образование:</strong>@Model.EducationLevel</p>
+            @switch (Model.EducationLevel)
+            {
+                case "1":
+					<p><strong>Ниво на образование: </strong>Основно</p>
+					break;
+				case "2":
+					<p><strong>Ниво на образование: </strong>Средно</p>
+					break;
+				case "3":
+					<p><strong>Ниво на образование: </strong>Бакалавър</p>
+					break;
+				case "4":
+					<p><strong>Ниво на образование: </strong>Магистър</p>
+					break;
+				case "5":
+					<p><strong>Ниво на образование: </strong>Доктор</p>
+					break;
+            }
         </div>
 
         <!-- Информация за работодател -->
         <div class="form-section">
             <h4>3. Информация за работодател</h4>
-            <p><strong>Пенсионер:</strong>@Model.IsRetired Не</p>
-            <p><strong>Име на работодателя:</strong>@Model.EmployerName</p>
-            <p><strong>Позиция:</strong>@Model.Position</p>
-            <p><strong>Години в работата:</strong>@Model.YearsAtJob </p>
-            <p><strong>Месеци в работата:</strong>@Model.MonthsAtJob </p>
-            <p><strong>Общ стаж:</strong>@Model.TotalWorkExperienceYears години и @Model.TotalWorkExperienceMonths месеца</p>
+            <p><strong>Пенсиониран/а ли сте: </strong>@Model.IsRetired</p>
+            <p><strong>Име на работодателя: </strong>@Model.EmployerName</p>
+            <p><strong>Позиция: </strong>@Model.Position</p>
+            <p><strong>Години в работата: </strong>@Model.YearsAtJob </p>
+            <p><strong>Месеци в работата: </strong>@Model.MonthsAtJob </p>
+            <p><strong>Общ стаж: </strong>@Model.TotalWorkExperienceYears години и @Model.TotalWorkExperienceMonths месеца</p>
         </div>
 
         <!-- Информация за домакинството -->
         <div class="form-section">
             <h4>4. Информация за домакинството</h4>
-            <p><strong>Членове на домакинството:</strong>@Model.NumberOfHouseholdMembers 4</p>
-            <p><strong>Членове с доказан доход:</strong>@Model.MembersWithProvenIncome 2</p>
-            <p><strong>Зависими от дохода:</strong>@Model.Dependents 1</p>
+            <p><strong>Членове на домакинството: </strong>@Model.NumberOfHouseholdMembers</p>
+            <p><strong>Членове с доказан доход: </strong>@Model.MembersWithProvenIncome</p>
+            <p><strong>Зависими от дохода: </strong>@Model.Dependents</p>
         </div>
 
         <!-- Информация за доходи -->
         <div class="form-section">
             <h4>5. Информация за доходи</h4>
-            <p><strong>Нето доход:</strong>@Model.NetMonthlyIncome 3000 лв.</p>
-            <p><strong>Фиксирани месечни разходи:</strong>@Model.FixedMonthlyExpenses 1000 лв.</p>
-            <p><strong>Нето от постоянен договор:</strong>@Model.PermanentContractIncome 2000 лв.</p>
-            <p><strong>Нето от временен договор:</strong>@Model.TemporaryContractIncome 500 лв.</p>
-            <p><strong>Нето от държавен договор:</strong>@Model.CivilContractIncome 0 лв.</p>
-            <p><strong>Нето от бизнес:</strong>@Model.BusinessIncome 500 лв.</p>
-            <p><strong>Нето от фрийленс:</strong>@Model.FreelanceIncome 300 лв.</p>
-            <p><strong>Други доходи:</strong>@Model.OtherIncome 200 лв.</p>
-            <p><strong>Имате ли други кредити:</strong>@Model.HasOtherCredits Не</p>
+            <p><strong>Нето доход: </strong>@Model.NetMonthlyIncome лв.</p>
+            <p><strong>Фиксирани месечни разходи: </strong>@Model.FixedMonthlyExpenses лв.</p>
+            <p><strong>Нето от постоянен договор: </strong>@Model.PermanentContractIncome лв.</p>
+            <p><strong>Нето от временен договор: </strong>@Model.TemporaryContractIncome лв.</p>
+            <p><strong>Нето от държавен договор: </strong>@Model.CivilContractIncome лв.</p>
+            <p><strong>Нето от бизнес: </strong>@Model.BusinessIncome лв.</p>
+            <p><strong>Нето от фрийленс: </strong>@Model.FreelanceIncome лв.</p>
+            <p><strong>Други доходи: </strong>@Model.OtherIncome лв.</p>
+            <p><strong>Имате ли други кредити: </strong>@Model.HasOtherCredits</p>
         </div>
 
         <!-- Информация за имущество -->
         <div class="form-section">
             <h4>6. Информация за имущество</h4>
-            <p><strong>Къща или апартамент:</strong>@Model.HasApartmentOrHouse Да</p>
-            <p><strong>Обществено имущество:</strong>@Model.HasCommercialProperty Не</p>
-            <p><strong>Земя:</strong>@Model.HasLand Да</p>
-            <p><strong>Други имуществени обекти:</strong>@Model.HasMultipleProperties Да</p>
-            <p><strong>Колко коли притежавате:</strong>@Model.VehicleCount 1</p>
+            <p><strong>Къща или апартамент: </strong>@Model.HasApartmentOrHouse</p>
+            <p><strong>Обществено имущество: </strong>@Model.HasCommercialProperty</p>
+            <p><strong>Земя: </strong>@Model.HasLand</p>
+            <p><strong>Други имуществени обекти: </strong>@Model.HasMultipleProperties</p>
+            <p><strong>Колко коли притежавате: </strong>@Model.VehicleCount</p>
         </div>
         <!-- Диаграма за кредитен рейтинг и рискова група -->
         <div class="form-section">
-            <h4>Вашият кредитен рейтинг и рискова група</h4>
+            <h4>7. Вашият кредитен рейтинг и рискова група</h4>
 
             <!-- Gauge for Credit Score -->
-            <div id="creditScoreGauge" style="width:200px; height:160px;"></div>
-            <p><strong>Вашият кредитен рейтинг:</strong> @Model.CreditScore</p>
-
-            <!-- Risk Group -->
-            <p><strong>Рискова група:</strong> @Model.RiskGroup</p>
+            <div id="creditScoreGauge" style="width:250px; height:230px;"></div>
+            <p><strong>Kредитен рейтинг: </strong> @Model.CreditScore</p>
+            @switch (Model.RiskGroup)
+            {
+                case "Low":
+                <p><strong>Рискова група: </strong>Ниска</p>
+                break;
+                case "Medium":
+				<p><strong>Рискова група: </strong>Средна</p>
+				break;
+                case "High":
+				<p><strong>Рискова група: </strong>Висока</p>
+                break;
+            }
+            
         </div>
 
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
         <!-- Raphael.js (required for JustGage) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-
         <!-- JustGage library -->
         <script src="https://cdn.jsdelivr.net/npm/justgage@1.3.1/justgage.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var g = new JustGage({
                     id: "creditScoreGauge",
-                    value: @(Model.CreditScore.ToString("F0")), // The credit score from your model
+                    value: @(Model.CreditScore.ToString("F0")), 
                     min: 300,
                     max: 850,
                     title: "Кредитен Рейтинг",
                     label: "Точки",
-                    levelColors: ["#ff0000", "#ff9900", "#00ff00"], // Red, Orange, Green for Low, Medium, High
-                    levelColorsThresholds: [500, 700] // Thresholds for Low, Medium, High
+                    levelColors: ["#ff0000", "#ff9900", "#00ff00"], 
+                    levelColorsThresholds: [500, 700] 
                 });
+            });
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#sendButton').click(function (event) {
+                    // Prevent the dropdown from closing
+                    event.stopPropagation();
+
+                    const userMessage = $('#userMessage').val().trim();
+                    if (!userMessage) {
+                        alert("Please enter a message.");
+                        return;
+                    }
+
+                    // Append user's message with the 'user-message' class
+                    $('#chatbox').append('<div class="message user-message"><strong>You:</strong> ' + userMessage + '</div>');
+                    $('#userMessage').val('');
+
+                    $.ajax({
+                        url: '@Url.Action("SendMessage", "Chatbot")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ UserMessage: userMessage }),
+                        success: function (data) {
+                            // Append chatbot's response with the 'chatbot-message' class
+                            $('#chatbox').append('<div class="message chatbot-message"><strong>Chatbot:</strong> ' + data.response + '</div>');
+                            scrollToBottom();
+                        },
+                        error: function () {
+                            $('#chatbox').append('<div class="message chatbot-message"><strong>Chatbot:</strong> Error: Unable to get response.</div>');
+                            scrollToBottom();
+                        }
+                    });
+                });
+
+                $('#userMessage').keypress(function (e) {
+                    if (e.which === 13) {
+                        // Prevent the dropdown from closing
+                        event.stopPropagation();
+
+                        $('#sendButton').click();
+                    }
+                });
+
+                function scrollToBottom() {
+                    const chatbox = $('#chatbox');
+                    chatbox.scrollTop(chatbox[0].scrollHeight);
+                }
             });
         </script>
 </body>
 </html>
+
+<style>
+    .form-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #creditScoreGauge {
+        margin: 0 auto;
+    }
+    #chatbox {
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        height: 350px;
+        width: 100%;
+    }
+
+    .message {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+
+    .user-message {
+        background-color: #ffffff;
+        color: #000000;
+        align-self: flex-end;
+        border: 1px solid #ccc;
+        text-align: left;
+        max-width: 80%;
+    }
+
+    .chatbot-message {
+        background-color: #DA1884;
+        color: white;
+        align-self: flex-start;
+        border: 1px solid #DA1884;
+        text-align: left;
+        max-width: 80%;
+    }
+
+
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+        .input-group .form-control {
+            margin-bottom: 0;
+        }
+
+    .input-group-append .btn {
+        padding: 12px;
+        line-height: normal;
+        height: 100%;
+        margin-bottom: 35px;
+    }
+
+    .chatbot:hover {
+        background-color: var(--primary-color);
+        color: var(--text-color);
+    }
+</style>

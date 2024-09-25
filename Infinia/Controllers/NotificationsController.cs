@@ -20,6 +20,8 @@ namespace Infinia.Controllers
         {
             return View();
         }
+
+        [HttpGet]
         public async Task<IActionResult> AllNotifications()
         {
             var userId = User.GetId();
@@ -29,6 +31,12 @@ namespace Infinia.Controllers
             }
             var model = await notificationService.GetAllNotificationsAsync(userId);
             return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> MarkAsRead(int id)
+        {
+            await notificationService.MarkAsReadAsync(id);
+            return RedirectToAction(nameof(AllNotifications));
         }
     }
 }

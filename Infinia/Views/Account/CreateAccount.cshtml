@@ -1,34 +1,239 @@
 ﻿@model Infinia.Core.ViewModels.Account.CreateAccountViewModel
-
 @{
-    ViewData["Title"] = "Create Account";
+    Layout = null;
 }
 
-<h2>Create a New Account</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/main.css">
+    <title>Откриване на сметка</title>
+</head>
+<body>
+    <!-- Навигационен бар -->
+    <nav class="navbar navbar-expand-lg main-nav">
+        <a class="navbar-brand logo" asp-controller="Home" asp-action="Index">Infinia</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+                <!-- Камбанка за известия -->
+                <li class="nav-item">
+                    <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </a>
+                </li>
+                <!-- Dropdown за "Средства" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="fundsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Средства
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="fundsDropdown">
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Index">Проверка на сметки</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Кредити" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="loansDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Кредити
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="loansDropdown">
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="CurrentLoans">Моите кредити</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="ChooseLoanType">Заявка за кредит</a>
+                        <a class="dropdown-item" asp-controller="Loan" asp-action="LoanApplicationsHistory">История на заявките за кредити</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Преводи" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="transfersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преводи
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="transfersDropdown">
+                        <a class="dropdown-item" asp-controller="Transaction" asp-action="Index">Нов превод</a>
+                    </div>
+                </li>
+                <!-- Dropdown за "Настройки" -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Настройки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<form asp-action="CreateAccount" asp-controller="Account" method="post">
-    <div class="form-group">
-        <label asp-for="Balance"></label>
-        <input asp-for="Balance" class="form-control" placeholder="Enter Balance" />
-        <span asp-validation-for="Balance" class="text-danger"></span>
+    <!--Откриване на нова банкова сметка-->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center title">Откриване на банкова сметка</h1>
+                <p class="text-center subtitle">За да откриете банкова сметка, моля попълнете нужните полета.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="CreateAccount" asp-controller="Account" id="createAccountForm">
+                            <div class="input-container">
+                                <div class="form-group pdn-input">
+                                    <label asp-for="IdentityCardNumber">Номер на лична карта:</label>
+                                    <input asp-for="IdentityCardNumber" type="text" id="pdNumber" class="form-control" placeholder="Въведете номер на лична карта.." required>
+                                    <span asp-validation-for="IdentityCardNumber" class="validation"></span>
+                                </div>
+                            </div>
+                            <div class="form-group bankBranch-input">
+                                <label asp-for="Branch">Клон на банка:</label>
+                                <div class="input-container">
+                                    <input asp-for="Branch" type="text" id="bb" class="form-control" placeholder="Въведете предпочитаният от Вас клон на банка.." required>
+                                    <span asp-validation-for="Branch" class="validation"></span>
+                                </div>
+                            </div>
+                            <div class="form-group balance-input">
+                                <label asp-for="Balance">Баланс по сметката:</label>
+                                <div class="input-container">
+                                    <input asp-for="Balance" type="number" id="balanceInput" class="form-control" placeholder="Въведете баланс.." required>
+                                </div>
+                                <span asp-validation-for="Balance" class="validation"></span>
+                            </div>
+                            <button id="submitButton" type="submit" class="btn btn-primary btn-block">Открий сметка</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="IdentityCardNumber"></label>
-        <input asp-for="IdentityCardNumber" class="form-control" placeholder="Enter Identity Card Number" />
-        <span asp-validation-for="IdentityCardNumber" class="text-danger"></span>
-    </div>
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sendButton').click(function (event) {
+                // Prevent the dropdown from closing
+                event.stopPropagation();
 
-    <div class="form-group">
-        <label asp-for="Branch"></label>
-        <input asp-for="Branch" class="form-control" placeholder="Enter Branch" />
-        <span asp-validation-for="Branch" class="text-danger"></span>
-    </div>
+                const userMessage = $('#userMessage').val().trim();
+                if (!userMessage) {
+                    alert("Please enter a message.");
+                    return;
+                }
 
-    <button type="submit" class="btn btn-primary">Create Account</button>
-</form>
+                // Append user's message with the 'user-message' class
+                $('#chatbox').append('<div class="message user-message"><strong>You:</strong> ' + userMessage + '</div>');
+                $('#userMessage').val('');
 
+                $.ajax({
+                    url: '@Url.Action("SendMessage", "Chatbot")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ UserMessage: userMessage }),
+                    success: function (data) {
+                        // Append chatbot's response with the 'chatbot-message' class
+                        $('#chatbox').append('<div class="message chatbot-message"><strong>Chatbot:</strong> ' + data.response + '</div>');
+                        scrollToBottom();
+                    },
+                    error: function () {
+                        $('#chatbox').append('<div class="message chatbot-message"><strong>Chatbot:</strong> Error: Unable to get response.</div>');
+                        scrollToBottom();
+                    }
+                });
+            });
+
+            $('#userMessage').keypress(function (e) {
+                if (e.which === 13) {
+                    // Prevent the dropdown from closing
+                    event.stopPropagation();
+
+                    $('#sendButton').click();
+                }
+            });
+
+            function scrollToBottom() {
+                const chatbox = $('#chatbox');
+                chatbox.scrollTop(chatbox[0].scrollHeight);
+            }
+        });
+    </script>
+</body>
+</html>
 @section Scripts {
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    #chatbox {
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        height: 350px;
+        width: 100%;
+    }
+
+    .message {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+
+    .user-message {
+        background-color: #ffffff;
+        color: #000000;
+        align-self: flex-end;
+        border: 1px solid #ccc;
+        text-align: left;
+        max-width: 80%;
+    }
+
+    .chatbot-message {
+        background-color: #DA1884;
+        color: white;
+        align-self: flex-start;
+        border: 1px solid #DA1884;
+        text-align: left;
+        max-width: 80%;
+    }
+
+
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+        .input-group .form-control {
+            margin-bottom: 0;
+        }
+
+    .input-group-append .btn {
+        padding: 12px;
+        line-height: normal;
+        height: 100%;
+        margin-bottom: 35px;
+    }
+
+    .chatbot:hover {
+        background-color: var(--primary-color);
+        color: var(--text-color);
+    }
+</style>

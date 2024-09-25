@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public decimal LoanAmount { get; set; }
+        public string LoanAmount { get; set; } = string.Empty;
 
         public int LoanTermMonths { get; set; }
 
@@ -13,8 +13,6 @@
         public string Type { get; set; } = string.Empty;
 
         public int LoanRepaymentNumber { get; set; }
-
-        public string Status { get; set; } = string.Empty;
 
         public string LoanRepaymentAmount { get; set; } = string.Empty;
     }

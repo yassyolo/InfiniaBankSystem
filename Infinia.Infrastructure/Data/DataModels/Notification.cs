@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static Infinia.Infrastructure.Data.DataConstants.DataConstants.Notification;
 
+//TODO: ADD NOTIFICATION ENTITY CONFIGURATION
 namespace Infinia.Infrastructure.Data.DataModels
 {
     [Comment("Notification entity")]
@@ -23,7 +24,7 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Comment("Notification message")]
         [Required]
         [MaxLength(ContentMaxLength)]
-        public string Content { get; set; } = null!;
+        public string Content { get; set; } = string.Empty;
 
         [Comment("Notification status")]
         [Required]
@@ -33,5 +34,10 @@ namespace Infinia.Infrastructure.Data.DataModels
         [DataType(DataType.DateTime)]
         [Required]
         public DateTime CreationDate { get; set; }
+
+        [Comment("Notification title")]
+        [Required]
+        [MaxLength(NotificationTitleMaxLength)]
+        public string Title { get; set; } = string.Empty;  
     }
 }

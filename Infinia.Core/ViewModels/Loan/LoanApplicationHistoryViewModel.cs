@@ -26,36 +26,36 @@ namespace Infinia.Core.ViewModels
         
             public int Dependents { get; set; }
 
-            public decimal NetMonthlyIncome { get; set; }
+            public string NetMonthlyIncome { get; set; } = string.Empty;
            
-            public decimal FixedMonthlyExpenses { get; set; }
+            public string FixedMonthlyExpenses { get; set; } = string.Empty;
 
-            public decimal PermanentContractIncome { get; set; }
+            public string PermanentContractIncome { get; set; } = string.Empty;
 
-            public decimal TemporaryContractIncome { get; set; }
+            public string TemporaryContractIncome { get; set; } = string.Empty;
 
-            public decimal CivilContractIncome { get; set; }
-            public decimal BusinessIncome { get; set; }
+            public string CivilContractIncome { get; set; } = string.Empty;
+            public string BusinessIncome { get; set; } = string.Empty;
 
-            public decimal PensionIncome { get; set; }
+            public string PensionIncome { get; set; } = string.Empty;
 
-            public decimal FreelanceIncome { get; set; }
+            public string FreelanceIncome { get; set; } = string.Empty;
 
-            public decimal OtherIncome { get; set; }
+            public string OtherIncome { get; set; } = string.Empty;
 
-            public bool HasOtherCredits { get; set; }
+            public string HasOtherCredits { get; set; } = string.Empty;
 
-            public bool HasApartmentOrHouse { get; set; }
+            public string HasApartmentOrHouse { get; set; } = string.Empty;
 
-            public bool HasCommercialProperty { get; set; }
+            public string HasCommercialProperty { get; set; } = string.Empty;
 
-            public bool HasLand { get; set; }
+            public string HasLand { get; set; } = string.Empty;
 
-            public bool HasMultipleProperties { get; set; }
+            public string HasMultipleProperties { get; set; } = string.Empty;
 
-            public bool HasPartialOwnership { get; set; }
+            public string HasPartialOwnership { get; set; } = string.Empty;
 
-            public bool NoProperty { get; set; }
+            public string NoProperty { get; set; } = string.Empty;
     
             public int VehicleCount { get; set; }
             

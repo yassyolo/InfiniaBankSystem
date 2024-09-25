@@ -29,6 +29,15 @@ namespace Infinia.Core.Services
         {
             var account = await repository.All<Account>().FirstOrDefaultAsync(x => x.Id == id);
             account.Name = model.NewName;
+            var notification = new Notification
+            {
+                CustomerId = account.CustomerId,
+                Content = $"Променихте името на сметката си на {model.NewName}.",
+                CreationDate = DateTime.Now,
+                IsRead = false,
+                Title = "Промяна на име на сметка"
+            };
+            await repository.AddAsync(notification);
             await repository.SaveChangesAsync();
         }
 
@@ -44,7 +53,7 @@ namespace Infinia.Core.Services
                 Branch = model.Branch,
                 EncryptedIBAN = encryptedIban,
                 Type = Current,
-                Name = $"CURRENT-{accountCountForUser+1}",
+                Name = $"РАЗПЛАЩАТЕЛНА-{accountCountForUser+1}",
                 CreationDate = creationDate,
                 Status = Open,
                 MonthlyFee = 2m
@@ -58,7 +67,7 @@ namespace Infinia.Core.Services
                 Branch = model.Branch,
                 EncryptedIBAN = encryptedIban,
                 Type = Savings,
-                Name = $"SAVINGS-{accountCountForUser+1}",
+                Name = $"СПЕСТОВНА-{accountCountForUser+1}",
                 CreationDate = creationDate,
                 Status = Open,
                 MonthlyFee = 0m
@@ -68,9 +77,10 @@ namespace Infinia.Core.Services
             var notification = new Notification
             {
                 CustomerId = userId,
-                Content = $"Account {currentAccount.Name} was created successfully",
+                Content = $"Открихте своята нова сметка: {currentAccount.Name}. Проверете раздел 'Средства'.",
                 CreationDate = creationDate,
-                IsRead = false
+                IsRead = false,
+                Title = "Нова сметка 🎉"
             };
             await repository.AddAsync(notification);
             await repository.SaveChangesAsync();
@@ -128,7 +138,7 @@ namespace Infinia.Core.Services
                 TotalBalance = accounts.Sum(x => x.Balance)
             };  
         }
-
+        //TODO: AVAILABLE ACCOUNT FOR TRANSACTION BETWEEN ACCPUNT CAN BE SAVING ALSO
         public async Task<Account> GetSavingsAccountAsync(string IBAN)
         {
             return await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => encryptionService.Decrypt(x.EncryptedIBAN) == IBAN);
@@ -155,6 +165,11 @@ namespace Infinia.Core.Services
         public async Task<bool> AmountGreaterThanSenderAccountBalance(int accountIdFromWhichWeWantToSendMoney, decimal amount)
         {
             return await repository.AllReadOnly<Account>().AnyAsync(x => x.Id == accountIdFromWhichWeWantToSendMoney && x.Balance < amount);
+        }
+
+        public async Task<bool> AccountBelongsToUserAsync(int id, string userId)
+        {
+            return await repository.AllReadOnly<Account>().AnyAsync(x => x.Id == id && x.CustomerId == userId);
         }
     }
 }

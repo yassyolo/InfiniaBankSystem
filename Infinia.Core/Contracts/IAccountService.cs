@@ -5,6 +5,7 @@ namespace Infinia.Core.Contracts
 {
     public interface IAccountService
     {
+        Task<bool> AccountBelongsToUserAsync(int id, string userId);
         Task<bool> AccountWithIdExistsAsync(int id);
         Task<bool> AmountGreaterThanSenderAccountBalance(int accountIdFromWhichWeWantToSendMoney, decimal amount);
         Task ChangeAccountNameAsync(int id, ChangeAccountNameViewModel model);

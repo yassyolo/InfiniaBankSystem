@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Infinia.Core.Helpers.RandomPasswordHelper;
 using System.Text;
 using static Infinia.Core.MessageConstants.ErrorMessages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Infinia.Controllers
 {
@@ -168,6 +169,7 @@ namespace Infinia.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ProfileDetails()
         {
             var userId = User.GetId();

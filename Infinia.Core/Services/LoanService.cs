@@ -9,6 +9,7 @@ using Infinia.Infrastructure.Data.DataModels;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
+using Infinia.Core.ViewModels.Transaction;
 
 namespace Infinia.Core.Services
 {
@@ -16,9 +17,11 @@ namespace Infinia.Core.Services
     {
         private readonly IRepository repository;
         private readonly IEncryptionService encryptionService;
+        private ITransactionService transactionService;
+
         private readonly HttpClient httpClient;
 
-        public LoanService(IRepository repository, IEncryptionService encryptionService)
+        public LoanService(IRepository repository, IEncryptionService encryptionService, ITransactionService transactionService)
         {
             this.repository = repository;
             this.encryptionService = encryptionService;
@@ -26,6 +29,7 @@ namespace Infinia.Core.Services
             httpClient.BaseAddress = new Uri("https://creditscoringapi-czdnd3gvcydze4fw.canadacentral-01.azurewebsites.net/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            this.transactionService = transactionService;
         }
 
         public async Task ApplyForLoanAsync(LoanApplicationViewModel model, string userId)
@@ -140,6 +144,27 @@ namespace Infinia.Core.Services
             if (creditScoreModel.CreditScore >= 700 && creditScoreModel.RiskGroup == "Low")
             {
                 loanApplication.Status = Infinia.Core.Constants.LoanStatusConstants.Approved;
+                var notification = new Notification
+                {
+                    CustomerId = account.CustomerId,
+                    Content = $"Кредитът Ви беше одобрен. Вижте го в раздел 'Моите кредити'!",
+                    CreationDate = DateTime.UtcNow,
+                    IsRead = false,
+                    Title = "Одобрен кредит 💸"
+                };
+                await repository.AddAsync(notification);
+                await repository.SaveChangesAsync();
+                var bankAccount = await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => x.Name == "Bank account");
+                var transactionWithinTheBankModel = new TransactionWithinTheBankViewModel
+                {
+                    Amount = model.LoanAmount,
+                    Reason = "Кредит",
+                    Description = "Превеждане на кредит",
+                    ReceiverName = account.Name,
+                    ReceiverIBAN = encryptionService.Decrypt(account.EncryptedIBAN),
+                    AccountId = bankAccount.Id
+                };
+                await transactionService.MakeTransactionWithinTheBankAsync(transactionWithinTheBankModel, bankAccount.CustomerId);
             }
             else
             {
@@ -164,9 +189,9 @@ namespace Infinia.Core.Services
                 .Select(x => new CurrentLoanViewModel
                 {
                     Id = x.Id,
-                    LoanAmount = x.LoanAmount,
+                    LoanAmount = x.LoanAmount.ToString("F1"),
                     LoanTermMonths = x.LoanTermMonths,
-                    InterestRate = x.InterestRate.ToString(),
+                    InterestRate = ((int)x.InterestRate).ToString(),
                     Type = x.Type,
                     LoanRepaymentNumber = x.LoanRepaymentNumber,
                 })
@@ -175,7 +200,7 @@ namespace Infinia.Core.Services
             {
                 loan.LoanRepaymentAmount = await repository.All<LoanRepayment>()
                     .Where(x => x.LoanApplicationId == loan.Id)
-                    .Select(x => x.RepaymentAmount.ToString())
+                    .Select(x => x.RepaymentAmount.ToString("F1"))
                     .FirstOrDefaultAsync();
             }
             return currentLoans;
@@ -188,7 +213,7 @@ namespace Infinia.Core.Services
                 .Select(x => new LoanApplicationHistoryViewModel
                 {
                     Id = x.Id,
-                    LoanAmount = x.LoanAmount.ToString("F2"),
+                    LoanAmount = x.LoanAmount.ToString("F1"),
                     LoanTermMonths = x.LoanTermMonths,
                     InterestRate = ((int)x.InterestRate).ToString(),
                     Type = x.Type,
@@ -205,22 +230,22 @@ namespace Infinia.Core.Services
                     NumberOfHouseholdMembers = x.HouseholdInfo.NumberOfHouseholdMembers,
                     MembersWithProvenIncome = x.HouseholdInfo.MembersWithProvenIncome,
                     Dependents = x.HouseholdInfo.Dependents,
-                    NetMonthlyIncome = x.IncomeInfo.NetMonthlyIncome,
-                    FixedMonthlyExpenses = x.IncomeInfo.FixedMonthlyExpenses,
-                    PermanentContractIncome = x.IncomeInfo.PermanentContractIncome,
-                    TemporaryContractIncome = x.IncomeInfo.TemporaryContractIncome,
-                    CivilContractIncome = x.IncomeInfo.CivilContractIncome,
-                    BusinessIncome = x.IncomeInfo.BusinessIncome,
-                    PensionIncome = x.IncomeInfo.PensionIncome,
-                    FreelanceIncome = x.IncomeInfo.FreelanceIncome,
-                    OtherIncome = x.IncomeInfo.OtherIncome,
-                    HasOtherCredits = x.IncomeInfo.HasOtherCredits,
-                    HasApartmentOrHouse = x.PropertyStatus.HasApartmentOrHouse,
-                    HasCommercialProperty = x.PropertyStatus.HasCommercialProperty,
-                    HasLand = x.PropertyStatus.HasLand,
-                    HasMultipleProperties = x.PropertyStatus.HasMultipleProperties,
-                    HasPartialOwnership = x.PropertyStatus.HasPartialOwnership,
-                    NoProperty = x.PropertyStatus.NoProperty,
+                    NetMonthlyIncome = x.IncomeInfo.NetMonthlyIncome.ToString("F1"),
+                    FixedMonthlyExpenses = x.IncomeInfo.FixedMonthlyExpenses.ToString("F1"),
+                    PermanentContractIncome = x.IncomeInfo.PermanentContractIncome.ToString("F1"),
+                    TemporaryContractIncome = x.IncomeInfo.TemporaryContractIncome.ToString("F1"),
+                    CivilContractIncome = x.IncomeInfo.CivilContractIncome.ToString("F1"),
+                    BusinessIncome = x.IncomeInfo.BusinessIncome.ToString("F1"),
+                    PensionIncome = x.IncomeInfo.PensionIncome.ToString("F1"),
+                    FreelanceIncome = x.IncomeInfo.FreelanceIncome.ToString("F1"),
+                    OtherIncome = x.IncomeInfo.OtherIncome.ToString("F1"),
+                    HasOtherCredits = x.IncomeInfo.HasOtherCredits == true ? "Да" : "Не",
+                    HasApartmentOrHouse = x.PropertyStatus.HasApartmentOrHouse == true ? "Да" : "Не",
+                    HasCommercialProperty = x.PropertyStatus.HasCommercialProperty == true ? "Да" : "Не",
+                    HasLand = x.PropertyStatus.HasLand == true ? "Да" : "Не",
+                    HasMultipleProperties = x.PropertyStatus.HasMultipleProperties == true ? "Да" : "Не",
+                    HasPartialOwnership = x.PropertyStatus.HasPartialOwnership == true ? "Да" : "Не",
+                    NoProperty = x.PropertyStatus.NoProperty == true ? "Да" : "Не",
                     VehicleCount = x.PropertyStatus.VehicleCount,
                     MaritalStatus = x.MaritalStatus.Status,
                     ProbabilityOfApproval = x.ProbabilityOfApproval,
@@ -237,7 +262,7 @@ namespace Infinia.Core.Services
                 .Select(x => new LoanApplicationHistoryViewModel
                 {
                     Id = x.Id,
-                    LoanAmount = x.LoanAmount.ToString("F2"),
+                    LoanAmount = x.LoanAmount.ToString("F1"),
                     LoanTermMonths = x.LoanTermMonths,
                     InterestRate = ((int)x.InterestRate).ToString(),
                     Type = x.Type,
@@ -324,20 +349,6 @@ namespace Infinia.Core.Services
         public async Task<bool> LoanApplicationExistsAsync(int id, string userId)
         {
             return await repository.All<LoanApplication>().AnyAsync(x => x.Id == id && x.CustomerId == userId);
-        }
-
-        public async Task GetMissingValuesForLoanApplicationAsync(LoanApplicationViewModel model)
-        {
-            var customer = await repository.All<Customer>().FirstOrDefaultAsync(x => x.UserName == "ivanivanov");
-            var customerId = customer.Id;
-            var identityCard = await repository.All<Customer>().Select(x => x.IdentityCard).FirstOrDefaultAsync();
-            var cardNumber = encryptionService.Decrypt(identityCard.EncryptedCardNumber);
-            var cardIssuer = encryptionService.Decrypt(identityCard.EncryptedIssuer);
-            var cardDate = encryptionService.Decrypt(identityCard.EncryptedDateOfIssue);
-            var ssn = encryptionService.Decrypt(identityCard.EncryptedSSN);
-            var nationality = encryptionService.Decrypt(identityCard.EncryptedNationality);
-            var sex = encryptionService.Decrypt(identityCard.EncryptedSex);
-            var accountIBAN = await repository.All<Account>().Where(x => x.Id == 3 ).Select(x => encryptionService.Decrypt(x.EncryptedIBAN)).FirstOrDefaultAsync();
         }
     }
 }

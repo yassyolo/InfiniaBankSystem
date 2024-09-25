@@ -18,19 +18,23 @@ namespace Infinia.Core.Services
         public async Task<IEnumerable<AllNotificationsViewModel>?> GetAllNotificationsAsync(string userId)
         {
             var notifications = await repository.AllReadOnly<Notification>()
-                .Where(x => x.CustomerId == userId)
+                .Where(x => x.CustomerId == userId && x.IsRead == false)
                 .Select(x => new AllNotificationsViewModel
                 {
                     Id = x.Id,
                     Content = x.Content,
-                    CreationDate = x.CreationDate.ToString("dd.MM.yyyy"),
+                    CreationDate = x.CreationDate.ToString("dd.MMMM.yyyy"),
+                    Title = x.Title,
                 }).ToListAsync();
-            foreach (var notification in notifications)
-            {
-                notification.IsRead = true;
-            }
             await repository.SaveChangesAsync();
             return notifications;
+        }
+
+        public async Task MarkAsReadAsync(int id)
+        {
+            var notification = await repository.All<Notification>().FirstOrDefaultAsync(x => x.Id == id);
+            notification.IsRead = true;
+            await repository.SaveChangesAsync();
         }
     }
 }

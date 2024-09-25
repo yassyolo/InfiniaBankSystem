@@ -10,5 +10,7 @@ namespace Infinia.Core.ViewModels.Notificatios
         public string Content { get; set; } = string.Empty;
         public bool IsRead { get; set; }
         public string CreationDate { get; set; } = string.Empty;
+
+        public string Title { get; set; } = string.Empty;
     }
 }

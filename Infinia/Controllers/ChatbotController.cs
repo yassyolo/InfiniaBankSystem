@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,11 +7,14 @@ using Newtonsoft.Json;
 
 public class ChatbotController : Controller
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient httpClient;
 
-    public ChatbotController(HttpClient httpClient)
+    public ChatbotController()
     {
-        _httpClient = httpClient;
+        httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri("https://chatbotniki.azurewebsites.net/");
+        httpClient.DefaultRequestHeaders.Accept.Clear();
+        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
     public IActionResult Index()
@@ -38,12 +42,10 @@ public class ChatbotController : Controller
         };
 
         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-        var requestUri = "https://azure00.openai.azure.com/"; 
+        var response = await httpClient.PostAsync("chat", content);
 
-        _httpClient.DefaultRequestHeaders.Clear();
-        _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "b0aa353afad74497a56a318512400391"); // Your API key
+        response.EnsureSuccessStatusCode();
 
-        var response = await _httpClient.PostAsync(requestUri, content);
 
         if (response.IsSuccessStatusCode)
         {

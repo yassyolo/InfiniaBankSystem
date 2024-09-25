@@ -66,6 +66,11 @@ namespace Infinia.Controllers
             {
                 return BadRequest();
             }
+            var userId = User.GetId();
+            if (await accountService.AccountBelongsToUserAsync(id, userId) == false)
+            {
+                return BadRequest();
+            }
             var model = await accountService.GetAccountNameAsync(id);
             return View(model);
         }
@@ -78,6 +83,11 @@ namespace Infinia.Controllers
                 return View(model);
             }
             if (await accountService.AccountWithIdExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var userId = User.GetId();  
+            if (await accountService.AccountBelongsToUserAsync(id, userId) == false)
             {
                 return BadRequest();
             }

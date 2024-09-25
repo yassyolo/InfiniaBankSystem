@@ -105,6 +105,8 @@
         {
             public const int ContentMaxLength = 200;
             public const int ContentMinLength = 0;
+            public const int NotificationTitleMaxLength = 40;
+            public const int NotificationTitleMinLength = 0;
         }
     }
 }

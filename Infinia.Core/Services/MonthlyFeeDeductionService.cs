@@ -53,8 +53,8 @@ namespace Infinia.Core.Services
 
                         var model = new TransactionWithinTheBankViewModel
                         {
-                            Reason = "Monthly fee deduction",
-                            Description = $"Monthly fee deduction made on {DateTime.UtcNow}",
+                            Reason = "Удържана месечна такса",
+                            Description = $"Удържана месечна такса на {DateTime.UtcNow}",
                             ReceiverName = "Bank account",
                             Amount = MonthlyFeeDeductionFee, 
                             ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
@@ -68,9 +68,10 @@ namespace Infinia.Core.Services
                         var notification = new Notification
                         {
                             CustomerId = account.CustomerId,
-                            Content = $"Monthly fee was deducted from your account with name {account.Name}.",
+                            Content = $"Месечната такса беше удържана от вашата сметка с име {account.Name}.",
                             CreationDate = DateTime.UtcNow,
-                            IsRead = false
+                            IsRead = false,
+                            Title = "Месечна такса💰"
                         };
 
                         await dbContext.Notifications.AddAsync(notification);

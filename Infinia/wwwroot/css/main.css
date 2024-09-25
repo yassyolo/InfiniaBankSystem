@@ -6,7 +6,12 @@
     margin: 0;
     padding: 0;
 }
-
+body {
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('../images/funds.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 .register-section {
     width: 100%;
     max-width: 500px;
@@ -131,6 +136,7 @@ body {
     background-color: var(--background-color);
     margin: 0;
     padding: 0;
+    height: 200%;
 }
 
 /* Стил за навигационния бар */
@@ -185,7 +191,7 @@ body {
     color: var(--text-color);
 }
 
-    .dropdown-item:hover {
+.dropdown-item:hover {
         background-color: var(--secondary-color);
         color: var(--text-color);
     }
@@ -299,6 +305,43 @@ p {
 .card-list .card-link:hover .card-button {
     background: #5372F0;
     color: #fff;
+}
+
+/* Стил за камбанката */
+.notification-bell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+    .notification-bell .material-symbols-outlined {
+        font-size: 24px;
+        color: #fff;
+    }
+
+    /* Hover ефект за камбанката */
+    .notification-bell:hover .material-symbols-outlined {
+        color: #f8d7da;
+    }
+
+/* Поддържане на правилното подравняване */
+.navbar .navbar-collapse {
+    justify-content: space-between; /* Оставя логото отляво и бутоните вдясно */
+}
+
+.navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Подравнява бутоните вдясно */
+}
+
+.navbar .nav-link {
+    padding: 0 10px; /* Поддържа равномерно разстояние между елементите */
+}
+
+.navbar {
+    padding: 10px 15px; /* Поддържаме стандартна височина на навигационния бар */
 }
 
 body {
@@ -552,10 +595,10 @@ h3 {
     padding: 20px;
 }
 
-/* Разстояние между картите */
+/* Разстояние между картите 
 .card + .card {
     margin-left: 50px;
-}
+}*/
 
 /* Промяна на цвета на заглавието (текста "Нов превод") в цветовете на Experian */
 h2 {
@@ -953,31 +996,32 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("/dist/images/funds.jpg");
+    height: 200vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../images/funds.jpg");
     background-size: cover;
     background-position: center;
     font-family: "Montserrat";
 }
 
-    #funds-page .account {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 2em;
-    }
+#funds-page .account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
+}
 
         #funds-page .account p {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 20px;
+
         }
 
-        #funds-page .account button {
-            color: #fff;
-            background-color: #2696E9;
-            letter-spacing: 1px;
-        }
+    #funds-page .account .funds__button {
+        color: #fff;
+        background-color: #2696E9;
+        letter-spacing: 1px;
+    }
 
     #funds-page .funds {
         background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(to right, #0e42ac, #890685);
@@ -988,13 +1032,20 @@ footer {
         justify-content: space-around;
         border: 3px solid black;
         border-radius: 2em;
+        margin:15px 0;
     }
 
-    #funds-page .funds__details {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-    }
+.funds__info-container-hr{
+    margin-top:0;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+#funds-page .funds__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
 
         #funds-page .funds__details h3 {
             color: #fff;
@@ -1002,15 +1053,17 @@ footer {
             letter-spacing: 2px;
         }
 
-        #funds-page .funds__details h1 {
-            color: #fff;
-            letter-spacing: 2px;
-            font-size: 25px;
-        }
+    #funds-page .funds__details h1 {
+        margin-top: -10px;
+        color: #fff;
+        letter-spacing: 2px;
+        font-size: 25px;
+    }
 
     #funds-page .funds__details-account {
         height: 30px;
         display: flex;
+        margin-bottom:5px;
     }
 
     #funds-page .funds__details-account-text {
@@ -1055,18 +1108,18 @@ footer {
         justify-content: center;
     }
 
-    #funds-page .funds__info-container {
-        display: flex;
-        flex-direction: row;
-    }
+#funds-page .funds__info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
-    #funds-page .funds__info-container-balance {
-        display: flex;
-        flex-direction: column;
-        color: #fff;
-        letter-spacing: 1px;
-        margin-right: 35px;
-    }
+#funds-page .funds__info-container-balance {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    letter-spacing: 1px;
+}
 
         #funds-page .funds__info-container-balance p {
             font-weight: bold;
@@ -1370,6 +1423,55 @@ hr {
         display: flex;
         justify-content: center;
     }
+
+/* Стилове за нотификациите */
+.notification-list .notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 20px;
+}
+
+.notification-item .card {
+    width: 80%; /* Намаляване на ширината на картите */
+    background-color: #f0f4fa; /* Цвят, вдъхновен от Experian */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    height: 180px; /* Намаляване на височината на картите */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центриране на съдържанието вертикално */
+    text-align: center; /* Центриране на текста */
+    margin: 0 auto; /* Центриране на картите на страницата */
+}
+
+    .notification-item .card:hover {
+        transform: translateY(-5px);
+    }
+
+.notification-item .card-body {
+    padding: 10px; /* Намаляване на вътрешния отстъп */
+}
+
+.notification-item .card-title {
+    font-size: 1.3rem; /* Намаляване на размера на заглавието */
+    font-weight: bold;
+    color: #4b0082; /* Основен лилав цвят */
+    margin-bottom: 5px;
+}
+
+.notification-item .card-text {
+    font-size: 2rem; /* Намаляване на размера на текста */
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.notification-item .text-muted {
+    font-size: 0.9rem;
+    color: #777;
+}
 
 html {
     scroll-behavior: smooth;
