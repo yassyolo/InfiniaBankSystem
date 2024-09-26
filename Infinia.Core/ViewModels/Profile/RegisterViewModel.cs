@@ -56,9 +56,6 @@ namespace Infinia.Core.ViewModels
         [StringLength(IssuerMaxLength, MinimumLength = IssuerMinLength, ErrorMessage = LengthErrorMessage)]
         public string IdentityCardIssuer { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]        
-        public DateTime IdentityCardIssueDate { get; set; } 
-
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(NationalityMaxLength, MinimumLength = NationalityMinLength, ErrorMessage = LengthErrorMessage)]
         public string IdentityCardNationality { get; set; } = string.Empty;
@@ -70,6 +67,5 @@ namespace Infinia.Core.ViewModels
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(SSNMaxLength, MinimumLength = SSNMinLength, ErrorMessage = LengthErrorMessage)]
         public string SSN { get; set; } = string.Empty;
-
     }
 }

@@ -24,6 +24,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
+                @if (User.IsInRole("BankAdministrator"))
+                {
+                    <!-- Икона за анализи -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="BankAdministrator" asp-action="BranchAnalysis">
+                            <span class="material-symbols-outlined">analytics</span> <!-- This is the icon -->
+                        </a>
+                    </li>
+                }
                 <!-- Камбанка за известия -->
                 <li class="nav-item">
                     <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
@@ -86,10 +95,19 @@
                         Настройки
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        }
+
                     </div>
                 </li>
             </ul>
@@ -116,11 +134,6 @@
                     <label asp-for="IdentityCardNumber">Лична карта №</label>
                     <input asp-for="IdentityCardNumber" class="form-control" placeholder="Въведете № на Вашата лична карта.." />
                     <span asp-validation-for="IdentityCardNumber" class="validation"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdentityCardIssueDate">Лична карта издадена на (**дата **месец ****год)</label>
-                    <input asp-for="IdentityCardIssueDate" class="form-control" placeholder="Въведете датата, на която е издадена личната Ви карта.." />
-                    <span asp-validation-for="IdentityCardIssueDate" class="validation"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="IdentityCardIssuer">Издадел на личната карта</label>

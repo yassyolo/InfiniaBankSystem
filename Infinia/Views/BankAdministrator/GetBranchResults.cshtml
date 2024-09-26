@@ -1,0 +1,441 @@
+﻿@model Infinia.Core.ViewModels.BankAdministrator.BranchAnalysisSelectedBranchAndIntervalViewModel// Replace with the correct model if needed
+
+@{
+    ViewData["Title"] = "Branch Analysis Results";
+}
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смяна на парола - Infinia</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="diagrams">
+        
+        <div class="diagrams__title">
+            <a class="content__btns-single diagrams-btn" asp-controller="BankAdministrator" asp-action="BranchAnalysis">Назад</a>
+            <a class="content__btns-single diagrams-btn" asp-controller="Home" asp-action="Index">Към "Infinia"</a>
+                
+        </div>
+        <h2 class="diagrams__h2">Анализ на клон на банка</h2>
+    
+        
+
+        <div id="analysisResults" @*style="display:block;"*@>
+            <!-- Set to block to show results -->
+            <div class="diagrams__branch-analysis">
+                <div class="diagrams__branc-analysis-element">
+                    <h3>Комбиниран анализ на сметки </h3>
+                    <div id="combinedChart" style="width:500px; height: 375px;"></div>
+                </div>
+                <div class="diagrams__branc-analysis-element">
+                    <h3>Комбиниран анализ на баланса</h3>
+                    <div id="combinedBalanceChart" style="width: 500px; height: 375px;"></div>
+                </div>
+            </div>
+            
+            <div id="combinedBarChart"></div>
+            <div id="genderDistributionChart"></div>
+            <div id="cashFlowForecast" style="width: 500px; height: 350px;"></div>
+        </div>
+
+    </div>
+    
+
+    <!-- Bootstrap JS и jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        
+        const branchName = '@Model.BranchName'; 
+        const startDate = '@Model.StartInterval'; 
+        const endDate = '@Model.EndInterval'; 
+
+        async function fetchData() {
+            const response = await fetch(`@Url.Action("GetBranchAnalysis")?branchName=${branchName}&startDate=${startDate}&endDate=${endDate}`);
+            const data = await response.json();
+            visualizeData(data);
+        }
+
+        function visualizeData(data) {
+            // Combined Analysis Chart
+            const combinedOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                dataLabels: {
+                    enabled: false // Hide data labels
+                },
+                series: [{
+                    name: 'Общ период от време',
+                    data: [
+                        data.allTimeStatistics.totalAccounts,
+                        data.allTimeStatistics.openAccounts,
+                        data.allTimeStatistics.closedAccounts
+                    ]
+                }, {
+                    name: 'Селектиран интервал',
+                    data: [
+                        data.selectedIntervalStatistics.totalAccounts,
+                        data.selectedIntervalStatistics.openAccounts,
+                        data.selectedIntervalStatistics.closedAccounts
+                    ]
+                }],
+                xaxis: {
+                    categories: ['Общ брой сметки', 'Активни сметки', 'Закрити сметки']
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '50%',
+                        endingShape: 'rounded'
+                    }
+                }
+            };
+
+            const combinedChart = new ApexCharts(document.querySelector("#combinedChart"), combinedOptions);
+            combinedChart.render();
+
+
+            const combinedBalanceOptions = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                dataLabels: {
+                    enabled: false // Hide data labels
+                },
+                series: [{
+                    name: 'Общ период от време',
+                    data: [
+                        data.allTimeStatistics.totalBalance,
+                        data.allTimeStatistics.averageBalance,
+                        data.allTimeStatistics.totalTransactionVolume
+                    ]
+                }, {
+                    name: 'Селектиран интервал',
+                    data: [
+                        data.selectedIntervalStatistics.totalBalance,
+                        data.selectedIntervalStatistics.averageBalance,
+                        data.selectedIntervalStatistics.totalTransactionVolume
+                    ]
+                }],
+                xaxis: {
+                    categories: ['Общ баланс', 'Среден баланс', 'Размер на транзакции']
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '50%',
+                        endingShape: 'rounded'
+                    }
+                }
+            };
+
+            const combinedBalanceChart = new ApexCharts(document.querySelector("#combinedBalanceChart"), combinedBalanceOptions);
+            combinedBalanceChart.render();
+        }
+        async function fetchGenderAnalysis() {
+            const response = await fetch(`@Url.Action("GenderAnalysis")?branchName=${branchName}`);
+            const genderData = await response.json();
+            visualizeGenderAnalysis(genderData);
+        }
+
+        function visualizeGenderAnalysis(data) {
+            const males = data.genderAnalysis.filter(row => row.gender === "Male");
+            const females = data.genderAnalysis.filter(row => row.gender === "Female");
+
+            const combinedData = {
+                averageTransactionAmount: {
+                    male: males.reduce((sum, row) => sum + row.averageTransactionAmount, 0),
+                    female: females.reduce((sum, row) => sum + row.averageTransactionAmount, 0)
+                },
+                totalTransactionAmount: {
+                    male: males.reduce((sum, row) => sum + row.totalTransactionAmount, 0),
+                    female: females.reduce((sum, row) => sum + row.totalTransactionAmount, 0)
+                },
+                loanAmountRequested: {
+                    male: males.reduce((sum, row) => sum + row.loanAmountRequested, 0),
+                    female: females.reduce((sum, row) => sum + row.loanAmountRequested, 0)
+                },
+                loanAmountApproved: {
+                    male: males.reduce((sum, row) => sum + row.loanAmountApproved, 0),
+                    female: females.reduce((sum, row) => sum + row.loanAmountApproved, 0)
+                },
+                accountBalance: {
+                    male: males.reduce((sum, row) => sum + row.accountBalance, 0),
+                    female: females.reduce((sum, row) => sum + row.accountBalance, 0)
+                }
+            };
+
+            // Create a combined bar chart
+            createCombinedBarChart("combinedBarChart", combinedData);
+
+            const genderCount = {
+                male: males.length,
+                female: females.length
+            };
+            createPieChart("genderDistributionChart", genderCount, "Дистрибуция на полове");
+        }
+
+        function createCombinedBarChart(chartId, data) {
+            const options = {
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    stacked: true
+                },
+                series: [
+                    {
+                        name: 'Средна сума преведени пари',
+                        data: [data.averageTransactionAmount.male, data.averageTransactionAmount.female]
+                    },
+                    {
+                        name: 'Обща сума преведени пари',
+                        data: [data.totalTransactionAmount.male, data.totalTransactionAmount.female]
+                    },
+                    {
+                        name: 'Сума, заявена при кредит',
+                        data: [data.loanAmountRequested.male, data.loanAmountRequested.female]
+                    },
+                    {
+                        name: 'Сума, одобрена при кредити',
+                        data: [data.loanAmountApproved.male, data.loanAmountApproved.female]
+                    },
+                    {
+                        name: 'Баланс по сметката',
+                        data: [data.accountBalance.male, data.accountBalance.female]
+                    }
+                ],
+                xaxis: {
+                    categories: ['Мъже', 'Жени']
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Стойности'
+                    }
+                },
+                title: {
+                    text: 'Комбинирани анализи по пол'
+                },
+                legend: {
+                    position: 'top'
+                }
+            };
+
+            const chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+            chart.render();
+        }
+        function createPieChart(chartId, data, title) {
+            const options = {
+                chart: {
+                    type: 'pie',
+                    height: 350
+                },
+                series: [data.male, data.female],
+                labels: ['Мъже', 'Жени'],
+                title: {
+                    text: title
+                }
+            };
+
+            const chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+            chart.render();
+        }
+
+        async function fetchCashflowForecast() {
+            const response = await fetch(`@Url.Action("ForecastCashflow")?branchName=${branchName}`);
+            const data = await response.json();
+            console.log(data); // Optional: for debugging
+            visualizeCashflowForecast(data);
+        }
+
+        function visualizeCashflowForecast(data) {
+            const historicalData = (data.historicalData && typeof data.historicalData === 'object')
+                ? Object.entries(data.historicalData)
+                    .filter(([date, value]) => value !== null && value !== undefined) 
+                    .map(([date, value]) => ({
+                        x: new Date(date).toLocaleDateString(),
+                        y: value
+                    }))
+                : []; 
+
+            const forecastedValue = data.forecastData && data.forecastData.length > 0
+                ? data.forecastData[0].forecastedNetCashFlow 
+                : 0; 
+            const forecastedData = [{
+                x: 'Forecast', 
+                y: forecastedValue
+            }];
+
+            const combinedData = [...historicalData, ...forecastedData];
+
+            // Chart options for cash flow
+            const options = {
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                dataLabels: {
+                    enabled: false // Hide data labels
+                },
+                series: [{
+                    name: 'Паричен поток',
+                    data: combinedData
+                }],
+                xaxis: {
+                    categories: combinedData.map(item => item.x), // x-axis categories will include both historical dates and the forecast label
+                    title: {
+                        text: 'Дата'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Паричен поток'
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        colors: {
+                            ranges: [{
+                                from: -100000,
+                                to: 0,
+                                color: '#f15b46' // Red for negative cash flow
+                            }, {
+                                from: 0,
+                                to: 100000,
+                                color: '#28a745' // Green for positive cash flow
+                            }]
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            const cashFlowChart = new ApexCharts(document.querySelector("#cashFlowForecast"), options);
+            cashFlowChart.render();
+        }
+
+
+        // Call fetchData on page load
+        fetchData();
+        fetchGenderAnalysis();
+        fetchCashflowForecast();
+    </script>
+}
+
+<style>
+    .diagrams__branch-analysis{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+align-items:center;
+        margin-bottom: 2em;
+    }
+
+    .diagrams__h2{
+        color:#4b0082;
+        margin-top:2em;
+        font-weight:bold;
+    }
+
+    .diagrams-btn {
+        width:150px;
+        height: 30px;
+
+        margin-right: 2em;
+    }
+    .diagrams__title{
+		display:flex;
+		flex-direction:row;
+        justify-content:space-around;
+    }
+
+    .diagrams-btn:nth-child(1) {
+            background-color: #2696E9;
+	}
+
+    .diagrams__branc-analysis-element{
+        display:flex;
+flex-direction:column;
+justify-content :center;
+    }
+
+    h2, h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    #branchAnalysisForm {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        #branchAnalysisForm div {
+            margin-bottom: 15px;
+        }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+   
+
+    /* Chart container styling */
+    #analysisResults {
+        max-width: 1200px;
+        margin: 40px auto 0;
+    }
+
+    #analysisResults h3 {  
+       margin-top: 40px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+
+    #combinedChart, #combinedBalanceChart, #combinedBarChart, #genderDistributionChart, #cashFlowForecast {
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>

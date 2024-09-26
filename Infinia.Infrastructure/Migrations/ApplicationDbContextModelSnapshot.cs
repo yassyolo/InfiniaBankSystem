@@ -95,7 +95,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 3,
                             Balance = 1000m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 25, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1744),
+                            CreationDate = new DateTime(2024, 9, 26, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3709),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -108,7 +108,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 4,
                             Balance = 200m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 25, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1744),
+                            CreationDate = new DateTime(2024, 9, 26, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3709),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 37, 24, 39, 194, 187, 85, 25, 67, 195, 56, 247, 137, 17, 220, 32, 81, 144, 82, 184, 28, 19, 253, 96, 177, 255, 107, 24, 58, 20, 70, 223, 151, 177, 120, 40, 127, 208, 127, 249, 54, 75, 220, 180, 194, 3, 193, 139, 189 },
                             MonthlyFee = 2m,
@@ -121,7 +121,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 5,
                             Balance = 900m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 5, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1809),
+                            CreationDate = new DateTime(2024, 9, 6, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3806),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -134,7 +134,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 2,
                             Balance = 0m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 26, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1964),
+                            CreationDate = new DateTime(2024, 8, 27, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3943),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -147,7 +147,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 1,
                             Balance = 100000000m,
                             Branch = "None",
-                            CreationDate = new DateTime(2024, 8, 26, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1964),
+                            CreationDate = new DateTime(2024, 8, 27, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3943),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 31, 206, 109, 135, 141, 71, 209, 126, 42, 101, 231, 236, 67, 171, 245, 18, 100, 92, 210, 218, 76, 159, 101, 79, 14, 131, 4, 157, 91, 180, 162, 152, 128, 221, 107, 227, 194, 167, 126, 176, 76, 155, 164, 21, 230, 73, 221, 13 },
                             MonthlyFee = 0m,
@@ -160,7 +160,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = 6,
                             Balance = 100m,
                             Branch = "Sliven",
-                            CreationDate = new DateTime(2024, 9, 5, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1809),
+                            CreationDate = new DateTime(2024, 9, 6, 10, 55, 31, 379, DateTimeKind.Local).AddTicks(3806),
                             CustomerId = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             EncryptedIBAN = new byte[] { 193, 10, 140, 103, 113, 25, 240, 73, 189, 131, 84, 240, 133, 51, 134, 120, 251, 105, 160, 55, 185, 161, 253, 175, 31, 209, 58, 112, 169, 238, 137, 250, 196, 39, 48, 190, 187, 42, 71, 23, 125, 144, 117, 50, 69, 224, 12, 122 },
                             MonthlyFee = 2m,
@@ -311,7 +311,7 @@ namespace Infinia.Infrastructure.Migrations
                             Id = "2cbfb88d - c6a3 - 445e-a0f3 - 2492fbbbc137",
                             AccessFailedCount = 0,
                             AddressId = 1,
-                            ConcurrencyStamp = "ca85d385-3a2e-4289-982a-8bb9024f7478",
+                            ConcurrencyStamp = "87f02bd3-bfb4-4616-9187-07f3122c3772",
                             Email = "ivanivanov@gmail.com",
                             EmailConfirmed = true,
                             IdentityCardId = 1,
@@ -319,9 +319,9 @@ namespace Infinia.Infrastructure.Migrations
                             Name = "Ivan Ivanov",
                             NormalizedEmail = "IVANIBANOV@GMAIL.COM",
                             NormalizedUserName = "IVANIVANOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAI95UCbbYk49vKZzXZnjiRSSCL6QRwaFooMukj94H7Fiys/7OklNl9givz/eayi2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBsJ6LsDiJic0xGA7g3v2FmP819IEwsYWObC80W70Cx2EI1hVQN4vNIXR1oIU2M6+w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2daca5d8-c435-4bec-8aec-282e725813d1",
+                            SecurityStamp = "5832ac9c-f674-4e53-a03e-19468231eb19",
                             TwoFactorEnabled = false,
                             UserName = "ivanivanov"
                         });
@@ -439,11 +439,6 @@ namespace Infinia.Infrastructure.Migrations
                         .HasColumnType("varbinary(max)")
                         .HasComment("Identity card number");
 
-                    b.Property<byte[]>("EncryptedDateOfIssue")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)")
-                        .HasComment("Identity card date of issue");
-
                     b.Property<byte[]>("EncryptedIssuer")
                         .IsRequired()
                         .HasColumnType("varbinary(max)")
@@ -475,7 +470,6 @@ namespace Infinia.Infrastructure.Migrations
                         {
                             Id = 1,
                             EncryptedCardNumber = new byte[] { 49, 34, 67, 29, 133, 160, 202, 196, 145, 181, 192, 114, 229, 113, 58, 22, 193, 50, 4, 2, 210, 21, 75, 154, 140, 102, 163, 28, 86, 92, 151, 73 },
-                            EncryptedDateOfIssue = new byte[] { 179, 85, 117, 239, 66, 92, 60, 97, 70, 3, 196, 223, 92, 112, 85, 69, 175, 173, 235, 42, 60, 70, 176, 166, 214, 41, 252, 156, 139, 109, 140, 130 },
                             EncryptedIssuer = new byte[] { 158, 114, 169, 139, 148, 7, 21, 70, 47, 14, 123, 36, 201, 172, 203, 230, 58, 200, 67, 15, 127, 249, 232, 154, 203, 237, 132, 80, 47, 222, 90, 250 },
                             EncryptedNationality = new byte[] { 134, 55, 67, 164, 48, 44, 210, 254, 78, 218, 227, 4, 6, 97, 152, 180, 234, 106, 141, 247, 74, 13, 39, 26, 219, 173, 161, 238, 61, 183, 169, 221 },
                             EncryptedSSN = new byte[] { 172, 50, 196, 250, 62, 125, 215, 96, 161, 1, 179, 55, 24, 130, 67, 36, 74, 62, 252, 121, 145, 155, 210, 128, 107, 87, 3, 72, 57, 56, 119, 247 },

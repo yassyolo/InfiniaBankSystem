@@ -6,12 +6,12 @@ using Infinia.Infrastructure.Data.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static Infinia.Core.Helpers.RandomPasswordHelper;
-using System.Text;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Infinia.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly SignInManager<Customer> signInManager;
@@ -26,13 +26,14 @@ namespace Infinia.Controllers
             this.profileService = profileService;
             this.emailSenderService = emailSenderService;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             var model = new LoginViewModel();
@@ -41,6 +42,7 @@ namespace Infinia.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -82,6 +84,7 @@ namespace Infinia.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public IActionResult ChangePassword()
         {
             var model = new ChangePasswordViewModel();
@@ -89,6 +92,7 @@ namespace Infinia.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -128,6 +132,7 @@ namespace Infinia.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public IActionResult ChangeUsername()
         {
             var model = new ChangeUsernameViewModel();
@@ -136,6 +141,7 @@ namespace Infinia.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> ChangeUsername(ChangeUsernameViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -170,6 +176,7 @@ namespace Infinia.Controllers
 
         [HttpGet]
         [Authorize]
+
         public async Task<IActionResult> ProfileDetails()
         {
             var userId = User.GetId();
@@ -182,6 +189,7 @@ namespace Infinia.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             var model = new RegisterViewModel();
@@ -189,6 +197,7 @@ namespace Infinia.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -219,6 +228,7 @@ namespace Infinia.Controllers
                 }
             }
             var result = await userManager.CreateAsync(user, model.Password);
+            await userManager.AddToRoleAsync(user, "Customer");
             if (result.Succeeded)
             {
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -237,11 +247,12 @@ namespace Infinia.Controllers
 
             return View(model);
         }
+        [AllowAnonymous]
         public IActionResult RegistrationConfirmed()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
@@ -260,7 +271,7 @@ namespace Infinia.Controllers
             }
             return View();
         }
-
+        [Authorize(Roles = "Customer")]
         public IActionResult ForgotPassword()
         {
             var model = new ForgotPasswordViewModel();
@@ -269,6 +280,7 @@ namespace Infinia.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -304,7 +316,10 @@ namespace Infinia.Controllers
 
             return View(model);
         }
-
+        public IActionResult Faq()
+        {
+            return View();
+        }
        
     }
 

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using static Infinia.Core.MessageConstants.ErrorMessages;
-using System.Threading.Tasks;
-
-namespace Infinia.Core.ViewModels.BankAdministrator
+﻿namespace Infinia.Core.ViewModels.BankAdministrator
 {
     public class BranchAnalysisSelectedBranchAndIntervalViewModel
     {

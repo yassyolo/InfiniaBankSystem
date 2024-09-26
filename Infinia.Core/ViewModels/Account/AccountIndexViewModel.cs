@@ -4,6 +4,6 @@
     {
         public IEnumerable<AccountRowViewModel> Accounts { get; set; } = new List<AccountRowViewModel>();
 
-        public decimal TotalBalance { get; set; }
+        public string TotalBalance { get; set; } = string.Empty;
     }
 }

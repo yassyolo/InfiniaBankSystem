@@ -10,7 +10,7 @@
 
         public string Type { get; set; } = string.Empty;
 
-        public decimal Balance { get; set; }
+        public string Balance { get; set; } = string.Empty;
         //TODO: Add transactions
     }
 }

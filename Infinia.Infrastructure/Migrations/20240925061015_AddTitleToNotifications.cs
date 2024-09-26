@@ -9,6 +9,9 @@ namespace Infinia.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+   name: "EncryptedDateOfIssue",
+   table: "IdentityCards");
             migrationBuilder.AddColumn<string>(
                 name: "Title",
                 table: "Notifications",
@@ -59,6 +62,7 @@ namespace Infinia.Infrastructure.Migrations
                 keyValue: 6,
                 column: "CreationDate",
                 value: new DateTime(2024, 9, 5, 9, 10, 14, 920, DateTimeKind.Local).AddTicks(1809));
+
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",

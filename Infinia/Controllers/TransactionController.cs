@@ -1,6 +1,7 @@
 ﻿using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Transaction;
 using Infinia.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using static Infinia.Core.MessageConstants.ErrorMessages;
@@ -8,6 +9,7 @@ using static Infinia.Infrastructure.Data.DataConstants.DataConstants.Transaction
 
 namespace Infinia.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionService transactionService;
@@ -140,7 +142,7 @@ namespace Infinia.Controllers
             {
                 return BadRequest();
             }
-            var availableAccounts = await transactionService.GetAvailableAccountsAsync(userId);
+            var availableAccounts = await transactionService.GetAvailableCurrentAccountsForUserAsync(userId);
             var model = new TransactionToAnotherBankViewModel()
             {
                 AvailableAccounts = availableAccounts
@@ -203,6 +205,23 @@ namespace Infinia.Controllers
 
             return File(Encoding.UTF8.GetBytes(model), fileType, fileName);
         }
-        
+        [HttpGet]
+        public async Task<IActionResult> TransactionsHistory(int id)
+        {
+            if (await accountService.AccountWithIdExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var transactionHistory = await transactionService.GetTransactionsForAccountAsync(id, 0);
+
+            return View(transactionHistory);
+        }
+        [HttpPost]
+        public async Task<IActionResult> TransactionsHistory(int id, TransactionHistoryViewModel model)
+        {
+            var transactionHistory = await transactionService.GetTransactionsForAccountAsync(id, model.TotalTransactions);
+
+            return View(transactionHistory);
+        }
     }
 }

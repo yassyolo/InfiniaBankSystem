@@ -1,9 +1,9 @@
-﻿using Infinia.Models;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Infinia.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,10 +18,26 @@ namespace Infinia.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [AllowAnonymous]
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (statusCode == 400)
+            {
+                return View("Error400");
+            }
+            else if (statusCode == 401)
+            {
+                return View("Error401");
+            }
+            else if (statusCode == 404)
+            {
+                return View("Error404");
+            }
+            else if (statusCode == 500)
+            {
+                return View("Error500");
+            }
+            return View();
         }
     }
 }

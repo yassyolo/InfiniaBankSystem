@@ -2,275 +2,55 @@
 
 @{
     ViewData["Title"] = "Branch Analysis";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
+    <title>Анализи и отчети</title>
+</head>
+<body>
 
-<h2>Branch Analysis</h2>
+    <div class="box">
+        <div class="box__goBack">
+            <img src="~/images/logo.png" class="box__goBack-logo">
+            <a href="#!" class="box__goBack-heading">Infinia</a>
+        </div>
 
-<form id="branchAnalysisForm">
-    <div>
-        <label for="branchName">Select Branch:</label>
-        <input type="text" id="branchName" name="BranchName" required />
+        <div class="box__heading">
+            <img src="~/images/analyzing.png">
+            <h2 class="box__heading-title">Анализи & Отчети</h2>
+        </div>
+
+        <form asp-action="BranchAnalysis" asp-controller="BankAdministrator" method="post" id="branchAnalysisForm" class="box__form">
+            <div class="box__form-container">
+                <label asp-for="BranchName" class="box__form-container-label">Име на клон:</label>
+                <input asp-for="BranchName" type="text" id="branchName" name="BranchName" class="box__form-container-input" required />
+            </div>
+            <div class="box__form-container">
+                <label asp-for="StartInterval" class="box__form-container-label">Начална дата:</label>
+                <input asp-for="StartInterval" type="date" id="startDate" name="StartInterval" class="box__form-container-input" required />
+            </div>
+            <div class="box__form-container">
+                <label asp-for="EndInterval" class="box__form-container-label">Крайна дата:</label>
+                <input asp-for="EndInterval" type="date" id="endDate" name="EndInterval" class="box__form-container-input" required />
+            </div>
+            <button type="submit" class="box__form-btn">Анализирай</button>
+        </form>
     </div>
-    <div>
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="StartInterval" required />
-    </div>
-    <div>
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="EndInterval" required />
-    </div>
-    <button type="submit">Analyze</button>
-</form>
 
-<div id="analysisResults" style="display:none;">
-    <h3>Combined Analysis</h3>
-    <div id="combinedChart" style="max-width: 500px; height: 300px;"></div>
-
-    <h3>Combined Balance Analysis</h3>
-    <div id="combinedBalanceChart" style="max-width: 500px; height: 300px;"></div>
-</div>
-<button id="fetchCashflowForecast" type="button">Fetch Cashflow Forecast</button>
-<div id="cashFlowForecast" style="max-width: 500px; height: 300px;"></div>
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        document.getElementById('branchAnalysisForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
-
-            const branchName = document.getElementById('branchName').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
-            const response = await fetch(`@Url.Action("GetBranchAnalysis")?branchName=${branchName}&startDate=${startDate}&endDate=${endDate}`);
-            const data = await response.json();
-
-            visualizeData(data);
-            document.getElementById('analysisResults').style.display = 'block';
-        });
-
-        function visualizeData(data) {
-            // Combined Analysis Chart
-            const combinedOptions = {
-                chart: {
-                    type: 'bar',
-                    height: 300
-                },
-                series: [{
-                    name: 'All Time',
-                    data: [
-                        data.allTimeStatistics.totalAccounts,
-                        data.allTimeStatistics.openAccounts,
-                        data.allTimeStatistics.closedAccounts
-                        
-                    ]
-                }, {
-                    name: 'Selected Interval',
-                    data: [
-                        data.selectedIntervalStatistics.totalAccounts,
-                        data.selectedIntervalStatistics.openAccounts,
-                        data.selectedIntervalStatistics.closedAccounts
-                        
-                    ]
-                }],
-                xaxis: {
-                    categories: ['Total Accounts', 'Open Accounts', 'Closed Accounts']
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '50%',
-                        endingShape: 'rounded'
-                    }
-                }
-            };
-
-            const combinedChart = new ApexCharts(document.querySelector("#combinedChart"), combinedOptions);
-            combinedChart.render();
-
-            // Combined Balance Analysis Chart
-            const combinedBalanceOptions = {
-                chart: {
-                    type: 'bar',
-                    height: 300
-                },
-                series: [{
-                    name: 'All Time Balance',
-                    data: [
-                        data.allTimeStatistics.totalBalance,
-                        data.allTimeStatistics.averageBalance,
-                        data.allTimeStatistics.totalTransactionVolume
-                    ]
-                }, {
-                    name: 'Selected Interval Balance',
-                    data: [
-                        data.selectedIntervalStatistics.totalBalance,
-                        data.selectedIntervalStatistics.averageBalance,
-                        data.selectedIntervalStatistics.totalTransactionVolume
-                    ]
-                }],
-                xaxis: {
-                    categories: ['Total Balance', 'Average Balance', 'Total Transaction Volume']
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '50%',
-                        endingShape: 'rounded'
-                    }
-                }
-            };
-
-            const combinedBalanceChart = new ApexCharts(document.querySelector("#combinedBalanceChart"), combinedBalanceOptions);
-            combinedBalanceChart.render();
-        }
-        document.getElementById('fetchCashflowForecast').addEventListener('click', async function () {
-            const branchName = document.getElementById('branchName').value;
-
-            const response = await fetch(`@Url.Action("ForecastCashflow")?branchName=${branchName}`);
-            const data = await response.json();
-
-            visualizeCashflowForecast(data);
-        });
-        function visualizeCashflowForecast(data) {
-            // Process Historical Data
-            const historicalData = Object.entries(data.HistoricalData).map(([date, value]) => ({
-                x: new Date(date).toLocaleDateString(),
-                y: value
-            }));
-
-            // Process Forecast Data
-            const forecastedData = data.ForecastData.map(forecast => ({
-                x: 'Forecast', // Assign a label to forecast
-                y: forecast.ForecastedNetCashFlow
-            }));
-
-            // Combine Historical and Forecast Data
-            const combinedData = [...historicalData, ...forecastedData];
-
-            // Chart options
-            const options = {
-                chart: {
-                    type: 'bar',
-                    height: 300
-                },
-                series: [{
-                    name: 'Net Cash Flow',
-                    data: combinedData
-                }],
-                xaxis: {
-                    categories: combinedData.map(item => item.x),
-                    title: {
-                        text: 'Date'
-                    }
-                },
-                yaxis: {
-                    title: {
-                        text: 'Net Cash Flow'
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        colors: {
-                            ranges: [{
-                                from: -100000,
-                                to: 0,
-                                color: '#f15b46'
-                            }, {
-                                from: 0,
-                                to: 100000,
-                                color: '#28a745'
-                            }]
-                        }
-                    }
-                }
-            };
-
-            // Render the chart
-            const cashFlowChart = new ApexCharts(document.querySelector("#cashFlowForecast"), options);
-            cashFlowChart.render();
-        }
-    </script>
-}
-
-<style>
-    /* General styling */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f6f9;
-        margin: 0;
-        padding: 20px;
+    @*<script>
+    function submitForm() {
+    const form = document.getElementById('branchAnalysisForm');
+    form.target = '_blank';
+    form.submit();
     }
+    </script>*@
 
-    h2, h3 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-    }
-
-    /* Form container styling */
-    #branchAnalysisForm {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-        #branchAnalysisForm div {
-            margin-bottom: 15px;
-        }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-    }
-
-    input[type="text"], input[type="date"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        box-sizing: border-box;
-    }
-
-    button[type="submit"] {
-        background-color: #28a745;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        width: 100%;
-        transition: background-color 0.3s ease;
-    }
-
-        button[type="submit"]:hover {
-            background-color: #218838;
-        }
-
-    /* Chart container styling */
-    #analysisResults {
-        max-width: 1200px;
-        margin: 40px auto 0;
-    }
-
-        #analysisResults h3 {
-            margin-top: 40px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-    /* Chart grid styling */
-    #combinedChart, #combinedBalanceChart {
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-</style>
+</body>
+</html>

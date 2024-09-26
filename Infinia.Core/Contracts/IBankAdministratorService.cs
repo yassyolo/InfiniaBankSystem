@@ -7,5 +7,6 @@ namespace Infinia.Core.Contracts
     {
         Task<CombinedBranchAnalysisStatisticsViewModel> GetBranchAnalysisAsync(string branchName, DateTime startDate, DateTime endDate);
         Task<CashFlowCombinedWeeklyData> GetHistoricalDataAsync(string branchName);
+        Task<CashFlowCombinedWeeklyData> GenerateSyntheticHistoricalDataAsync(string branchName);
     }
 }

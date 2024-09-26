@@ -27,6 +27,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
+                @if (User.IsInRole("BankAdministrator"))
+                {
+                    <!-- Икона за анализи -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="BankAdministrator" asp-action="BranchAnalysis">
+                            <span class="material-symbols-outlined">analytics</span> <!-- This is the icon -->
+                        </a>
+                    </li>
+                }
                 <!-- Камбанка за известия -->
                 <li class="nav-item">
                     <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
@@ -89,10 +98,19 @@
                         Настройки
                     </a>
                     <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
-                        <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
+                        }
+
                     </div>
                 </li>
             </ul>
@@ -101,6 +119,7 @@
     <section id="funds-page">
 
         <div class="account">
+            @*<p>Вашите средства: @Model.TotalBalance</p>*@
             <p>Вашите средства:</p>
             <a asp-action="CreateAccount" asp-controller="Account" class="funds__button">Отвори сметка</a>
         </div>
@@ -118,7 +137,7 @@
 
                     <div class="funds__details-buttons">
                         <a asp-action="Index" asp-controller="Transaction"  class="funds__button">Превод</a>
-                        <a asp-action="TransactionHistory" asp-controller="Transaction" asp-route-id="@account.Id"  class="funds__button">История</a>
+                        <a asp-action="TransactionsHistory" asp-controller="Transaction" asp-route-id="@account.Id"  class="funds__button">История</a>
                     </div>
                 </div>
 
@@ -126,7 +145,14 @@
                     <div class="funds__info-container">
                         <div class="funds__info-container-balance">
                             <p>@account.Name</p>
-                            <h1>@account.Type</h1>
+                            @if (account.Type == "Current")
+                            {
+                                <h1>Разплащателна</h1>
+                            }
+                            else
+                            {
+                                <h1>Спестовна</h1>
+                            }
 
                         </div>
 
@@ -137,13 +163,17 @@
                     <div class="funds__info-additional">
                         <a asp-action="ChangeAccountName" asp-controller="Account" asp-route-id="@account.Id"class="funds__button"><i class="fa-solid fa-right-left"></i><span>Преименувай</span></a>
                         <a asp-action="Details" asp-controller="Account" asp-route-id="@account.Id" class="funds__button"><i class="fa-solid fa-info"></i><span>Детайли</span></a>
-                        <a asp-action="Delete" asp-controller="Account" asp-route-id="@account.Id" class="funds__button"><i class="fa-solid fa-xmark"></i><span>Закрий</span></a>
+                        @if (account.Type == "Current")
+                        {
+                            <a asp-action="Delete" asp-controller="Account" asp-route-id="@account.Id" class="funds__button"><i class="fa-solid fa-xmark"></i><span>Закрий</span></a>
+                        }
+                        
                     </div>
                 </div>
 
             </div>
         }
-       
+        
 
     </section>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

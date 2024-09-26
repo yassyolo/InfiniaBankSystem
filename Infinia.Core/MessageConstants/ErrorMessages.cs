@@ -28,7 +28,7 @@
         public const string InvalidAccountErrorMessage = "Невалидна сметка.";
         public const string EmailNotConfirmedErrorMessage = "Имейла Ви трябва да е потвърден преди да се логнете в системата.";
         public const string InvalidAmountErrorMessage = "Сумата трябва да е между {2} и {1} лева.";
-        public const string InvalidAccountDeletion = "Cannot delete account.";
+        public const string InvalidAccountDeletion = "Не можете да изтриете тази сметка.";
         public const string InavlidCustomerIdentityCardErrorMessage = "Потребител с тази лична карта не съществува в системата.";
         public const string InavlidCustomerAddressErrorMessage = "Потребител с този адрес не съществува.";
         public const string InavlidCustomerAccountIBANErrorMessage = "Потребител с такава сметка не съществува.";

@@ -1,10 +1,12 @@
 ﻿using Infinia.Core.Contracts;
-using Infinia.Core.Services;
 using Infinia.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Infinia.Controllers
+
 {
+    [Authorize]
     public class NotificationsController : Controller
     {
         private readonly INotificationService notificationService;

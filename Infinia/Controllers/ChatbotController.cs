@@ -1,10 +1,10 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
+[Authorize]
 public class ChatbotController : Controller
 {
     private readonly HttpClient httpClient;

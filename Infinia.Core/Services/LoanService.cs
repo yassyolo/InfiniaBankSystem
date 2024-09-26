@@ -126,18 +126,10 @@ namespace Infinia.Core.Services
             };
             await repository.AddAsync(loanApplication);
             await repository.SaveChangesAsync();
-            //TODO: Implement the logic for loan repayment
-            var loanRepayment = new LoanRepayment
-            {
-                LoanApplicationId = loanApplication.Id,
-                RepaymentAmount = CalculateEMI(model.LoanAmount, model.InterestRate, model.LoanTermMonths),
-                Status = Infinia.Core.Constants.LoanRepaymentStatus.Pending
-            };
-            await repository.AddAsync(loanRepayment);
-            await repository.SaveChangesAsync();
 
+            var repaymentAmount = CalculateEMI(model.LoanAmount, model.InterestRate, model.LoanTermMonths);
             var accountBalance = account.Balance;
-            var creditScoreModel = await ApproveLoanAsync(model, userId, accountBalance, loanRepayment.RepaymentAmount);
+            var creditScoreModel = await ApproveLoanAsync(model, userId, accountBalance, repaymentAmount);
             loanApplication.RiskGroup = creditScoreModel.RiskGroup;
             loanApplication.CreditScore = creditScoreModel.CreditScore;
             loanApplication.ProbabilityOfApproval = creditScoreModel.ProbabilityOfApproval;
@@ -165,6 +157,14 @@ namespace Infinia.Core.Services
                     AccountId = bankAccount.Id
                 };
                 await transactionService.MakeTransactionWithinTheBankAsync(transactionWithinTheBankModel, bankAccount.CustomerId);
+                var loanRepayment = new LoanRepayment
+                {
+                    LoanApplicationId = loanApplication.Id,
+                    RepaymentAmount = CalculateEMI(model.LoanAmount, model.InterestRate, model.LoanTermMonths),
+                    Status = Infinia.Core.Constants.LoanRepaymentStatus.Pending
+                };
+                await repository.AddAsync(loanRepayment);
+                await repository.SaveChangesAsync();
             }
             else
             {

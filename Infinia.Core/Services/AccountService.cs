@@ -97,16 +97,22 @@ namespace Infinia.Core.Services
 
         public async Task<DeleteAccountViewModel?> GetAccountForDeleteAsync(int id)
         {
-            return await repository.AllReadOnly<Account>()
-                .Where(x => x.Id == id)
-                .Select(x => new DeleteAccountViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Balance = x.Balance,
-                    Type = x.Type,
-                    IBAN = encryptionService.Decrypt(x.EncryptedIBAN)
-                }).FirstOrDefaultAsync();
+            var currentAccount = await repository.AllReadOnly<Account>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            var model = new DeleteAccountViewModel
+            {
+                Id = currentAccount.Id,
+                Name = currentAccount.Name,
+                Balance = currentAccount.Balance,
+                Type = currentAccount.Type,
+                IBAN = encryptionService.Decrypt(currentAccount.EncryptedIBAN)
+            };
+            var savingsAccount = await repository.AllReadOnly<Account>().Where(x => x.EncryptedIBAN == currentAccount.EncryptedIBAN && x.Type == Savings).FirstOrDefaultAsync();
+           model.SavingsId = savingsAccount.Id;
+            model.SavingsName = savingsAccount.Name;
+            model.SavingsBalance = savingsAccount.Balance;
+            model.SavingsType = savingsAccount.Type;
+            model.SavingsIBAN = encryptionService.Decrypt(savingsAccount.EncryptedIBAN);
+            return model;
         }
 
         public async Task<ChangeAccountNameViewModel?> GetAccountNameAsync(int id)
@@ -130,18 +136,22 @@ namespace Infinia.Core.Services
                     IBAN = encryptionService.Decrypt(x.EncryptedIBAN),
                     Type = x.Type,
                     Name = x.Name,
-                    Balance = x.Balance
+                    Balance = x.Balance.ToString("F2")
                 }).ToListAsync();
+            var totalBalance = await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId).SumAsync(x => x.Balance);
+            
             return new AccountIndexViewModel
             {
                 Accounts = accounts,
-                TotalBalance = accounts.Sum(x => x.Balance)
+                TotalBalance = totalBalance.ToString("F2")
             };  
         }
         //TODO: AVAILABLE ACCOUNT FOR TRANSACTION BETWEEN ACCPUNT CAN BE SAVING ALSO
         public async Task<Account> GetSavingsAccountAsync(string IBAN)
         {
-            return await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => encryptionService.Decrypt(x.EncryptedIBAN) == IBAN);
+            var accounts = await repository.AllReadOnly<Account>().ToListAsync();
+            var account = accounts.FirstOrDefault(x => encryptionService.Decrypt(x.EncryptedIBAN) == IBAN);
+            return account;
         }
 
         public async Task<AccountDetailsViewModel?> GetAccountDetailsAsync(int id)
@@ -153,10 +163,10 @@ namespace Infinia.Core.Services
                     Id = x.Id,
                     Name = x.Name,
                     IBAN = encryptionService.Decrypt(x.EncryptedIBAN),
-                    Balance = x.Balance,
+                    Balance = x.Balance.ToString("F2"),
                     Branch = x.Branch,
                     Type = x.Type,
-                    CreationDate = x.CreationDate,
+                    CreationDate = x.CreationDate.ToString("dd.MM.yyyy"),
                     Status = x.Status,
                     MonthlyFee = x.MonthlyFee
                 }).FirstOrDefaultAsync();

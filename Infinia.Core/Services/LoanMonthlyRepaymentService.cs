@@ -25,12 +25,6 @@ namespace Infinia.Core.Services
                 await DeductLoanRepayment();
             }
             await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
-
-            /*while (!stoppingToken.IsCancellationRequested)
-            {
-                await DeductLoanRepayment();
-                await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
-            }*/
         }
 
         private async Task DeductLoanRepayment()
@@ -46,13 +40,13 @@ namespace Infinia.Core.Services
                 var currentDateNumber = DateTime.UtcNow.Day;
                 foreach (var loanRepayment in loanRepayments)
                 {
-                    var loanApplication = dbContext.LoanApplications.FirstOrDefault(x => x.Id == loanRepayment.LoanApplicationId);
+                    var loanApplication = dbContext.LoanApplications.FirstOrDefault(x => x.Id == loanRepayment.LoanApplicationId && x.Status == "Approved");
                     if (loanApplication.LoanRepaymentNumber == currentDateNumber)
                     {
                         var model = new TransactionWithinTheBankViewModel()
                         {
-                            Reason = "Loan repayment",
-                            Description = $"Loan repayment made on {DateTime.UtcNow.ToString()}",
+                            Reason = "Погасяване на кредит",
+                            Description = $"Погасяване на кредит, направено на: {DateTime.UtcNow.ToString()}",
                             ReceiverName = "Bank account",
                             Amount = loanRepayment.RepaymentAmount,
                             ReceiverIBAN = encryptionService.Decrypt(bankAccount.EncryptedIBAN),
@@ -61,8 +55,9 @@ namespace Infinia.Core.Services
                         await transactionService.MakeTransactionWithinTheBankAsync(model, loanRepayment.LoanApplication.CustomerId);
                         var notification = new Infrastructure.Data.DataModels.Notification
                         {
+                            Title = "Погасяване на кредит",
                             CustomerId = loanRepayment.LoanApplication.CustomerId,
-                            Content = $"Monthly loan payment and transaction tax was deducted from your account with name {loanRepayment.LoanApplication.Account.Name}.",
+                            Content = $"Успешно погасихте кредита си от сметка {loanRepayment.LoanApplication.Account.Name} и този месец!",
                             CreationDate = DateTime.UtcNow,
                             IsRead = false
                         };

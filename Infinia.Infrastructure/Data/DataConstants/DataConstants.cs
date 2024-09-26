@@ -29,8 +29,8 @@
         {
             public const int SSNMaxLength = 10;
             public const int SSNMinLength = 10;
-            public const int CardNumberMaxLength = 10;
-            public const int CardNumberMinLength = 10;
+            public const int CardNumberMaxLength = 9;
+            public const int CardNumberMinLength = 9;
             public const int IssuerMaxLength = 20;
             public const int IssuerMinLength = 2;
             public const int NationalityMaxLength = 20;

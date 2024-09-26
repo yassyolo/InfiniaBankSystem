@@ -3,10 +3,12 @@ using Infinia.Core.ViewModels;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 using Microsoft.AspNetCore.Mvc;
 using Infinia.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Infinia.Controllers
 {
+    [Authorize]
     public class LoanController : Controller
     {
         private readonly ILoanService loanService;

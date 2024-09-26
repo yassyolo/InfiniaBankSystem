@@ -18,10 +18,6 @@ namespace Infinia.Infrastructure.Data.DataModels
         [Required]
         public byte[] EncryptedCardNumber { get; set; } = null!;
 
-        [Comment("Identity card date of issue")]
-        [Required]
-        public byte[] EncryptedDateOfIssue { get; set; } = null!;
-
         [Comment("Identity card issuer")]
         [Required]
         public byte[] EncryptedIssuer { get; set; } = null!;

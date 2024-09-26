@@ -4,7 +4,6 @@ using static Infinia.Infrastructure.Data.DataConstants.DataConstants.Address;
 using static Infinia.Infrastructure.Data.DataConstants.DataConstants.IdentityCard;
 using static Infinia.Infrastructure.Data.DataConstants.DataConstants.Transaction;
 using static Infinia.Core.MessageConstants.ErrorMessages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infinia.Core.ViewModels
 {
@@ -116,9 +115,6 @@ namespace Infinia.Core.ViewModels
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(IssuerMaxLength, MinimumLength = IssuerMinLength, ErrorMessage = LengthErrorMessage)]
         public string IdentityCardIssuer { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = RequiredFieldErrorMessage)]        
-        public string IdentityCardIssueDate { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
         [StringLength(NationalityMaxLength, MinimumLength = NationalityMinLength, ErrorMessage = LengthErrorMessage)]

@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using static Infinia.Infrastructure.Data.DataConstants.DataConstants.LoanApplication;
 
-//TODO: ADD NEW PROPERTIES TO DEPLOYMENT SERVER
 namespace Infinia.Infrastructure.Data.DataModels
 {
     [Comment("Loan application entity")]

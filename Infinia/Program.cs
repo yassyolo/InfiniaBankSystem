@@ -50,10 +50,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
     app.UseHsts();
 }
 
@@ -81,6 +83,10 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "branchCashflowForecast",
     pattern: "{controller=BankAdministrator}/{action=ForecastCashflow}/{branchName?}");
+app.MapRazorPages();
+app.MapControllerRoute(
+    name: "genderAnalsysi",
+    pattern: "{controller=BankAdministrator}/{action=GenderAnalysis}/{branchName?}");
 app.MapRazorPages();
 
 

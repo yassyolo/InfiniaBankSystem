@@ -113,8 +113,7 @@ namespace Infinia.Core.Services
             var identityCard = new IdentityCard
             {
                 EncryptedCardNumber = encryptionService.Encrypt(model.IdentityCardNumber),
-                EncryptedIssuer = encryptionService.Encrypt(model.IdentityCardIssuer),
-                EncryptedDateOfIssue = encryptionService.Encrypt(model.IdentityCardIssueDate.ToString("dd.MM.yyyy")),
+                EncryptedIssuer = encryptionService.Encrypt(model.IdentityCardIssuer),              
                 EncryptedSex = encryptionService.Encrypt(model.IdentityCardSex),
                 EncryptedNationality = encryptionService.Encrypt(model.IdentityCardNationality),
                 EncryptedSSN = encryptionService.Encrypt(model.SSN)

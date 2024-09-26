@@ -1,11 +1,13 @@
 ﻿using Infinia.Core.Contracts;
 using Infinia.Core.ViewModels.Account;
 using Infinia.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Infinia.Core.MessageConstants.ErrorMessages;
 
 namespace Infinia.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountService accountService;
@@ -107,6 +109,7 @@ namespace Infinia.Controllers
             if (model.Balance >= 0 || model.Balance < 0 || savingsAccount.Balance >= 0 || savingsAccount.Balance < 0)
             {
                 TempData["InvalidOperation"] = InvalidAccountDeletion;
+                return View(model);
             }
             return View(model);
         }
@@ -125,6 +128,11 @@ namespace Infinia.Controllers
         public async Task<IActionResult> Details(int id)
         {
             if (await accountService.AccountWithIdExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var userId = User.GetId();
+            if (await accountService.AccountBelongsToUserAsync(id, userId) == false)
             {
                 return BadRequest();
             }

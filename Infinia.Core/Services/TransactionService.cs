@@ -32,7 +32,7 @@ namespace Infinia.Core.Services
 
         public async Task<IEnumerable<AvailableAccountViewModels>?> GetAvailableAccountsAsync(string userId)
         {
-            return await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId && x.Type == Current)
+            return await repository.AllReadOnly<Account>().Where(x => x.CustomerId == userId) 
                 .Select(x => new AvailableAccountViewModels()
                 {
                     Type = x.Type,
@@ -43,10 +43,19 @@ namespace Infinia.Core.Services
                 }).ToListAsync();
         }
 
-        public async Task<TransactionHistoryViewModel?> GetTransactionsForAccountAsync(int id)
+        public async Task<TransactionHistoryViewModel?> GetTransactionsForAccountAsync(int id, int? totalTransactions = null)
         {
             var currentAccount = repository.AllReadOnly<Account>().FirstOrDefault(x => x.Id == id);
-            var transactions = await repository.AllReadOnly<Transaction>().Where(x => x.AccountId == id)
+
+            var transactionsQuery = repository.AllReadOnly<Transaction>().Where(x => x.AccountId == id);
+
+
+            if (totalTransactions.HasValue && totalTransactions.Value > 0)
+            {
+                transactionsQuery = transactionsQuery.Take(totalTransactions.Value);
+            }
+
+            var transactions = await transactionsQuery
                 .Select(x => new TransactionRowViewModel()
                 {
                     ReceiverOrSenderIBAN = encryptionService.Decrypt(x.EncryptedReceiverIBAN),
@@ -55,6 +64,7 @@ namespace Infinia.Core.Services
                     Reason = x.Reason,
                     CreatedOn = x.TransactionDate.ToString("dd.MM.yyyy"),
                 }).ToListAsync();
+
             var endBalance = 0m;
             foreach (var transaction in transactions)
             {
@@ -66,16 +76,19 @@ namespace Infinia.Core.Services
                 {
                     endBalance -= decimal.Parse(transaction.Amount);
                 }
-                
             }
+
             return new TransactionHistoryViewModel()
             {
+                Id = id,
                 Transactions = transactions,
-                EndBalance = endBalance.ToString("F2")
+                EndBalance = endBalance.ToString("F2"),  
+                TotalTransactions = transactions.Count 
             };
         }
 
-        public async Task MakeTransactionBetweenMyAccountsAsync(TransactionBetweenMyAccountsViewModel model, string userId)
+
+    public async Task MakeTransactionBetweenMyAccountsAsync(TransactionBetweenMyAccountsViewModel model, string userId)
         {
             var receiverAccount = repository.All<Account>().FirstOrDefault(x => x.Id == model.AccountIdFromWhichWeWantToReceiveMoney && x.CustomerId == userId);
             if (receiverAccount == null)

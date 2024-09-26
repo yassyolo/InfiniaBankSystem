@@ -36,7 +36,10 @@ namespace Infinia.Core.Services
             return new CombinedBranchAnalysisStatisticsViewModel
             {
                 AllTimeStatistics = allTimeStatistics,
-                SelectedIntervalStatistics = selectedIntervalStatistics
+                SelectedIntervalStatistics = selectedIntervalStatistics,
+                BranchName = branchName,
+                StartInterval = startDate,
+                EndInterval = endDate
             };
         }
 
@@ -58,6 +61,30 @@ namespace Infinia.Core.Services
                 });
 
             }
+            return model;
+        }
+        public async Task<CashFlowCombinedWeeklyData> GenerateSyntheticHistoricalDataAsync(string branchName)
+        {
+            var today = DateTime.UtcNow;
+            var model = new CashFlowCombinedWeeklyData();
+            var random = new Random();
+
+            for (int i = 0; i < 6; i++)
+            {
+                var startDate = today.AddDays(-7 * i);
+                var endDate = startDate.AddDays(7);
+
+                // Generate synthetic data
+                model.HistoricalData.Add(new WeeklyCashFlowViewModel
+                {
+                    Date = startDate.ToString("yyyy-MM-dd"),
+                    AccountMaintenanceFees = (decimal)(random.Next(0, 100) * 10), // Random fee between 0 and 1000
+                    LoanRepayments = (decimal)(random.Next(0, 100) * 100), // Random repayment between 0 and 1000
+                    TransactionFees = (decimal)(random.Next(0, 50) * 100), // Random fees between 0 and 500
+                    LoanDisbursements = (decimal)(random.Next(0, 400000)), // Random loan disbursement between 0 and 10,000
+                });
+            }
+
             return model;
         }
     }
