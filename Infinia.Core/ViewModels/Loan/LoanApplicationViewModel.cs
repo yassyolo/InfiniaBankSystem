@@ -109,7 +109,7 @@ namespace Infinia.Core.ViewModels
         public string PostalCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]
-        [StringLength(CardNumberMaxLength, MinimumLength = CardNumberMinLength, ErrorMessage = LengthErrorMessage)]
+        [StringLength(9, MinimumLength = 9, ErrorMessage = LengthErrorMessage)]
         public string IdentityCardNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredFieldErrorMessage)]

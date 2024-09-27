@@ -141,7 +141,7 @@ body {
 
 /* Стил за навигационния бар */
 .navbar-experian {
-    background-color: var(--primary-color); /* Цветът на фона на навигацията */
+    background: linear-gradient(to right, #0e42ac, #890685); /* Цветът на фона на навигацията */
     padding: 20px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -173,7 +173,7 @@ body {
     justify-content: flex-start; /* Преместване на бутоните наляво */
     margin-top: 30px; /* Разстояние отгоре */
     padding-left: 100px; /* Допълнително разстояние от ляво за бутоните */
-    background-color: var(--primary-color); /* Фонът на навигационния бар е индигов */
+    background: linear-gradient(to right, #0e42ac, #890685); /* Фонът на навигационния бар е индигов */
 }
 
 /* Преместване на бутоните по-наляво и центриране */

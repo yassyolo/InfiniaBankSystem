@@ -38,12 +38,15 @@
                         </a>
                     </li>
                 }
-                <!-- Камбанка за известия -->
-                <li class="nav-item">
-                    <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </a>
-                </li>
+                else if (User.IsInRole("Customer"))
+                {
+                    <!-- Камбанка за известия -->
+                    <li class="nav-item">
+                        <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </a>
+                    </li>
+                }
                 <!-- Dropdown за "Chatbot" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="chatToggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -105,6 +108,7 @@
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Faq">FAQ</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
                         }
                         else
@@ -129,7 +133,7 @@
                         <img src="~/images/cash.jpg" alt="Card Image"
                              class="card-image">
                         <p class="badge designer">Средства</p>
-                        <h3>Следете средствата си лесно и удобно! Заявете новата си сметка сега!</h3>
+                        <h3>Заявете новата си сметка бързо и удобно сега!</h3>
                         <button class="card-button
            material-symbols-rounded">
                             arrow_forward
@@ -138,10 +142,10 @@
                 </li>
                 <li class="card-item swiper-slide">
                     <a asp-action="ChooseLoanType" asp-controller="Loan" class="card-link">
-                        <img src="~/images/credits.jpg" alt="Card Image"
+                        <img src="~/images/creditApply.jpg" alt="Card Image"
                              class="card-image">
                         <p class="badge developer">Кредити</p>
-                        <h3>Превърнете мечтите си в реалност! Кандидатствайте за кредит с няколко клика!</h3>
+                        <h3>Кандидатствайте за кредит с няколко клика!</h3>
                         <button class="card-button
            material-symbols-rounded">
                             arrow_forward
@@ -162,8 +166,8 @@
                 </li>
                 <li class="card-item swiper-slide">
                     <a asp-action="ProfileDetails" asp-controller="Profile" class="card-link">
-                        <img src="~/images/settings.png" alt="Card Image"
-                             class="card-image">
+                        <img src="~/images/settings-1.png" alt="Card Image"
+                             class="card-image carrousel-img">
                         <p class="badge gamer">Настройки</p>
                         <h3>Управлявайте профила си сигурно в нашата система!</h3>
                         <button class="card-button
@@ -175,9 +179,9 @@
                 <li class="card-item swiper-slide">
                     <a asp-action="AllNotifications" asp-controller="Notifications" class="card-link">
                         <img src="~/images/notifications.jpg" alt="Card Image"
-                             class="card-image">
+                             class="card-image carrousel-img">
                         <p class="badge editor">Известия</p>
-                        <h3>Следете известията си, свързани с акаунта Ви, само с един клик!</h3>
+                        <h3>Следете известията си лесно и удобно, само с един клик!</h3>
                         <button class="card-button
            material-symbols-rounded">
                             arrow_forward
@@ -256,6 +260,9 @@
 </body>
 </html>
 <style>
+    .carrousel-img{
+
+    }
     #chatbox {
         background-color: white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

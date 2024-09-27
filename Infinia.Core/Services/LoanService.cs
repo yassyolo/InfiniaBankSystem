@@ -147,12 +147,13 @@ namespace Infinia.Core.Services
                 await repository.AddAsync(notification);
                 await repository.SaveChangesAsync();
                 var bankAccount = await repository.AllReadOnly<Account>().FirstOrDefaultAsync(x => x.Name == "Bank account");
+                var customer = await repository.AllReadOnly<Customer>().FirstOrDefaultAsync(x => x.Id == userId);
                 var transactionWithinTheBankModel = new TransactionWithinTheBankViewModel
                 {
                     Amount = model.LoanAmount,
                     Reason = "Кредит",
                     Description = "Превеждане на кредит",
-                    ReceiverName = account.Name,
+                    ReceiverName = customer.Name,
                     ReceiverIBAN = encryptionService.Decrypt(account.EncryptedIBAN),
                     AccountId = bankAccount.Id
                 };

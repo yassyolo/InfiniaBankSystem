@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Infinia.Controllers
 {
-    
+    [Authorize(Roles = "BankAdministrator")]
     public class BankAdministratorController : Controller
     {
         private readonly IBankAdministratorService bankAdministratorService;
@@ -17,7 +17,7 @@ namespace Infinia.Controllers
         {
             this.bankAdministratorService = bankAdministratorService;
             httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://predictionapi-agghdjbsezg2dxgp.canadacentral-01.azurewebsites.net/");
+            httpClient.BaseAddress = new Uri("https://finances-c4esard7gwhhc8gj.canadacentral-01.azurewebsites.net/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

@@ -40,12 +40,16 @@
                         </a>
                     </li>
                 }
-                <!-- Камбанка за известия -->
-                <li class="nav-item">
-                    <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </a>
-                </li>
+                else if(User.IsInRole("Customer"))
+                {
+                    <!-- Камбанка за известия -->
+                    <li class="nav-item">
+                        <a class="nav-link notification-bell" asp-action="AllNotifications" asp-controller="Notifications">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </a>
+                    </li>
+                }
+               
                 <!-- Dropdown за "Chatbot" -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="chatToggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -107,6 +111,7 @@
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ProfileDetails">Общи</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ChangeUsername">Потребителско име</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="ChangePassword">Парола</a>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="Faq">FAQ</a>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="Logout">Логаут</a>
                         }
                         else
