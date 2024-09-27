@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Infinia.Controllers
 {
-    [Authorize(Roles = "BankAdministrator")]
+    
     public class BankAdministratorController : Controller
     {
         private readonly IBankAdministratorService bankAdministratorService;

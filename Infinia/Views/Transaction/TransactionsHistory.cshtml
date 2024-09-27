@@ -113,27 +113,17 @@
 
     <div class="transactions">
         <div class="transactions__head">
-            <form asp-action="TransactionsHistory" asp-controller="Transaction" asp-route-id="@Model.Id"id="branchAnalysisForm" class="transactions__head-form">
-                @*<div class="transactions__head-form-info">
-                <label asp-for="TotalTransactions" class="transactions__head-form-info-label">Брой:</label>
-                <input asp-for="TotalTransactions" type="text" id="branchName" class="transactions__head-form-info-input" name="TotalTransactions" placeholder="Въведете клон на банка" required />
-                </div>
-                <div class="transactions__head-form-info">
-                <label asp-for="StartDate"  class="transactions__head-form-info-label">Начална дата:</label>
-                <input asp-for="StartDate" type="date" id="startDate" class="transactions__head-form-info-input" name="StartInterval" required />
-                </div>
-                <div class="transactions__head-form-info">
-                <label asp-for="EndDate"  class="transactions__head-form-info-label">Крайна дата:</label>
-                <input asp-for="EndDate" type="date" id="endDate" class="transactions__head-form-info-input" name="EndInterval" required />
-                </div>*@
+
                 <div class="transactions__head-btns">
-                    <button type="button" class="transactions__head-btns-ad" >Последни 3</button>
-                    <button type="button" class="transactions__head-btns-ad" >Последни 10</button>
+                <form asp-action="GetLastTenTransactionsHistory" asp-controller="Transaction" asp-route-id="@Model.Id" id="branchAnalysisForm" class="transactions__head-form">
+                    <button type="submit" class="transactions__head-btns-ad" >Последни 10</button>
+                </form>
                     <button type="button" class="transactions__head-btns-ad">Всички</button>
-                    <button type="submit" class="transactions__head-btns-ad">Приложи</button>
-                    <button class="transactions__head-btns-ad"><i class="fa fa-download"></i> Изтегли</button>
+                <form asp-action="DownloadTransactionHistoryForAccount" asp-controller="Transaction" asp-route-id="@Model.Id" method="get">
+                    <button type="submit" class="transactions__head-btns-ad"><i class="fa fa-download"></i> Изтегли</button>
+                    </form>
                 </div>
-            </form>
+           
 
            
         </div>
@@ -169,7 +159,10 @@
         <a asp-action="Index" asp-controller="Account" class="content__btns-single toAccount">Към сметки</a>
 
     </div>
-
+    <!-- jQuery (make sure it's loaded before Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap JS и jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

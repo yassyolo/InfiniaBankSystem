@@ -223,5 +223,15 @@ namespace Infinia.Controllers
 
             return View(transactionHistory);
         }
+        public async Task<IActionResult> GetLastTenTransactionsHistory(int id)
+        {
+            if (await accountService.AccountWithIdExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var transactionHistory = await transactionService.GetTransactionsForAccountAsync(id, 10);
+
+            return View(transactionHistory);
+        }
     }
 }
